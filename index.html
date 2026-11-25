@@ -2,314 +2,1263 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zerex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Zerex — Telegram Mini App</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg: #0b1410;
-      --card: #13221b;
-      --card-2: #192d24;
-      --gold: #f5b942;
-      --gold-2: #d9822b;
-      --text: #f3f7f5;
-      --muted: #9db0a6;
-      --accent: #22c55e;
-      --border: rgba(245, 185, 66, 0.22);
+      --bg-dark: #090d0b;
+      --forest-1: #0f2419;
+      --forest-2: #173a28;
+      --forest-3: #225238;
+      --wood-light: #b97a45;
+      --wood-mid: #8b5427;
+      --wood-dark: #573114;
+      --gold-1: #ffe07d;
+      --gold-2: #f4b41a;
+      --gold-3: #b37300;
+      --neon-purple: #9b4dff;
+      --text-main: #f6f8f5;
+      --text-muted: #b7c7bc;
+      --moss: #4ea847;
+      --danger: #e04f4f;
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
     body {
-      background: radial-gradient(circle at top, #173024, var(--bg) 65%);
-      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(78, 168, 71, 0.24), transparent 48%),
+        radial-gradient(circle at 80% 10%, rgba(155, 77, 255, 0.14), transparent 40%),
+        linear-gradient(180deg, #163726 0%, #0d1f16 48%, #07110c 100%);
+      color: var(--text-main);
       min-height: 100vh;
-      padding: 16px 16px 88px;
+      overflow-x: hidden;
+      padding-bottom: 28px;
     }
-    .header {
+
+    /* O'rmon va Zerex atmosferasi */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .canopy {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(28px);
+      opacity: 0.45;
+    }
+
+    .canopy.left {
+      width: 240px;
+      height: 240px;
+      top: -60px;
+      left: -70px;
+      background: radial-gradient(circle, #2d7a47, transparent 70%);
+    }
+
+    .canopy.right {
+      width: 260px;
+      height: 260px;
+      top: -50px;
+      right: -80px;
+      background: radial-gradient(circle, #1f5c36, transparent 70%);
+    }
+
+    .canopy.center-glow {
+      width: 320px;
+      height: 320px;
+      top: 26%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(244, 180, 26, 0.14), rgba(155, 77, 255, 0.08) 55%, transparent 75%);
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 12px 14px 20px;
+    }
+
+    /* Yuqori panel: Avatar, Daraja, Balans, Depozit */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .profile-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .avatar-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(145deg, var(--gold-1), var(--gold-2), var(--gold-3));
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), 0 0 14px rgba(244, 180, 26, 0.35);
+      position: relative;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #14221a;
+      display: block;
+    }
+
+    .brand-mini-badge {
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #2b1847, #150b24);
+      border: 1px solid rgba(183, 128, 255, 0.75);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .level-pill {
+      background: rgba(8, 18, 13, 0.78);
+      border: 1px solid rgba(255, 224, 125, 0.28);
+      border-radius: 10px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold-1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    .wallet-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .balance-readout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(8, 17, 12, 0.72);
+      border: 1px solid rgba(255, 224, 125, 0.25);
+      padding: 6px 12px;
+      border-radius: 14px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .balance-amount {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      color: var(--gold-1);
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+    }
+
+    .coin-g {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff0a8, #f4b41a 60%, #9e6200 100%);
+      border: 2px solid #ffe89e;
+      color: #4b2900;
+      font-weight: 900;
+      font-size: 15px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 3px 10px rgba(244, 180, 26, 0.45);
+    }
+
+    .deposit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(180deg, #c98648 0%, #8c5222 55%, #5e3412 100%);
+      border: 2px solid #e7b378;
+      border-radius: 13px;
+      padding: 7px 14px;
+      color: #fff6df;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #3d2009, 0 8px 16px rgba(0, 0, 0, 0.45);
+      transition: transform 0.1s ease;
+    }
+
+    .deposit-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #3d2009, 0 5px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Markaziy Zerex banner + Online ko'rsatkichi */
+    .center-status {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 6px;
+      gap: 8px;
+    }
+
+    .zerex-crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, rgba(20, 12, 36, 0.86), rgba(16, 40, 28, 0.88), rgba(20, 12, 36, 0.86));
+      border: 1px solid rgba(177, 117, 255, 0.45);
+      padding: 5px 14px;
+      border-radius: 999px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .zerex-z {
+      font-weight: 950;
+      font-size: 15px;
+      background: linear-gradient(180deg, #ffffff, #c79cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .zerex-tagline {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      color: var(--gold-1);
+    }
+
+    .online-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(11, 24, 18, 0.78);
+      border: 1px solid rgba(114, 232, 112, 0.3);
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #d9f7dc;
+    }
+
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #48e55b;
+      box-shadow: 0 0 8px #48e55b;
+    }
+
+    /* Yon menyu tugmalari (Gramora yog'och uslubida) */
+    .side-menus-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 14px;
+      gap: 12px;
+    }
+
+    .side-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .side-col.right {
+      align-items: flex-end;
+    }
+
+    .wood-tile-btn {
+      width: 84px;
+      background: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+    }
+
+    .wood-tile-btn:active {
+      transform: scale(0.95);
+    }
+
+    .wood-box {
+      width: 62px;
+      height: 58px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--wood-light) 0%, var(--wood-mid) 58%, var(--wood-dark) 100%);
+      border: 2px solid #e6b47c;
+      box-shadow: 0 5px 0 #3b1e08, 0 8px 14px rgba(0, 0, 0, 0.45), inset 0 2px 3px rgba(255, 240, 205, 0.35);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      position: relative;
+    }
+
+    .wood-box::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 6px;
+      width: 18px;
+      height: 8px;
+      border-radius: 10px 10px 2px 10px;
+      background: linear-gradient(180deg, #74d352, #388e2c);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .wood-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-align: center;
+      line-height: 1.15;
+      color: #fff6e0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85);
+    }
+
+    /* O'yinlar qatori: rasm + pastida nomi */
+    .games-section {
+      margin-top: 22px;
+    }
+
+    .games-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      align-items: start;
+    }
+
+    .game-chip {
+      background: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: transform 0.14s ease;
+    }
+
+    .game-chip.active {
+      transform: translateY(-4px);
+    }
+
+    .game-art {
+      width: 50px;
+      height: 50px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      position: relative;
+      border: 2px solid rgba(255, 224, 125, 0.45);
+      box-shadow: 0 5px 0 rgba(15, 26, 18, 0.9), 0 8px 14px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+
+    .game-chip.active .game-art {
+      border-color: var(--gold-1);
+      box-shadow: 0 0 0 2px rgba(244, 180, 26, 0.55), 0 8px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .art-shashka { background: linear-gradient(145deg, #c78246, #6e3c15); }
+    .art-shaxmat { background: linear-gradient(145deg, #4b6587, #233347); }
+    .art-bilyard { background: linear-gradient(145deg, #218c53, #0e4d2b); }
+    .art-durak   { background: linear-gradient(145deg, #9b3d52, #4d1723); }
+    .art-mafia   { background: linear-gradient(145deg, #3a2d59, #181129); }
+    .art-xo      { background: linear-gradient(145deg, #5e349c, #261247); }
+
+    .game-name {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #f3f7f4;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+      line-height: 1.1;
+    }
+
+    /* Katta PLAY tugmasi */
+    .play-wrap {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .play-btn {
+      width: 82%;
+      max-width: 310px;
+      padding: 16px 24px;
+      border-radius: 18px;
+      border: 2px solid #e7b579;
+      background: linear-gradient(180deg, #c68345 0%, #8c5223 58%, #5b3212 100%);
+      box-shadow:
+        0 7px 0 #381c07,
+        0 14px 24px rgba(0, 0, 0, 0.58),
+        inset 0 2px 4px rgba(255, 245, 215, 0.4);
+      color: #4d280b;
+      font-size: 28px;
+      font-weight: 950;
+      letter-spacing: 2px;
+      cursor: pointer;
+      position: relative;
+      text-shadow: 0 1px 0 rgba(255, 224, 165, 0.55);
+      transition: transform 0.1s ease;
+    }
+
+    .play-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 #381c07, 0 8px 14px rgba(0, 0, 0, 0.5);
+    }
+
+    .selected-game-hint {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .selected-game-hint strong {
+      color: var(--gold-1);
+    }
+
+    /* Modal / Ichki oynalar */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 8, 5, 0.78);
+      backdrop-filter: blur(6px);
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 440px;
+      max-height: 88vh;
+      overflow-y: auto;
+      background: linear-gradient(180deg, #173525 0%, #0d1d14 100%);
+      border: 2px solid rgba(231, 180, 120, 0.55);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+      position: relative;
+    }
+
+    .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 14px;
+      gap: 10px;
       margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .brand { font-size: 20px; font-weight: 800; color: var(--gold); letter-spacing: 0.5px; }
-    .user-meta { font-size: 12px; color: var(--muted); }
-    .balance-pill {
-      background: linear-gradient(135deg, var(--gold), var(--gold-2));
-      color: #141414;
-      font-weight: 800;
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 14px;
+
+    .modal-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .page { display: none; }
-    .page.active { display: block; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 12px;
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--gold-1);
     }
-    .title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--gold); }
-    .tap-btn {
-      width: 100%;
-      padding: 20px;
-      border-radius: 18px;
-      border: 1px solid var(--gold);
-      background: linear-gradient(180deg, #1f3b2e, #112119);
-      color: var(--text);
+
+    .close-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
       font-size: 18px;
       font-weight: 700;
       cursor: pointer;
+    }
+
+    .section-box {
+      background: rgba(7, 16, 11, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stake-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .stake-chip {
+      padding: 8px 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(244, 180, 26, 0.35);
+      background: rgba(244, 180, 26, 0.1);
+      color: var(--gold-1);
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .stake-chip.active {
+      background: linear-gradient(180deg, var(--gold-2), var(--gold-3));
+      color: #241300;
+      border-color: var(--gold-1);
+    }
+
+    .primary-action {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 13px;
+      border: 1px solid #ffe07d;
+      background: linear-gradient(180deg, #32a852 0%, #1d7535 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #10451e;
+    }
+
+    .primary-action:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #10451e;
+    }
+
+    .secondary-action {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
       margin-top: 8px;
     }
-    .tap-btn:active { transform: scale(0.98); }
-    .row {
+
+    .room-code-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      font-size: 13px;
+      margin-bottom: 8px;
+      outline: none;
+    }
+
+    /* Jonli o'yin xonasi ichidagi maydonlar */
+    .live-banner {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--card-2);
-      padding: 12px;
+      background: rgba(155, 77, 255, 0.14);
+      border: 1px solid rgba(155, 77, 255, 0.42);
       border-radius: 12px;
-      margin-bottom: 8px;
+      padding: 9px 11px;
+      font-size: 12px;
+      margin-bottom: 10px;
     }
-    .btn {
-      background: var(--gold);
-      color: #111;
-      border: none;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #0e1a14;
-      border-top: 1px solid var(--border);
+
+    .xo-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      padding: 8px 6px;
-      gap: 4px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      max-width: 240px;
+      margin: 10px auto;
     }
-    .nav button {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 11px;
-      padding: 6px 2px;
-      border-radius: 10px;
+
+    .xo-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 224, 125, 0.35);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--gold-1);
+      font-size: 28px;
+      font-weight: 900;
       cursor: pointer;
     }
-    .nav button.active {
-      background: var(--card-2);
-      color: var(--gold);
-      font-weight: 700;
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      margin-bottom: 8px;
+      font-size: 13px;
     }
-    .progress-bar {
-      width: 100%;
-      height: 10px;
-      background: var(--card-2);
+
+    .small-pill-btn {
+      padding: 6px 10px;
+      border-radius: 9px;
+      border: none;
+      background: var(--gold-2);
+      color: #241300;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #14271c;
+      border: 1px solid var(--gold-2);
+      color: #fff;
+      padding: 9px 16px;
       border-radius: 999px;
-      overflow: hidden;
-      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 80;
+      opacity: 0;
+      transition: all 0.24s ease;
+      white-space: nowrap;
     }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--gold));
-      transition: width 0.25s ease;
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
-    .muted { color: var(--muted); font-size: 13px; margin-top: 6px; }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div>
-      <div class="brand">ZEREX</div>
-      <div class="user-meta" id="userInfo">O‘yinchi</div>
-    </div>
-    <div class="balance-pill" id="balanceView">0 🪙</div>
+  <div class="bg-decor">
+    <div class="canopy left"></div>
+    <div class="canopy right"></div>
+    <div class="canopy center-glow"></div>
   </div>
 
-  <!-- BOSH SAHIFA -->
-  <section class="page active" id="page-home">
-    <div class="card">
-      <div class="title">Bosh sahifa</div>
-      <p class="muted">Tanga to‘plang, darajani ko‘taring va Top 100 reytingga kiring.</p>
-      <button class="tap-btn" id="tapBtn">⚡ Tanga yig‘ish (+10 🪙)</button>
-    </div>
-  </section>
-
-  <!-- REYTING (TOP 100) -->
-  <section class="page" id="page-top">
-    <div class="card">
-      <div class="title">Reyting (Top 100)</div>
-      <p class="muted">Ballar bo‘yicha avtomatik saralanadi.</p>
-      <div id="leaderboardList" style="margin-top:12px;"></div>
-    </div>
-  </section>
-
-  <!-- VAZIFALAR -->
-  <section class="page" id="page-tasks">
-    <div class="card">
-      <div class="title">Vazifalar</div>
-      <div id="tasksList"></div>
-    </div>
-  </section>
-
-  <!-- DARAJA -->
-  <section class="page" id="page-level">
-    <div class="card">
-      <div class="title">Darajangiz</div>
-      <div id="levelText" style="font-size:18px;font-weight:700;">1-daraja</div>
-      <div class="muted" id="levelSub">Keyingi darajagacha: 100 🪙</div>
-      <div class="progress-bar"><div class="progress-fill" id="levelBar" style="width:0%"></div></div>
-    </div>
-  </section>
-
-  <!-- DEPOZIT -->
-  <section class="page" id="page-deposit">
-    <div class="card">
-      <div class="title">Depozit (Avtomatik hisob)</div>
-      <p class="muted">Paketni tanlang — balans avtomatik yangilanadi (keyingi bosqichda Telegram Stars/to‘lov tizimi ulanadi).</p>
-      <div style="margin-top:12px;">
-        <div class="row">
-          <div><b>+500 🪙</b><div class="muted">Boshlang‘ich paket</div></div>
-          <button class="btn" onclick="addDeposit(500)">To‘ldirish</button>
+  <div class="app">
+    <!-- Yuqori qism: Profil, Daraja, Balans, Depozit -->
+    <header class="top-bar">
+      <div class="profile-box">
+        <div class="avatar-ring">
+          <img id="userAvatar" class="avatar-img" alt="Avatar" />
+          <span class="brand-mini-badge">ZEREX</span>
         </div>
-        <div class="row">
-          <div><b>+2 500 🪙</b><div class="muted">Faol o‘yinchi paketi</div></div>
-          <button class="btn" onclick="addDeposit(2500)">To‘ldirish</button>
+        <div class="level-pill" id="userLevel">Lvl 1 · Yangi o'yinchi</div>
+      </div>
+
+      <div class="wallet-box">
+        <div class="balance-readout">
+          <span class="balance-amount" id="userBalance">0</span>
+          <span class="coin-g">G</span>
         </div>
+        <button class="deposit-btn" onclick="openMenuModal('deposit')">
+          <span>G</span>
+          <span>DEPOZIT</span>
+          <span>&gt;</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Markaziy Zerex nishoni va Online ko'rsatkichi -->
+    <div class="center-status">
+      <div class="zerex-crest">
+        <span class="zerex-z">ZEREX</span>
+        <span class="zerex-tagline">PLAY · WIN · EARN</span>
+      </div>
+      <div class="online-pill">
+        <span class="online-dot"></span>
+        <span id="onlineCount">403 online</span>
       </div>
     </div>
-  </section>
 
-  <nav class="nav">
-    <button class="active" data-page="home" onclick="switchPage('home', this)">Bosh</button>
-    <button data-page="top" onclick="switchPage('top', this)">Reyting</button>
-    <button data-page="tasks" onclick="switchPage('tasks', this)">Vazifa</button>
-    <button data-page="level" onclick="switchPage('level', this)">Daraja</button>
-    <button data-page="deposit" onclick="switchPage('deposit', this)">Depozit</button>
-  </nav>
+    <!-- Yon menyular -->
+    <section class="side-menus-row">
+      <div class="side-col left">
+        <button class="wood-tile-btn" onclick="openMenuModal('tasks')">
+          <div class="wood-box">📋</div>
+          <span class="wood-label">VAZIFALAR</span>
+        </button>
+
+        <button class="wood-tile-btn" onclick="openMenuModal('rating')">
+          <div class="wood-box">🏆</div>
+          <span class="wood-label">REYTING</span>
+        </button>
+
+        <button class="wood-tile-btn" onclick="openMenuModal('shop')">
+          <div class="wood-box">🏪</div>
+          <span class="wood-label">DO‘KON</span>
+        </button>
+      </div>
+
+      <div class="side-col right">
+        <button class="wood-tile-btn" onclick="openMenuModal('friends')">
+          <div class="wood-box">👥</div>
+          <span class="wood-label">DO‘ST BILAN</span>
+        </button>
+
+        <button class="wood-tile-btn" onclick="openMenuModal('withdraw')">
+          <div class="wood-box">💵</div>
+          <span class="wood-label">PUL YECHISH</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- O'yinlar qatori: rasm + pastida nomi -->
+    <section class="games-section">
+      <div class="games-strip" id="gamesStrip"></div>
+    </section>
+
+    <!-- Asosiy PLAY tugmasi -->
+    <div class="play-wrap">
+      <button class="play-btn" onclick="openGameLobby(selectedGameId)">PLAY</button>
+    </div>
+    <p class="selected-game-hint">
+      Tanlangan o‘yin: <strong id="selectedGameLabel">Shashka</strong> · Faqat jonli raqiblar
+    </p>
+  </div>
+
+  <!-- Universal Modal Oyna -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+    <div class="modal-card" id="modalCard">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span id="modalIcon" style="font-size: 24px;">🎮</span>
+          <h2 class="modal-title" id="modalTitle">Bo‘lim</h2>
+        </div>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script>
-    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-    if (tg) tg.expand();
-
-    const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
-    const myName = tgUser ? (tgUser.first_name + (tgUser.username ? ` (@${tgUser.username})` : '')) : 'Siz (Zerex)';
-
-    const STORAGE_KEY = 'zerex_state_v1';
-    const defaultState = {
-      coins: 0,
-      tasksDone: [],
-      players: [
-        { name: 'Rustam_pro', coins: 1200 },
-        { name: 'Madina_99', coins: 850 },
-        { name: 'Sardor_uz', coins: 420 }
-      ]
+    /**
+     * HAQIQIY ODAMLAR BILAN JONLI O'YNASH UCHUN SOZLAMA:
+     * Firebase Realtime Database yaratsangiz, quyidagi qiymatlarni o'zingiznikiga almashtiring.
+     * Hozircha bo'sh qoldirilsa ham barcha oynalar va xona/raqib qidirish interfeysi ishlaydi.
+     */
+    const FIREBASE_CONFIG = {
+      apiKey: "",
+      authDomain: "",
+      databaseURL: "",
+      projectId: "",
+      appId: ""
     };
 
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? { ...defaultState, ...JSON.parse(raw) } : { ...defaultState };
-      } catch {
-        return { ...defaultState };
+    const GAMES = [
+      {
+        id: "shashka",
+        name: "Shashka",
+        icon: "⚫",
+        artClass: "art-shashka",
+        desc: "Klassik 8x8 taxta. Raqibingiz bilan navbatma-navbat dona suring va barcha shashkalarini yuting.",
+        modeTag: "1v1 · Jonli taxta"
+      },
+      {
+        id: "shaxmat",
+        name: "Shaxmat",
+        icon: "♞",
+        artClass: "art-shaxmat",
+        desc: "Strategik shaxmat bellashuvi. Haqiqiy raqibga qarshi shohni mot qiling.",
+        modeTag: "1v1 · Strategiya"
+      },
+      {
+        id: "bilyard",
+        name: "Bilyard",
+        icon: "🎱",
+        artClass: "art-bilyard",
+        desc: "8-shar bilyard stolida kuch va burchakni hisoblab, sharlarni ketma-ket tushiring.",
+        modeTag: "1v1 · Stol o'yini"
+      },
+      {
+        id: "durak",
+        name: "Durak",
+        icon: "🃏",
+        artClass: "art-durak",
+        desc: "Kozir kartalar bilan hujum va himoya. Qo‘lingizdagi kartalarni birinchi bo‘lib tugating.",
+        modeTag: "2–4 o'yinchi · Karta"
+      },
+      {
+        id: "mafia",
+        name: "Mafia",
+        icon: "🕵️",
+        artClass: "art-mafia",
+        desc: "Tun va kunduz bosqichlari: tinch aholi, komissar va mafiya o‘rtasida haqiqiy o‘yinchilar bahsi.",
+        modeTag: "Guruh · Jonli ovoz/matn"
+      },
+      {
+        id: "xo",
+        name: "X-O",
+        icon: "✖️",
+        artClass: "art-xo",
+        desc: "3x3 katakda ketma-ket uchta X yoki O terib, jonli raqib ustidan tezkor g‘alaba qozoning.",
+        modeTag: "1v1 · Tezkor duel"
+      }
+    ];
+
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
+
+    const state = {
+      balance: Number(localStorage.getItem("zerex_balance") || 250),
+      xp: Number(localStorage.getItem("zerex_xp") || 40),
+      completedTasks: JSON.parse(localStorage.getItem("zerex_tasks") || "[]"),
+      roomCode: "",
+      stake: 50,
+      matchStatus: "idle", // idle | searching | matched
+      xoBoard: Array(9).fill(""),
+      xoTurn: "X"
+    };
+
+    let selectedGameId = GAMES[0].id;
+
+    function getLevelInfo(xp) {
+      const level = Math.max(1, Math.floor(xp / 100) + 1);
+      const titles = ["Yangi o'yinchi", "Tajribali", "Usta", "Grossmeyster", "Afsona"];
+      const title = titles[Math.min(titles.length - 1, Math.floor((level - 1) / 3))];
+      return { level, title };
+    }
+
+    function saveState() {
+      localStorage.setItem("zerex_balance", String(state.balance));
+      localStorage.setItem("zerex_xp", String(state.xp));
+      localStorage.setItem("zerex_tasks", JSON.stringify(state.completedTasks));
+    }
+
+    function showToast(text) {
+      const el = document.getElementById("toast");
+      el.textContent = text;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+    }
+
+    function renderProfile() {
+      const avatarEl = document.getElementById("userAvatar");
+      const fallbackSvg = encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <rect width="100" height="100" fill="#182b20"/>
+          <circle cx="50" cy="38" r="18" fill="#f4b41a"/>
+          <path d="M20 88c4-18 18-26 30-26s26 8 30 26" fill="#32a852"/>
+        </svg>`
+      );
+      avatarEl.src = tgUser && tgUser.photo_url ? tgUser.photo_url : `data:image/svg+xml,${fallbackSvg}`;
+
+      const lvl = getLevelInfo(state.xp);
+      document.getElementById("userLevel").textContent = `Lvl ${lvl.level} · ${lvl.title}`;
+      document.getElementById("userBalance").textContent = state.balance.toLocaleString("en-US");
+    }
+
+    function renderGamesStrip() {
+      const strip = document.getElementById("gamesStrip");
+      strip.innerHTML = GAMES.map((g) => {
+        const activeClass = g.id === selectedGameId ? "active" : "";
+        return `
+          <button class="game-chip ${activeClass}" onclick="selectGame('${g.id}', true)">
+            <div class="game-art ${g.artClass}">${g.icon}</div>
+            <span class="game-name">${g.name}</span>
+          </button>
+        `;
+      }).join("");
+
+      const activeGame = GAMES.find((g) => g.id === selectedGameId) || GAMES[0];
+      document.getElementById("selectedGameLabel").textContent = activeGame.name;
+    }
+
+    function selectGame(gameId, openImmediately = false) {
+      selectedGameId = gameId;
+      state.matchStatus = "idle";
+      renderGamesStrip();
+      if (openImmediately) {
+        openGameLobby(gameId);
       }
     }
 
-    let state = loadState();
-
-    const tasks = [
-      { id: 't1', title: 'Birinchi 50 tangani yig‘ing', reward: 100, check: () => state.coins >= 50 },
-      { id: 't2', title: '200 tanga jamg‘aring', reward: 250, check: () => state.coins >= 200 }
-    ];
-
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      render();
+    function openModal(icon, title, bodyHtml) {
+      document.getElementById("modalIcon").textContent = icon;
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalBody").innerHTML = bodyHtml;
+      document.getElementById("modalBackdrop").classList.add("open");
     }
 
-    function switchPage(page, btn) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page-' + page).classList.add('active');
-      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
+    function closeModal() {
+      document.getElementById("modalBackdrop").classList.remove("open");
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target.id === "modalBackdrop") closeModal();
+    }
+
+    function openGameLobby(gameId) {
+      const game = GAMES.find((g) => g.id === gameId) || GAMES[0];
+      const stakes = [25, 50, 100, 250];
+
+      const stakeButtons = stakes
+        .map(
+          (amt) =>
+            `<button class="stake-chip ${state.stake === amt ? "active" : ""}" onclick="setStake(${amt}, '${game.id}')">${amt} G</button>`
+        )
+        .join("");
+
+      let statusBox = "";
+      if (state.matchStatus === "searching") {
+        statusBox = `
+          <div class="live-banner">
+            <span>🔍 <strong>${game.name}</strong> uchun jonli raqib qidirilmoqda... (Botlar yo‘q)</span>
+            <button class="small-pill-btn" onclick="cancelMatchmaking('${game.id}')">Bekor</button>
+          </div>
+        `;
+      } else if (state.matchStatus === "matched") {
+        statusBox = `
+          <div class="live-banner">
+            <span>🟢 Xona faol: <strong>${state.roomCode || "ZX-LIVE"}</strong> · Stavka: <strong>${state.stake} G</strong></span>
+          </div>
+          ${renderGameArena(game.id)}
+        `;
+      }
+
+      const bodyHtml = `
+        <div class="section-box">
+          <div class="section-label">${game.modeTag}</div>
+          <p style="font-size:13px; line-height:1.45; color:#e5efe8;">${game.desc}</p>
+        </div>
+
+        <div class="section-box">
+          <div class="section-label">Stavka tanlang</div>
+          <div class="stake-row">${stakeButtons}</div>
+        </div>
+
+        ${statusBox}
+
+        <div class="section-box">
+          <div class="section-label">Haqiqiy odam bilan ulanish</div>
+          <button class="primary-action" onclick="startRealMatchmaking('${game.id}')">
+            ⚡ Jonli raqib izlash (${game.name})
+          </button>
+          <div style="margin-top:10px;">
+            <input id="roomCodeInput" class="room-code-input" placeholder="Xona kodini kiriting (masalan: ZEREX-77)" value="${state.roomCode}" />
+            <button class="secondary-action" onclick="joinRoomByCode('${game.id}')">
+              🔗 Xona kodi bilan ulanish
+            </button>
+          </div>
+        </div>
+      `;
+
+      openModal(game.icon, game.name, bodyHtml);
+    }
+
+    function renderGameArena(gameId) {
+      if (gameId === "xo") {
+        const cells = state.xoBoard
+          .map(
+            (val, idx) =>
+              `<button class="xo-cell" onclick="playXoCell(${idx})">${val}</button>`
+          )
+          .join("");
+        return `
+          <div class="section-box">
+            <div class="section-label">X-O Jonli maydon · Navbat: ${state.xoTurn}</div>
+            <div class="xo-grid">${cells}</div>
+            <button class="secondary-action" onclick="resetXoBoard()">Maydonni tozalash</button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="section-box">
+          <div class="section-label">${GAMES.find((g) => g.id === gameId)?.name} Xonasi</div>
+          <p style="font-size:12px; color:var(--text-muted); line-height:1.45;">
+            Siz jonli xonaga kirdingiz. Real vaqtda boshqa foydalanuvchilar bilan yurish almashish uchun
+            <code>FIREBASE_CONFIG</code> ma’lumotlarini ulasangiz, bu maydon ikkala o‘yinchida sinxron ishlaydi.
+          </p>
+        </div>
+      `;
+    }
+
+    function setStake(amount, gameId) {
+      state.stake = amount;
+      openGameLobby(gameId);
+    }
+
+    function startRealMatchmaking(gameId) {
+      if (state.balance < state.stake) {
+        showToast("Balansda yetarli G tanga yo‘q! Depozit qiling.");
+        return;
+      }
+
+      const hasFirebase = Boolean(FIREBASE_CONFIG.databaseURL);
+      if (!hasFirebase) {
+        state.matchStatus = "matched";
+        state.roomCode = state.roomCode || `ZX-${Math.floor(1000 + Math.random() * 9000)}`;
+        showToast("Xona ochildi! Jonli raqib ulanishi uchun Firebase ulang.");
+        openGameLobby(gameId);
+        return;
+      }
+
+      state.matchStatus = "searching";
+      openGameLobby(gameId);
+    }
+
+    function cancelMatchmaking(gameId) {
+      state.matchStatus = "idle";
+      openGameLobby(gameId);
+    }
+
+    function joinRoomByCode(gameId) {
+      const input = document.getElementById("roomCodeInput");
+      const code = (input ? input.value : "").trim().toUpperCase();
+      if (!code) {
+        showToast("Avval xona kodini kiriting!");
+        return;
+      }
+      state.roomCode = code;
+      state.matchStatus = "matched";
+      showToast(`${code} xonasiga ulandingiz`);
+      openGameLobby(gameId);
+    }
+
+    function playXoCell(index) {
+      if (state.xoBoard[index]) return;
+      state.xoBoard[index] = state.xoTurn;
+      state.xoTurn = state.xoTurn === "X" ? "O" : "X";
+      openGameLobby("xo");
+    }
+
+    function resetXoBoard() {
+      state.xoBoard = Array(9).fill("");
+      state.xoTurn = "X";
+      openGameLobby("xo");
+    }
+
+    function openMenuModal(menuType) {
+      if (menuType === "tasks") {
+        const tasks = [
+          { id: "t1", title: "Zerex kanaliga obuna bo‘lish", reward: 100 },
+          { id: "t2", title: "1 ta do‘stni taklif qilish", reward: 150 },
+          { id: "t3", title: "Kunlik kirish bonusi", reward: 50 }
+        ];
+        const html = tasks
+          .map((t) => {
+            const done = state.completedTasks.includes(t.id);
+            return `
+              <div class="list-item">
+                <div>
+                  <div style="font-weight:800;">${t.title}</div>
+                  <div style="font-size:11px; color:var(--gold-1);">+${t.reward} G</div>
+                </div>
+                <button class="small-pill-btn" ${done ? "disabled style='opacity:0.5'" : ""} onclick="claimTask('${t.id}', ${t.reward})">
+                  ${done ? "Olindi" : "Olish"}
+                </button>
+              </div>
+            `;
+          })
+          .join("");
+        openModal("📋", "Vazifalar", html);
+        return;
+      }
+
+      if (menuType === "rating") {
+        const leaders = [
+          { name: "Sherzod_4405", lvl: 12, coins: 4820 },
+          { name: "Nodirbek_UZ", lvl: 10, coins: 3690 },
+          { name: "Madina_Pro", lvl: 9, coins: 3150 },
+          { name: "Jasur_X", lvl: 7, coins: 2240 }
+        ];
+        const html = leaders
+          .map(
+            (u, i) => `
+              <div class="list-item">
+                <div><strong>#${i + 1} ${u.name}</strong> <span style="font-size:11px; color:var(--text-muted);">· Lvl ${u.lvl}</span></div>
+                <strong style="color:var(--gold-1);">${u.coins} G</strong>
+              </div>
+            `
+          )
+          .join("");
+        openModal("🏆", "Reyting", html);
+        return;
+      }
+
+      if (menuType === "shop") {
+        const items = [
+          { name: "Oltin ramka", price: 200, icon: "👑" },
+          { name: "Maxsus avatar nishoni", price: 350, icon: "⚡" },
+          { name: "VIP stol effekti", price: 500, icon: "💎" }
+        ];
+        const html = items
+          .map(
+            (it) => `
+              <div class="list-item">
+                <div><strong>${it.icon} ${it.name}</strong></div>
+                <button class="small-pill-btn" onclick="buyShopItem('${it.name}', ${it.price})">${it.price} G</button>
+              </div>
+            `
+          )
+          .join("");
+        openModal("🏪", "Do‘kon", html);
+        return;
+      }
+
+      if (menuType === "friends") {
+        const refLink = `https://t.me/Zerex_uz_bot?start=ref_${tgUser ? tgUser.id : "guest"}`;
+        const html = `
+          <div class="section-box">
+            <div class="section-label">Do‘stni taklif qilish havolasi</div>
+            <input class="room-code-input" readonly value="${refLink}" />
+            <button class="primary-action" onclick="copyText('${refLink}')">Havolani nusxalash</button>
+          </div>
+        `;
+        openModal("👥", "Do‘st bilan", html);
+        return;
+      }
+
+      if (menuType === "deposit") {
+        const packs = [100, 300, 500, 1000];
+        const html = `
+          <div class="section-box">
+            <div class="section-label">Balansni to‘ldirish (G)</div>
+            <div class="stake-row">
+              ${packs.map((p) => `<button class="stake-chip" onclick="addDeposit(${p})">+${p} G</button>`).join("")}
+            </div>
+          </div>
+        `;
+        openModal("💰", "Depozit", html);
+        return;
+      }
+
+      if (menuType === "withdraw") {
+        const html = `
+          <div class="section-box">
+            <div class="section-label">Pul yechish so‘rovi</div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
+              Joriy balans: <strong style="color:var(--gold-1);">${state.balance} G</strong>. Minimal yechish: 500 G.
+            </p>
+            <input id="withdrawAmount" class="room-code-input" type="number" placeholder="Miqdor (G)" />
+            <input id="withdrawWallet" class="room-code-input" placeholder="Karta yoki hamyon raqami" />
+            <button class="primary-action" onclick="submitWithdraw()">So‘rov yuborish</button>
+          </div>
+        `;
+        openModal("💵", "Pul yechish", html);
+      }
+    }
+
+    function claimTask(taskId, reward) {
+      if (state.completedTasks.includes(taskId)) return;
+      state.completedTasks.push(taskId);
+      state.balance += reward;
+      state.xp += 35;
+      saveState();
+      renderProfile();
+      showToast(`+${reward} G qo‘shildi!`);
+      openMenuModal("tasks");
+    }
+
+    function buyShopItem(name, price) {
+      if (state.balance < price) {
+        showToast("Mablag‘ yetarli emas!");
+        return;
+      }
+      state.balance -= price;
+      state.xp += 25;
+      saveState();
+      renderProfile();
+      showToast(`${name} xarid qilindi!`);
     }
 
     function addDeposit(amount) {
-      state.coins += amount;
+      state.balance += amount;
+      state.xp += 20;
       saveState();
+      renderProfile();
+      showToast(`+${amount} G balansga tushdi!`);
     }
 
-    function claimTask(id, reward) {
-      if (!state.tasksDone.includes(id)) {
-        state.tasksDone.push(id);
-        state.coins += reward;
-        saveState();
+    function submitWithdraw() {
+      const amt = Number(document.getElementById("withdrawAmount")?.value || 0);
+      const wallet = (document.getElementById("withdrawWallet")?.value || "").trim();
+      if (amt < 500) {
+        showToast("Minimal yechish miqdori 500 G!");
+        return;
       }
-    }
-
-    function getLevelInfo(coins) {
-      const step = 200;
-      const level = Math.floor(coins / step) + 1;
-      const intoLevel = coins % step;
-      const pct = Math.min(100, Math.round((intoLevel / step) * 100));
-      const left = step - intoLevel;
-      return { level, pct, left };
-    }
-
-    function render() {
-      document.getElementById('userInfo').textContent = myName;
-      document.getElementById('balanceView').textContent = `${state.coins.toLocaleString()} 🪙`;
-
-      const lvl = getLevelInfo(state.coins);
-      document.getElementById('levelText').textContent = `${lvl.level}-daraja`;
-      document.getElementById('levelSub').textContent = `Keyingi darajagacha: ${lvl.left} 🪙`;
-      document.getElementById('levelBar').style.width = `${lvl.pct}%`;
-
-      const tasksEl = document.getElementById('tasksList');
-      tasksEl.innerHTML = tasks.map(t => {
-        const done = state.tasksDone.includes(t.id);
-        const ready = t.check();
-        return `
-          <div class="row">
-            <div>
-              <div><b>${t.title}</b></div>
-              <div class="muted">Mukofot: +${t.reward} 🪙</div>
-            </div>
-            <button class="btn" ${done || !ready ? 'disabled' : ''} onclick="claimTask('${t.id}', ${t.reward})">
-              ${done ? 'Olindi' : ready ? 'Olish' : 'Bajarilmagan'}
-            </button>
-          </div>
-        `;
-      }).join('');
-
-      const combined = [
-        ...state.players.filter(p => p.name !== myName),
-        { name: myName, coins: state.coins, isMe: true }
-      ].sort((a, b) => b.coins - a.coins).slice(0, 100);
-
-      document.getElementById('leaderboardList').innerHTML = combined.map((p, idx) => `
-        <div class="row" style="${p.isMe ? 'border:1px solid var(--gold);' : ''}">
-          <div><b>#${idx + 1}</b> ${p.name}</div>
-          <div><b>${p.coins.toLocaleString()} 🪙</b></div>
-        </div>
-      `).join('');
-    }
-
-    document.getElementById('tapBtn').addEventListener('click', () => {
-      state.coins += 10;
+      if (amt > state.balance) {
+        showToast("Balansda buncha G yo‘q!");
+        return;
+      }
+      if (!wallet) {
+        showToast("Karta yoki hamyon raqamini kiriting!");
+        return;
+      }
+      state.balance -= amt;
       saveState();
-    });
+      renderProfile();
+      showToast(`${amt} G yechish so‘rovi qabul qilindi`);
+      closeModal();
+    }
 
-    render();
+    function copyText(text) {
+      navigator.clipboard?.writeText(text);
+      showToast("Havola nusxalandi!");
+    }
+
+    renderProfile();
+    renderGamesStrip();
   </script>
 </body>
 </html>
