@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zerex</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg: #0b1410;
+      --card: #13221b;
+      --card-2: #192d24;
+      --gold: #f5b942;
+      --gold-2: #d9822b;
+      --text: #f3f7f5;
+      --muted: #9db0a6;
+      --accent: #22c55e;
+      --border: rgba(245, 185, 66, 0.22);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #173024, var(--bg) 65%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px 16px 88px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+    .brand { font-size: 20px; font-weight: 800; color: var(--gold); letter-spacing: 0.5px; }
+    .user-meta { font-size: 12px; color: var(--muted); }
+    .balance-pill {
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: #141414;
+      font-weight: 800;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--gold); }
+    .tap-btn {
+      width: 100%;
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid var(--gold);
+      background: linear-gradient(180deg, #1f3b2e, #112119);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .tap-btn:active { transform: scale(0.98); }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-2);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+    .btn {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #0e1a14;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 8px 6px;
+      gap: 4px;
+    }
+    .nav button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 2px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .nav button.active {
+      background: var(--card-2);
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: var(--card-2);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      transition: width 0.25s ease;
+    }
+    .muted { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="brand">ZEREX</div>
+      <div class="user-meta" id="userInfo">O‘yinchi</div>
+    </div>
+    <div class="balance-pill" id="balanceView">0 🪙</div>
+  </div>
+
+  <!-- BOSH SAHIFA -->
+  <section class="page active" id="page-home">
+    <div class="card">
+      <div class="title">Bosh sahifa</div>
+      <p class="muted">Tanga to‘plang, darajani ko‘taring va Top 100 reytingga kiring.</p>
+      <button class="tap-btn" id="tapBtn">⚡ Tanga yig‘ish (+10 🪙)</button>
+    </div>
+  </section>
+
+  <!-- REYTING (TOP 100) -->
+  <section class="page" id="page-top">
+    <div class="card">
+      <div class="title">Reyting (Top 100)</div>
+      <p class="muted">Ballar bo‘yicha avtomatik saralanadi.</p>
+      <div id="leaderboardList" style="margin-top:12px;"></div>
+    </div>
+  </section>
+
+  <!-- VAZIFALAR -->
+  <section class="page" id="page-tasks">
+    <div class="card">
+      <div class="title">Vazifalar</div>
+      <div id="tasksList"></div>
+    </div>
+  </section>
+
+  <!-- DARAJA -->
+  <section class="page" id="page-level">
+    <div class="card">
+      <div class="title">Darajangiz</div>
+      <div id="levelText" style="font-size:18px;font-weight:700;">1-daraja</div>
+      <div class="muted" id="levelSub">Keyingi darajagacha: 100 🪙</div>
+      <div class="progress-bar"><div class="progress-fill" id="levelBar" style="width:0%"></div></div>
+    </div>
+  </section>
+
+  <!-- DEPOZIT -->
+  <section class="page" id="page-deposit">
+    <div class="card">
+      <div class="title">Depozit (Avtomatik hisob)</div>
+      <p class="muted">Paketni tanlang — balans avtomatik yangilanadi (keyingi bosqichda Telegram Stars/to‘lov tizimi ulanadi).</p>
+      <div style="margin-top:12px;">
+        <div class="row">
+          <div><b>+500 🪙</b><div class="muted">Boshlang‘ich paket</div></div>
+          <button class="btn" onclick="addDeposit(500)">To‘ldirish</button>
+        </div>
+        <div class="row">
+          <div><b>+2 500 🪙</b><div class="muted">Faol o‘yinchi paketi</div></div>
+          <button class="btn" onclick="addDeposit(2500)">To‘ldirish</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav">
+    <button class="active" data-page="home" onclick="switchPage('home', this)">Bosh</button>
+    <button data-page="top" onclick="switchPage('top', this)">Reyting</button>
+    <button data-page="tasks" onclick="switchPage('tasks', this)">Vazifa</button>
+    <button data-page="level" onclick="switchPage('level', this)">Daraja</button>
+    <button data-page="deposit" onclick="switchPage('deposit', this)">Depozit</button>
+  </nav>
+
+  <script>
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+    if (tg) tg.expand();
+
+    const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
+    const myName = tgUser ? (tgUser.first_name + (tgUser.username ? ` (@${tgUser.username})` : '')) : 'Siz (Zerex)';
+
+    const STORAGE_KEY = 'zerex_state_v1';
+    const defaultState = {
+      coins: 0,
+      tasksDone: [],
+      players: [
+        { name: 'Rustam_pro', coins: 1200 },
+        { name: 'Madina_99', coins: 850 },
+        { name: 'Sardor_uz', coins: 420 }
+      ]
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? { ...defaultState, ...JSON.parse(raw) } : { ...defaultState };
+      } catch {
+        return { ...defaultState };
+      }
+    }
+
+    let state = loadState();
+
+    const tasks = [
+      { id: 't1', title: 'Birinchi 50 tangani yig‘ing', reward: 100, check: () => state.coins >= 50 },
+      { id: 't2', title: '200 tanga jamg‘aring', reward: 250, check: () => state.coins >= 200 }
+    ];
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      render();
+    }
+
+    function switchPage(page, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    function addDeposit(amount) {
+      state.coins += amount;
+      saveState();
+    }
+
+    function claimTask(id, reward) {
+      if (!state.tasksDone.includes(id)) {
+        state.tasksDone.push(id);
+        state.coins += reward;
+        saveState();
+      }
+    }
+
+    function getLevelInfo(coins) {
+      const step = 200;
+      const level = Math.floor(coins / step) + 1;
+      const intoLevel = coins % step;
+      const pct = Math.min(100, Math.round((intoLevel / step) * 100));
+      const left = step - intoLevel;
+      return { level, pct, left };
+    }
+
+    function render() {
+      document.getElementById('userInfo').textContent = myName;
+      document.getElementById('balanceView').textContent = `${state.coins.toLocaleString()} 🪙`;
+
+      const lvl = getLevelInfo(state.coins);
+      document.getElementById('levelText').textContent = `${lvl.level}-daraja`;
+      document.getElementById('levelSub').textContent = `Keyingi darajagacha: ${lvl.left} 🪙`;
+      document.getElementById('levelBar').style.width = `${lvl.pct}%`;
+
+      const tasksEl = document.getElementById('tasksList');
+      tasksEl.innerHTML = tasks.map(t => {
+        const done = state.tasksDone.includes(t.id);
+        const ready = t.check();
+        return `
+          <div class="row">
+            <div>
+              <div><b>${t.title}</b></div>
+              <div class="muted">Mukofot: +${t.reward} 🪙</div>
+            </div>
+            <button class="btn" ${done || !ready ? 'disabled' : ''} onclick="claimTask('${t.id}', ${t.reward})">
+              ${done ? 'Olindi' : ready ? 'Olish' : 'Bajarilmagan'}
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      const combined = [
+        ...state.players.filter(p => p.name !== myName),
+        { name: myName, coins: state.coins, isMe: true }
+      ].sort((a, b) => b.coins - a.coins).slice(0, 100);
+
+      document.getElementById('leaderboardList').innerHTML = combined.map((p, idx) => `
+        <div class="row" style="${p.isMe ? 'border:1px solid var(--gold);' : ''}">
+          <div><b>#${idx + 1}</b> ${p.name}</div>
+          <div><b>${p.coins.toLocaleString()} 🪙</b></div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('tapBtn').addEventListener('click', () => {
+      state.coins += 10;
+      saveState();
+    });
+
+    render();
+  </script>
+</body>
+</html>
