@@ -7,24 +7,17 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-deep: #060d09;
-      --forest-dark: #0b1c13;
-      --forest-mid: #153524;
+      --bg-image: url("https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80");
       --wood-top: #c88446;
       --wood-mid: #8e5222;
       --wood-bot: #532c0e;
       --gold-bright: #ffe68a;
       --gold-mid: #f5b418;
-      --gold-dark: #a66900;
       --violet-glow: #9b4dff;
       --text-primary: #f7faf7;
-      --text-secondary: #b9cdc0;
-      --win-green: #28b856;
-      --loss-red: #e04848;
-      --draw-amber: #eab308;
+      --text-secondary: #c9ddd0;
       --radius-xl: 22px;
       --radius-lg: 16px;
-      --radius-md: 12px;
     }
 
     * {
@@ -39,53 +32,14 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       color: var(--text-primary);
-      background:
-        radial-gradient(ellipse at 50% 20%, rgba(52, 211, 130, 0.16), transparent 48%),
-        radial-gradient(ellipse at 82% 12%, rgba(155, 77, 255, 0.16), transparent 42%),
-        radial-gradient(ellipse at 18% 82%, rgba(245, 180, 24, 0.14), transparent 48%),
-        linear-gradient(180deg, #132e20 0%, #0b1c13 52%, #060d09 100%);
+      background-image:
+        linear-gradient(180deg, rgba(7, 22, 14, 0.78) 0%, rgba(8, 20, 14, 0.86) 55%, rgba(4, 11, 7, 0.95) 100%),
+        var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       overflow-x: hidden;
       padding-bottom: 28px;
-    }
-
-    .ambient-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .light-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(44px);
-      opacity: 0.45;
-    }
-
-    .orb-1 {
-      width: 260px;
-      height: 260px;
-      top: -70px;
-      left: -60px;
-      background: radial-gradient(circle, rgba(34, 150, 86, 0.65), transparent 72%);
-    }
-
-    .orb-2 {
-      width: 280px;
-      height: 280px;
-      top: -60px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(139, 69, 240, 0.42), transparent 72%);
-    }
-
-    .orb-3 {
-      width: 340px;
-      height: 240px;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: radial-gradient(circle, rgba(245, 180, 24, 0.22), transparent 72%);
     }
 
     .app {
@@ -96,7 +50,6 @@
       padding: 12px 14px 20px;
     }
 
-    /* Yuqori panel */
     .top-bar {
       display: flex;
       justify-content: space-between;
@@ -118,7 +71,7 @@
       border-radius: 50%;
       padding: 3px;
       background: linear-gradient(145deg, var(--gold-bright), var(--gold-mid), var(--violet-glow));
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65), 0 0 18px rgba(245, 180, 24, 0.35);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 16px rgba(245, 180, 24, 0.35);
     }
 
     .avatar-img {
@@ -132,8 +85,8 @@
 
     .nick-badge {
       max-width: 165px;
-      background: linear-gradient(90deg, rgba(16, 34, 24, 0.94), rgba(28, 18, 48, 0.92));
-      border: 1px solid rgba(255, 230, 138, 0.45);
+      background: rgba(11, 27, 19, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.5);
       border-radius: 999px;
       padding: 3px 10px;
       font-size: 11.5px;
@@ -145,13 +98,12 @@
     }
 
     .level-pill {
-      background: linear-gradient(180deg, rgba(18, 43, 30, 0.92), rgba(9, 22, 15, 0.96));
+      background: rgba(9, 22, 15, 0.9);
       border: 1px solid rgba(255, 230, 138, 0.32);
       border-radius: 10px;
       padding: 4px 9px;
       font-size: 11.5px;
       font-weight: 700;
-      color: var(--text-primary);
     }
 
     .wallet-box {
@@ -165,11 +117,11 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(180deg, rgba(20, 46, 32, 0.9), rgba(8, 18, 12, 0.94));
-      border: 1px solid rgba(255, 230, 138, 0.38);
+      background: rgba(10, 25, 17, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.42);
       padding: 6px 12px;
       border-radius: 14px;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.55);
     }
 
     .balance-amount {
@@ -205,10 +157,9 @@
       font-weight: 800;
       font-size: 13px;
       cursor: pointer;
-      box-shadow: 0 5px 0 #3a1d06, 0 10px 18px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 5px 0 #3a1d06, 0 10px 18px rgba(0, 0, 0, 0.6);
     }
 
-    /* 10. Markazda yashil nuqta bilan Online ko'rsatkichi */
     .center-status {
       display: flex;
       flex-direction: column;
@@ -221,7 +172,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(90deg, rgba(35, 18, 66, 0.9), rgba(17, 47, 32, 0.92), rgba(35, 18, 66, 0.9));
+      background: rgba(15, 34, 24, 0.88);
       border: 1px solid rgba(183, 128, 255, 0.55);
       padding: 5px 15px;
       border-radius: 999px;
@@ -246,14 +197,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(180deg, rgba(16, 42, 28, 0.92), rgba(8, 20, 14, 0.96));
-      border: 1px solid rgba(72, 229, 91, 0.45);
+      background: rgba(10, 26, 18, 0.92);
+      border: 1px solid rgba(72, 229, 91, 0.5);
       padding: 6px 15px;
       border-radius: 999px;
       font-size: 12.5px;
       font-weight: 800;
       color: #e8ffec;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
     }
 
     .online-dot {
@@ -261,10 +212,9 @@
       height: 9px;
       border-radius: 50%;
       background: #2fe65b;
-      box-shadow: 0 0 10px #2fe65b, 0 0 18px rgba(47, 230, 91, 0.65);
+      box-shadow: 0 0 10px #2fe65b, 0 0 18px rgba(47, 230, 91, 0.7);
     }
 
-    /* Yon menyular */
     .side-menus-row {
       display: flex;
       justify-content: space-between;
@@ -304,7 +254,7 @@
       border-radius: 14px;
       background: linear-gradient(180deg, var(--wood-top) 0%, var(--wood-mid) 56%, var(--wood-bot) 100%);
       border: 2px solid #f0be82;
-      box-shadow: 0 5px 0 #361905, 0 10px 16px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 5px 0 #361905, 0 10px 16px rgba(0, 0, 0, 0.65);
       display: grid;
       place-items: center;
       font-size: 26px;
@@ -329,10 +279,9 @@
       text-align: center;
       line-height: 1.15;
       color: #fff7e3;
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
     }
 
-    /* O'yinlar qatori */
     .games-section {
       margin-top: 22px;
     }
@@ -365,7 +314,7 @@
       place-items: center;
       font-size: 24px;
       border: 2px solid rgba(255, 230, 138, 0.5);
-      box-shadow: 0 5px 0 rgba(10, 20, 14, 0.95), 0 9px 16px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 5px 0 rgba(10, 20, 14, 0.95), 0 9px 16px rgba(0, 0, 0, 0.6);
     }
 
     .game-chip.active .game-art {
@@ -401,7 +350,7 @@
       border-radius: 18px;
       border: 2px solid #f0be82;
       background: linear-gradient(180deg, #d48c48 0%, #945521 58%, #5b300e 100%);
-      box-shadow: 0 7px 0 #341804, 0 14px 26px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 7px 0 #341804, 0 14px 26px rgba(0, 0, 0, 0.7);
       color: #422006;
       font-size: 28px;
       font-weight: 950;
@@ -418,17 +367,17 @@
       margin-top: 8px;
       font-size: 12px;
       color: var(--text-secondary);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     }
 
     .selected-game-hint strong {
       color: var(--gold-bright);
     }
 
-    /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(2, 7, 4, 0.84);
+      background: rgba(2, 7, 4, 0.85);
       backdrop-filter: blur(7px);
       z-index: 40;
       display: none;
@@ -443,14 +392,14 @@
 
     .modal-card {
       width: 100%;
-      max-width: 455px;
-      max-height: 90vh;
+      max-width: 460px;
+      max-height: 92vh;
       overflow-y: auto;
-      background: linear-gradient(180deg, #173827 0%, #0d1f15 58%, #08130d 100%);
+      background: linear-gradient(180deg, rgba(23, 56, 39, 0.96) 0%, rgba(13, 31, 21, 0.98) 58%, rgba(8, 19, 13, 0.99) 100%);
       border: 2px solid rgba(240, 190, 130, 0.55);
       border-radius: var(--radius-xl);
-      padding: 16px;
-      box-shadow: 0 20px 46px rgba(0, 0, 0, 0.85);
+      padding: 15px;
+      box-shadow: 0 20px 46px rgba(0, 0, 0, 0.88);
     }
 
     .modal-header {
@@ -487,144 +436,117 @@
     }
 
     .section-box {
-      background: rgba(7, 17, 12, 0.82);
-      border: 1px solid rgba(255, 230, 138, 0.14);
+      background: rgba(7, 17, 12, 0.84);
+      border: 1px solid rgba(255, 230, 138, 0.15);
       border-radius: var(--radius-lg);
-      padding: 12px;
-      margin-bottom: 12px;
+      padding: 11px;
+      margin-bottom: 11px;
     }
 
     .section-label {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 800;
       color: var(--text-secondary);
       margin-bottom: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
       text-align: center;
     }
 
-    /* 7. Tikish tugmalari (3 dan 100,000 gacha) */
-    .stake-scroll-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    .stake-one-row {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
       gap: 7px;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
     }
 
     .stake-pill {
-      padding: 8px 4px;
-      border-radius: 12px;
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 11px;
       border: 1.5px solid rgba(240, 190, 130, 0.45);
       background: linear-gradient(180deg, #5e3717 0%, #341c09 100%);
       color: #fff3cf;
       font-weight: 800;
       font-size: 12px;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
+      white-space: nowrap;
     }
 
     .stake-pill.active {
       background: linear-gradient(180deg, #ffe385 0%, #f5b418 65%, #b57400 100%);
       color: #261400;
       border-color: #fff5c2;
-      box-shadow: 0 0 12px rgba(245, 180, 24, 0.4);
     }
 
-    .friend-games-row {
+    .board-8x8 {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .friend-send-btn {
+      grid-template-columns: repeat(8, 1fr);
       width: 100%;
-      padding: 13px 14px;
-      border-radius: 14px;
-      border: 1.5px solid #ffe68a;
-      background: linear-gradient(180deg, #ffd866 0%, #e5a115 65%, #b57704 100%);
-      color: #2b1600;
-      font-weight: 900;
-      font-size: 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #694100;
+      max-width: 312px;
+      aspect-ratio: 1 / 1;
+      margin: 8px auto;
+      border: 3px solid #c88446;
+      border-radius: 10px;
+      overflow: hidden;
     }
 
-    /* 9. Vazifalar rasmdagi ko'rinishda */
-    .task-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 15px;
-      background: linear-gradient(180deg, #593314 0%, #381e0a 100%);
-      border: 1.5px solid rgba(240, 190, 130, 0.35);
-      margin-bottom: 10px;
-    }
-
-    .task-left {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      min-width: 0;
-    }
-
-    .task-icon-box {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: rgba(0, 0, 0, 0.28);
-      border: 1px solid rgba(255, 230, 138, 0.28);
+    .sq-8x8 {
       display: grid;
       place-items: center;
-      font-size: 21px;
-      flex-shrink: 0;
-    }
-
-    .task-title {
-      font-size: 13px;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: #fff6e0;
-      letter-spacing: 0.3px;
-    }
-
-    .task-reward {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--gold-bright);
-      margin-top: 2px;
-    }
-
-    .task-sub {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-top: 2px;
-    }
-
-    .task-action-btn {
-      padding: 9px 14px;
-      border-radius: 12px;
-      border: 1px solid #ffe68a;
-      background: linear-gradient(180deg, #f7cb59 0%, #d99514 100%);
-      color: #291500;
-      font-weight: 900;
-      font-size: 11.5px;
+      aspect-ratio: 1 / 1;
       cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 3px 0 #664000;
+      position: relative;
     }
 
-    /* 13. O'yin ichidagi boshqaruv (Taslim, Mikrofon, Durrang, 50x50) */
+    .sq-light { background: #edd1a3; }
+    .sq-dark  { background: #6f4222; }
+    .sq-selected { outline: 3px solid #38e8b0; outline-offset: -3px; }
+
+    .piece-red {
+      width: 74%;
+      height: 74%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ff7b7b, #c92a2a);
+      border: 2px solid #ffd8d8;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.55);
+    }
+
+    .piece-white {
+      width: 74%;
+      height: 74%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #cbd5e1);
+      border: 2px solid #475569;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.55);
+    }
+
+    .xo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      max-width: 220px;
+      margin: 8px auto;
+    }
+
+    .xo-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 230, 138, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--gold-bright);
+      font-size: 26px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
     .controls-bar {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 7px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .ctrl-btn {
@@ -634,7 +556,7 @@
       background: rgba(255, 255, 255, 0.08);
       color: #fff;
       font-weight: 800;
-      font-size: 11.5px;
+      font-size: 11px;
       cursor: pointer;
     }
 
@@ -655,16 +577,16 @@
     .outcome-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 7px;
       margin-top: 8px;
     }
 
     .outcome-btn {
-      padding: 9px 6px;
-      border-radius: 11px;
+      padding: 8px 5px;
+      border-radius: 10px;
       border: none;
       font-weight: 800;
-      font-size: 11.5px;
+      font-size: 11px;
       cursor: pointer;
       color: #fff;
     }
@@ -672,71 +594,6 @@
     .outcome-win { background: linear-gradient(180deg, #27a852, #176b33); }
     .outcome-draw { background: linear-gradient(180deg, #eab308, #a16207); color: #1a1100; }
     .outcome-loss { background: linear-gradient(180deg, #d94343, #8c2323); }
-
-    .xo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      max-width: 220px;
-      margin: 8px auto;
-    }
-
-    .xo-cell {
-      aspect-ratio: 1 / 1;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 230, 138, 0.4);
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--gold-bright);
-      font-size: 26px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    /* 12. To'lov usullari */
-    .pay-methods-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .pay-method-btn {
-      padding: 10px;
-      border-radius: 12px;
-      border: 1.5px solid rgba(255, 230, 138, 0.35);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      font-weight: 800;
-      font-size: 12.5px;
-      cursor: pointer;
-    }
-
-    .pay-method-btn.active {
-      border-color: var(--gold-bright);
-      background: rgba(245, 180, 24, 0.22);
-      color: var(--gold-bright);
-    }
-
-    .card-box {
-      background: rgba(255, 230, 138, 0.08);
-      border: 1px dashed rgba(255, 230, 138, 0.45);
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 12px;
-    }
-
-    .room-code-input {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 11px;
-      border: 1px solid rgba(255, 230, 138, 0.25);
-      background: rgba(0, 0, 0, 0.38);
-      color: #fff;
-      font-size: 13px;
-      margin-bottom: 8px;
-      outline: none;
-    }
 
     .primary-action {
       width: 100%;
@@ -750,17 +607,119 @@
       cursor: pointer;
     }
 
-    .secondary-action {
+    .friend-games-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+
+    .friend-send-btn {
       width: 100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-primary);
-      font-weight: 700;
-      font-size: 12.5px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1.5px solid #ffe68a;
+      background: linear-gradient(180deg, #ffd866 0%, #e5a115 65%, #b57704 100%);
+      color: #2b1600;
+      font-weight: 900;
+      font-size: 14px;
       cursor: pointer;
-      margin-top: 8px;
+    }
+
+    .task-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 11px;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #593314 0%, #381e0a 100%);
+      border: 1.5px solid rgba(240, 190, 130, 0.35);
+      margin-bottom: 9px;
+    }
+
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .task-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.28);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .task-title {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #fff6e0;
+    }
+
+    .task-reward {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--gold-bright);
+    }
+
+    .task-action-btn {
+      padding: 8px 12px;
+      border-radius: 11px;
+      border: 1px solid #ffe68a;
+      background: linear-gradient(180deg, #f7cb59 0%, #d99514 100%);
+      color: #291500;
+      font-weight: 900;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .pay-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pay-method-btn {
+      padding: 9px;
+      border-radius: 11px;
+      border: 1.5px solid rgba(255, 230, 138, 0.35);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .pay-method-btn.active {
+      border-color: var(--gold-bright);
+      background: rgba(245, 180, 24, 0.22);
+      color: var(--gold-bright);
+    }
+
+    .card-box {
+      background: rgba(255, 230, 138, 0.09);
+      border: 1px dashed rgba(255, 230, 138, 0.5);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .leader-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 10px;
+      border-radius: 12px;
+      background: rgba(16, 39, 27, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.15);
+      font-size: 13px;
+      margin-bottom: 7px;
     }
 
     .rating-tabs {
@@ -787,22 +746,20 @@
     }
 
     .leaderboard-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      max-height: 340px;
+      max-height: 330px;
       overflow-y: auto;
     }
 
-    .leader-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 9px 10px;
-      border-radius: 12px;
-      background: rgba(16, 39, 27, 0.9);
-      border: 1px solid rgba(255, 230, 138, 0.15);
+    .room-code-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 11px;
+      border: 1px solid rgba(255, 230, 138, 0.25);
+      background: rgba(0, 0, 0, 0.38);
+      color: #fff;
       font-size: 13px;
+      margin-bottom: 8px;
+      outline: none;
     }
 
     .toast {
@@ -831,12 +788,6 @@
   </style>
 </head>
 <body>
-  <div class="ambient-layer">
-    <div class="light-orb orb-1"></div>
-    <div class="light-orb orb-2"></div>
-    <div class="light-orb orb-3"></div>
-  </div>
-
   <div class="app">
     <header class="top-bar">
       <div class="profile-box">
@@ -860,7 +811,6 @@
       </div>
     </header>
 
-    <!-- 10. Markazda yashil nuqta bilan Online ko'rsatkichi -->
     <div class="center-status">
       <div class="zerex-crest">
         <span class="zerex-z">ZEREX</span>
@@ -872,19 +822,16 @@
       </div>
     </div>
 
-    <!-- Yon menyular -->
     <section class="side-menus-row">
       <div class="side-col left">
         <button class="wood-tile-btn" onclick="openMenuModal('tasks')">
           <div class="wood-box">📋</div>
           <span class="wood-label">VAZIFALAR</span>
         </button>
-
         <button class="wood-tile-btn" onclick="openMenuModal('rating')">
           <div class="wood-box">🏆</div>
           <span class="wood-label">REYTING</span>
         </button>
-
         <button class="wood-tile-btn" onclick="openMenuModal('shop')">
           <div class="wood-box">🏪</div>
           <span class="wood-label">DO‘KON</span>
@@ -896,7 +843,6 @@
           <div class="wood-box">👥</div>
           <span class="wood-label">DO‘ST BILAN</span>
         </button>
-
         <button class="wood-tile-btn" onclick="openMenuModal('withdraw')">
           <div class="wood-box">💵</div>
           <span class="wood-label">PUL YECHISH</span>
@@ -904,20 +850,18 @@
       </div>
     </section>
 
-    <!-- O'yinlar qatori -->
     <section class="games-section">
       <div class="games-strip" id="gamesStrip"></div>
     </section>
 
     <div class="play-wrap">
-      <button class="play-btn" onclick="openGameLobby(selectedGameId)">PLAY</button>
+      <button class="play-btn" onclick="launchGameAuto(selectedGameId)">PLAY</button>
     </div>
     <p class="selected-game-hint">
       Tanlangan o‘yin: <strong id="selectedGameLabel">Shashka</strong> · Tikuv: <strong id="hintStake">3 G</strong> · Yutuq: <strong>1.8x</strong>
     </p>
   </div>
 
-  <!-- Modal -->
   <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
     <div class="modal-card" id="modalCard">
       <div class="modal-header">
@@ -934,27 +878,23 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    /**
-     * KARTA RAQAMINGIZNI SHU YERGA KIRITING:
-     */
-    const OWNER_CARD_NUMBER = "8600 •••• •••• 4405";
-    const OWNER_CARD_HOLDER = "ZEREX PAY";
+    const MY_CARD_NUMBER = "6262 5702 3220 5437";
+    const MY_CARD_OWNER = "Esirgapov Sherzod";
 
-    const WIN_MULTIPLIER = 1.8; // Yutgan o'yinchi 1.8x oladi
-    const MAX_STAKE = 100000; // Maksimal 100 000 tanga
+    const WIN_MULTIPLIER = 1.8;
+    const MAX_STAKE = 100000;
     const STAKE_OPTIONS = [3, 5, 10, 20, 50, 100, 300, 1000, 5000, 10000, 50000, 100000];
-
     const MIN_COINS_BUY = 1000;
     const MIN_COINS_PRICE_UZS = 11000;
-    const FRIEND_INVITE_BONUS = 20; // Har bir taklif qilingan do'st uchun 20 tanga
+    const FRIEND_INVITE_BONUS = 20;
 
     const GAMES = [
-      { id: "shashka", name: "Shashka", icon: "⚫", artClass: "art-shashka", desc: "8x8 shashka. 50x50 (50 yurish) qoidasi bo‘yicha durrang, o‘zaro durrang kelishuvi, mikrofon va taslim bo‘lish mavjud." },
-      { id: "shaxmat", name: "Shaxmat", icon: "♞", artClass: "art-shaxmat", desc: "Strategik shaxmat. Ikki tomonlama durrang kelishuvi, ovozli mikrofon va taslim bo‘lish imkoniyati bor." },
-      { id: "bilyard", name: "Bilyard", icon: "🎱", artClass: "art-bilyard", desc: "8-shar bilyard. Raqib bilan mikrofon, ikki tomonlama durrang va taslim bo‘lish tugmalari mavjud." },
-      { id: "durak", name: "Durak", icon: "🃏", artClass: "art-durak", desc: "Karta o‘yini. Durrang kelishuvi, mikrofon va taslim bo‘lish bilan jonli bellashuv." },
-      { id: "mafia", name: "Mafia", icon: "🕵️", artClass: "art-mafia", desc: "Jamoaviy muhokama va ovozli mikrofon, durrang kelishuvi hamda taslim bo‘lish funksiyasi." },
-      { id: "xo", name: "X-O", icon: "✖️", artClass: "art-xo", desc: "3x3 tezkor duel. Ketma-ket 3 ta belgi tering; durrangda tikuv qaytariladi." }
+      { id: "shashka", name: "Shashka", icon: "⚫", artClass: "art-shashka" },
+      { id: "shaxmat", name: "Shaxmat", icon: "♞", artClass: "art-shaxmat" },
+      { id: "bilyard", name: "Bilyard", icon: "🎱", artClass: "art-bilyard" },
+      { id: "durak", name: "Durak", icon: "🃏", artClass: "art-durak" },
+      { id: "mafia", name: "Mafia", icon: "🕵️", artClass: "art-mafia" },
+      { id: "xo", name: "X-O", icon: "✖️", artClass: "art-xo" }
     ];
 
     const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
@@ -970,24 +910,39 @@
       return "@Zerex_Player";
     }
 
+    function createInitialShashkaBoard() {
+      const b = Array(64).fill(0);
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          if ((r + c) % 2 === 1) {
+            if (r < 3) b[r * 8 + c] = 2;
+            if (r > 4) b[r * 8 + c] = 1;
+          }
+        }
+      }
+      return b;
+    }
+
     const state = {
-      balance: Number(localStorage.getItem("zerex_v3_balance") ?? 8), // Boshlang'ich 8 tanga
-      xp: Number(localStorage.getItem("zerex_v3_xp") ?? 0),
-      wins: Number(localStorage.getItem("zerex_v3_wins") ?? 0),
-      invitedFriends: Number(localStorage.getItem("zerex_v3_friends") ?? 0),
-      adsWatched: Number(localStorage.getItem("zerex_v3_ads") ?? 0),
-      sitesVisited: Number(localStorage.getItem("zerex_v3_sites") ?? 0),
-      bonusClaimed: localStorage.getItem("zerex_v3_bonus") === "1",
+      balance: Number(localStorage.getItem("zerex_v5_balance") ?? 8),
+      xp: Number(localStorage.getItem("zerex_v5_xp") ?? 0),
+      wins: Number(localStorage.getItem("zerex_v5_wins") ?? 0),
+      invitedFriends: Number(localStorage.getItem("zerex_v5_friends") ?? 0),
+      adsWatched: Number(localStorage.getItem("zerex_v5_ads") ?? 0),
+      sitesVisited: Number(localStorage.getItem("zerex_v5_sites") ?? 0),
+      bonusClaimed: localStorage.getItem("zerex_v5_bonus") === "1",
       selectedStake: 3,
       friendGameId: "shashka",
       friendStake: 3,
-      roomCode: "",
       lockedStake: 0,
-      matchStatus: "idle", // idle | matched
+      inGame: false,
+      opponentName: "",
       micEnabled: false,
       myDrawAgree: false,
-      opponentDrawAgree: true, // Raqib durrang taklif qilgan holatni sinash uchun
+      opponentDrawAgree: true,
       shashkaMoves50: 0,
+      shashkaBoard: createInitialShashkaBoard(),
+      shashkaSelected: null,
       xoBoard: Array(9).fill(""),
       xoTurn: "X",
       payMethod: "Payme",
@@ -1004,13 +959,13 @@
     }
 
     function saveState() {
-      localStorage.setItem("zerex_v3_balance", String(state.balance));
-      localStorage.setItem("zerex_v3_xp", String(state.xp));
-      localStorage.setItem("zerex_v3_wins", String(state.wins));
-      localStorage.setItem("zerex_v3_friends", String(state.invitedFriends));
-      localStorage.setItem("zerex_v3_ads", String(state.adsWatched));
-      localStorage.setItem("zerex_v3_sites", String(state.sitesVisited));
-      localStorage.setItem("zerex_v3_bonus", state.bonusClaimed ? "1" : "0");
+      localStorage.setItem("zerex_v5_balance", String(state.balance));
+      localStorage.setItem("zerex_v5_xp", String(state.xp));
+      localStorage.setItem("zerex_v5_wins", String(state.wins));
+      localStorage.setItem("zerex_v5_friends", String(state.invitedFriends));
+      localStorage.setItem("zerex_v5_ads", String(state.adsWatched));
+      localStorage.setItem("zerex_v5_sites", String(state.sitesVisited));
+      localStorage.setItem("zerex_v5_bonus", state.bonusClaimed ? "1" : "0");
     }
 
     function showToast(text) {
@@ -1018,7 +973,7 @@
       el.textContent = text;
       el.classList.add("show");
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2500);
     }
 
     function renderProfile() {
@@ -1042,7 +997,7 @@
     function renderGamesStrip() {
       const strip = document.getElementById("gamesStrip");
       strip.innerHTML = GAMES.map((g) => `
-        <button class="game-chip ${g.id === selectedGameId ? "active" : ""}" onclick="selectGame('${g.id}', true)">
+        <button class="game-chip ${g.id === selectedGameId ? "active" : ""}" onclick="selectAndPlayGame('${g.id}')">
           <div class="game-art ${g.artClass}">${g.icon}</div>
           <span class="game-name">${g.name}</span>
         </button>
@@ -1051,14 +1006,39 @@
       document.getElementById("selectedGameLabel").textContent = active.name;
     }
 
-    function selectGame(gameId, openImmediately = false) {
+    function selectAndPlayGame(gameId) {
       selectedGameId = gameId;
-      state.matchStatus = "idle";
-      state.lockedStake = 0;
-      state.myDrawAgree = false;
       renderGamesStrip();
       renderProfile();
-      if (openImmediately) openGameLobby(gameId);
+      openGameScreen(gameId);
+    }
+
+    function launchGameAuto(gameId) {
+      selectedGameId = gameId;
+      renderGamesStrip();
+      if (!state.inGame) {
+        if (state.balance < state.selectedStake) {
+          showToast("Balansda yetarli tanga yo‘q! Depozit qiling.");
+          openMenuModal("deposit");
+          return;
+        }
+        const rivals = ["@Javohir_UZ", "@Madiev_Pro", "@Sarob_X", "@Bekzod_77", "@Ozodbek"];
+        state.balance -= state.selectedStake;
+        state.lockedStake = state.selectedStake;
+        state.inGame = true;
+        state.opponentName = rivals[Math.floor(Math.random() * rivals.length)];
+        state.shashkaBoard = createInitialShashkaBoard();
+        state.shashkaSelected = null;
+        state.shashkaMoves50 = 0;
+        state.xoBoard = Array(9).fill("");
+        state.xoTurn = "X";
+        state.myDrawAgree = false;
+        state.opponentDrawAgree = true;
+        saveState();
+        renderProfile();
+        showToast(`Raqib topildi: ${state.opponentName} · Tikuv ${state.lockedStake.toLocaleString("en-US")} G`);
+      }
+      openGameScreen(gameId);
     }
 
     function openModal(icon, title, bodyHtml) {
@@ -1076,139 +1056,187 @@
       if (e.target.id === "modalBackdrop") closeModal();
     }
 
-    /* 7 & 13. O'yin oynasi: 3..100,000 tikuv, 1.8x yutuq, durrang, mikrofon, taslim, 50x50 */
-    function openGameLobby(gameId) {
+    function openGameScreen(gameId) {
       const game = GAMES.find((g) => g.id === gameId) || GAMES[0];
-      const payoutWin = Math.floor(state.selectedStake * WIN_MULTIPLIER);
+      const activeStake = state.inGame ? state.lockedStake : state.selectedStake;
+      const winAmount = Math.floor(activeStake * WIN_MULTIPLIER);
 
-      const stakeButtons = STAKE_OPTIONS.map((amt) => `
-        <button class="stake-pill ${state.selectedStake === amt ? "active" : ""}" onclick="setGameStake(${amt}, '${game.id}')">
-          ${amt >= 1000 ? `${amt / 1000}K` : amt} G
+      const stakeRowHtml = STAKE_OPTIONS.map((amt) => `
+        <button class="stake-pill ${state.selectedStake === amt ? "active" : ""}" onclick="pickStakeOneRow(${amt}, '${game.id}')">
+          ${amt.toLocaleString("en-US")} G
         </button>
       `).join("");
 
-      let activeRoomHtml = "";
-      if (state.matchStatus === "matched") {
-        const shashka50Btn = game.id === "shashka"
-          ? `<button class="ctrl-btn" onclick="stepShashka50('${game.id}')">50x50 (${state.shashkaMoves50}/50)</button>`
-          : `<button class="ctrl-btn" onclick="showToast('50x50 durrang qoidasi faqat Shashkada mavjud')">50x50 (Shashka)</button>`;
-
-        activeRoomHtml = `
-          <div class="live-banner">
-            <span>🟢 Xona: <strong>${state.roomCode || "ZX-LIVE"}</strong> · Tikuv: <strong>${state.lockedStake.toLocaleString("en-US")} G</strong></span>
-            <span>Yutuq: <strong>${Math.floor(state.lockedStake * WIN_MULTIPLIER).toLocaleString("en-US")} G</strong></span>
-          </div>
-
-          ${game.id === "xo" ? `
-            <div class="section-box">
-              <div class="section-label">X-O Maydon · Navbat: ${state.xoTurn}</div>
-              <div class="xo-grid">
-                ${state.xoBoard.map((v, i) => `<button class="xo-cell" onclick="playXoCell(${i})">${v}</button>`).join("")}
-              </div>
+      let boardHtml = "";
+      if (game.id === "shashka") {
+        const squares = state.shashkaBoard.map((cell, idx) => {
+          const r = Math.floor(idx / 8);
+          const c = idx % 8;
+          const isDark = (r + c) % 2 === 1;
+          const selClass = state.shashkaSelected === idx ? "sq-selected" : "";
+          const pieceHtml = cell === 1
+            ? `<div class="piece-red"></div>`
+            : cell === 2
+            ? `<div class="piece-white"></div>`
+            : "";
+          return `
+            <div class="sq-8x8 ${isDark ? "sq-dark" : "sq-light"} ${selClass}" onclick="tapShashkaSquare(${idx})">
+              ${pieceHtml}
             </div>
-          ` : `
-            <div class="section-box">
-              <div class="section-label">${game.name} Jonli Xonasi</div>
-              <p style="font-size:12px; color:var(--text-secondary);">
-                Mikrofon holati: <strong>${state.micEnabled ? "Yoqilgan (Ovoz uzatilmoqda)" : "O‘chirilgan"}</strong> ·
-                Durrang kelishuvi: <strong>${state.myDrawAgree && state.opponentDrawAgree ? "Ikkala tomon rozi (Durrang!)" : state.opponentDrawAgree ? "Raqib durrang taklif qildi" : "Kutilmoqda"}</strong>
-              </p>
-            </div>
-          `}
-
+          `;
+        }).join("");
+        boardHtml = `
           <div class="section-box">
-            <div class="section-label">O‘yin ichidagi boshqaruv</div>
-            <div class="controls-bar">
-              <button class="ctrl-btn ${state.micEnabled ? "mic-on" : ""}" onclick="toggleMic('${game.id}')">
-                ${state.micEnabled ? "🎙️ Mik: ON" : "🎤 Mikrofon"}
-              </button>
-              <button class="ctrl-btn ${state.myDrawAgree ? "draw-voted" : ""}" onclick="requestDraw('${game.id}')">
-                🤝 Durrang
-              </button>
-              <button class="ctrl-btn surrender" onclick="surrenderMatch('${game.id}')">
-                🏳️ Taslim bo‘lish
-              </button>
+            <div class="section-label">Shashka 8×8 · Donani bosing va bo‘sh katakka yuring</div>
+            <div class="board-8x8">${squares}</div>
+          </div>
+        `;
+      } else if (game.id === "xo") {
+        boardHtml = `
+          <div class="section-box">
+            <div class="section-label">X-O 3×3 · Navbat: ${state.xoTurn}</div>
+            <div class="xo-grid">
+              ${state.xoBoard.map((val, i) => `<button class="xo-cell" onclick="tapXoSquare(${i})">${val}</button>`).join("")}
             </div>
-            <div style="margin-top:7px;">${shashka50Btn}</div>
-
-            <div class="outcome-row">
-              <button class="outcome-btn outcome-win" onclick="resolveMatch('${game.id}', 'win')">G‘alaba (${Math.floor(state.lockedStake * WIN_MULTIPLIER)} G)</button>
-              <button class="outcome-btn outcome-draw" onclick="resolveMatch('${game.id}', 'draw')">Durrang (+${state.lockedStake} G)</button>
-              <button class="outcome-btn outcome-loss" onclick="resolveMatch('${game.id}', 'loss')">Yutqazish</button>
-            </div>
+          </div>
+        `;
+      } else {
+        boardHtml = `
+          <div class="section-box">
+            <div class="section-label">${game.name} Jonli Maydoni</div>
+            <p style="font-size:12.5px; color:var(--text-secondary); text-align:center; line-height:1.45;">
+              Raqib: <strong style="color:#fff;">${state.opponentName || "Avto-raqib"}</strong> ·
+              Tikuv: <strong style="color:var(--gold-bright);">${activeStake.toLocaleString("en-US")} G</strong> ·
+              Yutuq: <strong style="color:var(--gold-bright);">${winAmount.toLocaleString("en-US")} G (1.8x)</strong>
+            </p>
           </div>
         `;
       }
 
+      const shashkaExtraBtn = game.id === "shashka"
+        ? `<button class="ctrl-btn" onclick="stepShashka50('${game.id}')">50x50 (${state.shashkaMoves50}/50)</button>`
+        : `<button class="ctrl-btn" onclick="showToast('50x50 faqat Shashkada mavjud')">50x50</button>`;
+
       const bodyHtml = `
         <div class="section-box">
-          <p style="font-size:12.5px; line-height:1.45; color:#e7f3ec;">${game.desc}</p>
-        </div>
-
-        <div class="section-box">
-          <div class="section-label">Nechta tanga tikasiz? (3 G — 100 000 G · 1.8x yutuq)</div>
-          <div class="stake-scroll-grid">${stakeButtons}</div>
-          <div style="margin-top:9px; font-size:12px; text-align:center; color:var(--gold-bright); font-weight:800;">
-            Tanlangan tikuv: ${state.selectedStake.toLocaleString("en-US")} G → Yutuq: ${payoutWin.toLocaleString("en-US")} G (1.8x)
+          <div class="section-label">Tikuv (1 qatorda · 3 G – 100 000 G · 1.8x yutuq)</div>
+          <div class="stake-one-row">${stakeRowHtml}</div>
+          <div style="margin-top:8px; font-size:12px; text-align:center; color:var(--gold-bright); font-weight:800;">
+            Tikuv: ${activeStake.toLocaleString("en-US")} G · Yutuq: ${winAmount.toLocaleString("en-US")} G (1.8x)
           </div>
         </div>
 
-        ${activeRoomHtml}
+        ${boardHtml}
 
         <div class="section-box">
-          <button class="primary-action" onclick="startLiveMatch('${game.id}', state.selectedStake)">
-            ⚡ Jonli raqib bilan boshlash (${state.selectedStake.toLocaleString("en-US")} G)
-          </button>
-          <input id="roomCodeInput" class="room-code-input" style="margin-top:9px;" placeholder="Xona kodini kiriting" value="${state.roomCode}" />
-          <button class="secondary-action" onclick="joinRoomWithStake('${game.id}', state.selectedStake)">
-            🔗 Xona kodi bilan ulanish
-          </button>
+          <div class="section-label">Boshqaruv</div>
+          <div class="controls-bar">
+            <button class="ctrl-btn ${state.micEnabled ? "mic-on" : ""}" onclick="toggleMic('${game.id}')">
+              ${state.micEnabled ? "🎙️ Mik: ON" : "🎤 Mikrofon"}
+            </button>
+            <button class="ctrl-btn ${state.myDrawAgree ? "draw-voted" : ""}" onclick="agreeDraw('${game.id}')">
+              🤝 Durrang
+            </button>
+            <button class="ctrl-btn surrender" onclick="surrenderNow('${game.id}')">
+              🏳️ Taslim bo‘lish
+            </button>
+          </div>
+          <div style="margin-top:7px;">${shashkaExtraBtn}</div>
+
+          ${state.inGame ? `
+            <div class="outcome-row">
+              <button class="outcome-btn outcome-win" onclick="finishRound('${game.id}', 'win')">G‘alaba (+${winAmount} G)</button>
+              <button class="outcome-btn outcome-draw" onclick="finishRound('${game.id}', 'draw')">Durrang (+${activeStake} G)</button>
+              <button class="outcome-btn outcome-loss" onclick="finishRound('${game.id}', 'loss')">Yutqazish</button>
+            </div>
+          ` : `
+            <button class="primary-action" style="margin-top:9px;" onclick="launchGameAuto('${game.id}')">
+              ⚡ Avto raqib topib o‘ynash (${state.selectedStake.toLocaleString("en-US")} G)
+            </button>
+          `}
         </div>
       `;
 
       openModal(game.icon, game.name, bodyHtml);
     }
 
-    function setGameStake(amt, gameId) {
-      if (amt > MAX_STAKE) {
-        showToast("Maksimal tikuv 100 000 G!");
-        return;
-      }
+    function pickStakeOneRow(amt, gameId) {
+      if (amt > MAX_STAKE) return showToast("Maksimal tikuv 100 000 G!");
       state.selectedStake = amt;
       renderProfile();
-      openGameLobby(gameId);
+      openGameScreen(gameId);
     }
 
-    function startLiveMatch(gameId, stakeAmt) {
-      if (state.matchStatus === "matched") {
-        showToast("Siz allaqachon xonadasiz!");
+    function tapShashkaSquare(idx) {
+      if (!state.inGame) {
+        launchGameAuto("shashka");
         return;
       }
-      if (state.balance < stakeAmt) {
-        showToast("Balansda yetarli tanga yo‘q! Depozit qiling.");
+      const board = state.shashkaBoard;
+      if (state.shashkaSelected === null) {
+        if (board[idx] === 1) {
+          state.shashkaSelected = idx;
+          openGameScreen("shashka");
+        } else {
+          showToast("O‘zingizning qizil shashkangizni tanlang");
+        }
         return;
       }
-      state.balance -= stakeAmt;
-      state.lockedStake = stakeAmt;
-      state.matchStatus = "matched";
-      state.roomCode = state.roomCode || `ZX-${Math.floor(1000 + Math.random() * 9000)}`;
-      state.myDrawAgree = false;
-      state.opponentDrawAgree = true;
-      state.shashkaMoves50 = 0;
-      saveState();
-      renderProfile();
-      showToast(`${stakeAmt.toLocaleString("en-US")} G tikuv bilan xona ochildi`);
-      openGameLobby(gameId);
+
+      const from = state.shashkaSelected;
+      state.shashkaSelected = null;
+      if (from === idx) {
+        openGameScreen("shashka");
+        return;
+      }
+
+      const r1 = Math.floor(from / 8), c1 = from % 8;
+      const r2 = Math.floor(idx / 8), c2 = idx % 8;
+      const dr = r2 - r1, dc = Math.abs(c2 - c1);
+
+      if (board[idx] === 0 && Math.abs(dr) === 1 && dc === 1) {
+        board[idx] = board[from];
+        board[from] = 0;
+        state.shashkaMoves50 += 1;
+        const oppIdx = board.findIndex((v, i) => v === 2 && i + 9 < 64 && board[i + 9] === 0 && ((i + 9) % 8) !== 0);
+        if (oppIdx !== -1) {
+          board[oppIdx + 9] = 2;
+          board[oppIdx] = 0;
+        }
+      } else if (board[idx] === 0 && Math.abs(dr) === 2 && dc === 2) {
+        const mid = (r1 + r2) / 2 * 8 + (c1 + c2) / 2;
+        if (board[mid] === 2) {
+          board[mid] = 0;
+          board[idx] = board[from];
+          board[from] = 0;
+          state.shashkaMoves50 = 0;
+        }
+      } else {
+        showToast("Diagonal bo‘sh katakka yuring");
+      }
+      openGameScreen("shashka");
     }
 
-    function joinRoomWithStake(gameId, stakeAmt) {
-      const code = (document.getElementById("roomCodeInput")?.value || "").trim().toUpperCase();
-      if (!code) {
-        showToast("Xona kodini kiriting!");
+    function stepShashka50(gameId) {
+      state.shashkaMoves50 += 1;
+      if (state.shashkaMoves50 >= 50) {
+        showToast("50x50 qoidasi bo‘yicha durrang!");
+        finishRound(gameId, "draw");
+      } else {
+        showToast(`50x50 yurish: ${state.shashkaMoves50}/50`);
+        openGameScreen(gameId);
+      }
+    }
+
+    function tapXoSquare(idx) {
+      if (!state.inGame) {
+        launchGameAuto("xo");
         return;
       }
-      state.roomCode = code;
-      startLiveMatch(gameId, stakeAmt);
+      if (state.xoBoard[idx]) return;
+      state.xoBoard[idx] = state.xoTurn;
+      state.xoTurn = state.xoTurn === "X" ? "O" : "X";
+      openGameScreen("xo");
     }
 
     async function toggleMic(gameId) {
@@ -1218,146 +1246,103 @@
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             stream.getTracks().forEach((t) => t.stop());
           }
-          state.micEnabled = true;
-          showToast("Mikrofon yoqildi (raqib bilan ovozli aloqa)");
-        } catch (err) {
-          state.micEnabled = true;
-          showToast("Mikrofon rejimi yoqildi");
-        }
+        } catch (e) {}
+        state.micEnabled = true;
+        showToast("Mikrofon yoqildi");
       } else {
         state.micEnabled = false;
         showToast("Mikrofon o‘chirildi");
       }
-      openGameLobby(gameId);
+      openGameScreen(gameId);
     }
 
-    function requestDraw(gameId) {
+    function agreeDraw(gameId) {
       state.myDrawAgree = true;
       if (state.myDrawAgree && state.opponentDrawAgree) {
-        showToast("Ikkala taraf ham durrangni tasdiqladi! Tikuv qaytariladi.");
-        resolveMatch(gameId, "draw");
+        showToast("Ikkala tomon durrangni tasdiqladi! Tikuv qaytarildi.");
+        finishRound(gameId, "draw");
       } else {
-        showToast("Durrang taklifi yuborildi. Raqib tasdiqlashini kuting.");
-        openGameLobby(gameId);
+        showToast("Durrang taklif qilindi");
+        openGameScreen(gameId);
       }
     }
 
-    function stepShashka50(gameId) {
-      state.shashkaMoves50 += 1;
-      if (state.shashkaMoves50 >= 50) {
-        showToast("50x50 qoidasi bajarildi! O‘yin durrang bilan tugadi.");
-        resolveMatch(gameId, "draw");
-      } else {
-        showToast(`50x50 yurish: ${state.shashkaMoves50}/50`);
-        openGameLobby(gameId);
-      }
+    function surrenderNow(gameId) {
+      showToast("Siz taslim bo‘ldingiz.");
+      finishRound(gameId, "loss");
     }
 
-    function surrenderMatch(gameId) {
-      showToast("Siz taslim bo‘ldingiz. Tikuv raqibga o‘tdi.");
-      resolveMatch(gameId, "loss");
-    }
-
-    function resolveMatch(gameId, outcome) {
-      if (!state.lockedStake) return;
+    function finishRound(gameId, outcome) {
+      if (!state.inGame) return;
       if (outcome === "win") {
         const prize = Math.floor(state.lockedStake * WIN_MULTIPLIER);
         state.balance += prize;
         state.wins += 1;
         state.xp += 35;
-        showToast(`G‘alaba! +${prize.toLocaleString("en-US")} G (1.8x) hisobingizga tushdi!`);
+        showToast(`G‘alaba! +${prize.toLocaleString("en-US")} G (1.8x)`);
       } else if (outcome === "draw") {
         state.balance += state.lockedStake;
         state.xp += 10;
-        showToast(`Durrang! ${state.lockedStake.toLocaleString("en-US")} G tikuv qaytarildi.`);
+        showToast(`Durrang! ${state.lockedStake.toLocaleString("en-US")} G qaytarildi.`);
       } else {
         state.xp += 5;
-        showToast(`Raund yakunlandi (${state.lockedStake.toLocaleString("en-US")} G tikuv).`);
+        showToast("O‘yin yakunlandi.");
       }
+      state.inGame = false;
       state.lockedStake = 0;
-      state.matchStatus = "idle";
       state.micEnabled = false;
       state.myDrawAgree = false;
       saveState();
       renderProfile();
-      openGameLobby(gameId);
+      openGameScreen(gameId);
     }
 
-    function playXoCell(idx) {
-      if (state.xoBoard[idx]) return;
-      state.xoBoard[idx] = state.xoTurn;
-      state.xoTurn = state.xoTurn === "X" ? "O" : "X";
-      openGameLobby("xo");
-    }
-
-    /* 11. Do'st bilan o'ynash oynasi (rasmdagi ko'rinishda) */
     function openFriendPlayModal() {
       const payout = Math.floor(state.friendStake * WIN_MULTIPLIER);
-      const gamesRowHtml = GAMES.map((g) => `
-        <button class="game-chip ${g.id === state.friendGameId ? "active" : ""}" onclick="setFriendGame('${g.id}')">
-          <div class="game-art ${g.artClass}" style="width:42px;height:42px;font-size:20px;">${g.icon}</div>
-          <span class="game-name" style="font-size:9.5px;">${g.name}</span>
+      const gamesHtml = GAMES.map((g) => `
+        <button class="game-chip ${g.id === state.friendGameId ? "active" : ""}" onclick="state.friendGameId='${g.id}';openFriendPlayModal();">
+          <div class="game-art ${g.artClass}" style="width:40px;height:40px;font-size:19px;">${g.icon}</div>
+          <span class="game-name" style="font-size:9px;">${g.name}</span>
         </button>
       `).join("");
 
-      const stakesRowHtml = STAKE_OPTIONS.map((amt) => `
-        <button class="stake-pill ${state.friendStake === amt ? "active" : ""}" onclick="setFriendStake(${amt})">
-          ${amt >= 1000 ? `${amt / 1000}K` : amt} G
+      const stakesHtml = STAKE_OPTIONS.map((amt) => `
+        <button class="stake-pill ${state.friendStake === amt ? "active" : ""}" onclick="state.friendStake=${amt};openFriendPlayModal();">
+          ${amt.toLocaleString("en-US")} G
         </button>
       `).join("");
 
-      const html = `
+      openModal("👥", "DO‘ST BILAN O‘YNASH", `
         <div class="section-box">
           <div class="section-label">QAYSI O‘YIN?</div>
-          <div class="friend-games-row">${gamesRowHtml}</div>
+          <div class="friend-games-row">${gamesHtml}</div>
         </div>
-
         <div class="section-box">
-          <div class="section-label">NECHTA TANGA TIKASIZ?</div>
-          <div class="stake-scroll-grid">${stakesRowHtml}</div>
+          <div class="section-label">NECHTA TANGA TIKASIZ? (1 QATORDA)</div>
+          <div class="stake-one-row">${stakesHtml}</div>
         </div>
-
         <div class="section-box">
-          <p style="font-size:12.5px; line-height:1.45; text-align:center; color:#e9f5ee; margin-bottom:12px;">
+          <p style="font-size:12px;text-align:center;color:var(--text-secondary);margin-bottom:10px;line-height:1.45;">
             Do‘stingizga havola yuboring — u havolani ochishi bilan o‘yin avtomatik boshlanadi.
             Tikuv: <strong style="color:var(--gold-bright);">${state.friendStake.toLocaleString("en-US")} G</strong>,
             g‘olib <strong style="color:var(--gold-bright);">×1.8 (${payout.toLocaleString("en-US")} G)</strong> oladi.
           </p>
-          <button class="friend-send-btn" onclick="sendFriendInvite()">
-            ✈️ Telegram orqali do‘stga yuborish
-          </button>
+          <button class="friend-send-btn" onclick="sendFriendInvite()">✈️ Telegram orqali do‘stga yuborish</button>
         </div>
-      `;
-      openModal("👥", "DO‘ST BILAN O‘YNASH", html);
-    }
-
-    function setFriendGame(id) {
-      state.friendGameId = id;
-      openFriendPlayModal();
-    }
-
-    function setFriendStake(amt) {
-      if (amt > MAX_STAKE) {
-        showToast("Maksimal tikuv 100 000 G!");
-        return;
-      }
-      state.friendStake = amt;
-      openFriendPlayModal();
+      `);
     }
 
     function sendFriendInvite() {
-      const refCode = `ref_${tgUser ? tgUser.id : "user"}_${state.friendGameId}_${state.friendStake}`;
-      const shareUrl = `https://t.me/Zerex_uz_bot?start=${refCode}`;
-      const text = `Zerex'da ${state.friendGameId.toUpperCase()} o‘ynaymiz! Tikuv: ${state.friendStake} G (1.8x yutuq).`;
+      const url = `https://t.me/Zerex_uz_bot?start=play_${state.friendGameId}_${state.friendStake}`;
+      const text = `Zerex'da ${state.friendGameId.toUpperCase()} o‘ynaymiz! Tikuv: ${state.friendStake} G (1.8x).`;
       if (tg && tg.openTelegramLink) {
-        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(text)}`);
+        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
       } else {
-        navigator.clipboard?.writeText(shareUrl);
-        showToast("Do‘stga taklif havolasi nusxalandi!");
+        navigator.clipboard?.writeText(url);
+        showToast("Taklif havolasi nusxalandi!");
       }
     }
 
-    /* 8 & 9. Vazifalar oynasi */
     function renderTasksHtml() {
       return `
         <div class="task-card">
@@ -1366,10 +1351,9 @@
             <div>
               <div class="task-title">REKLAMA KO‘RISH</div>
               <div class="task-reward">+1 G · ${state.adsWatched}/20</div>
-              <div class="task-sub">Sarguzasht: ${Math.min(5, Math.floor(state.adsWatched / 4))}/5</div>
             </div>
           </div>
-          <button class="task-action-btn" onclick="completeTaskAd()">BOSHLASH</button>
+          <button class="task-action-btn" onclick="state.adsWatched++;state.balance+=1;saveState();renderProfile();openModal('📋','VAZIFALAR',renderTasksHtml());">BOSHLASH</button>
         </div>
 
         <div class="task-card">
@@ -1380,7 +1364,7 @@
               <div class="task-reward">+1 G</div>
             </div>
           </div>
-          <button class="task-action-btn" onclick="completeTaskBonus()">go</button>
+          <button class="task-action-btn" onclick="if(!state.bonusClaimed){state.bonusClaimed=true;state.balance+=1;saveState();renderProfile();showToast('+1 G');}else{showToast('Olindi');}">go</button>
         </div>
 
         <div class="task-card">
@@ -1389,10 +1373,9 @@
             <div>
               <div class="task-title">SAYTGA O‘TISH</div>
               <div class="task-reward">+1 G · ${state.sitesVisited}/5</div>
-              <div class="task-sub">Sarguzasht: ${Math.min(5, state.sitesVisited)}/5</div>
             </div>
           </div>
-          <button class="task-action-btn" onclick="completeTaskSite()">BOSHLASH</button>
+          <button class="task-action-btn" onclick="state.sitesVisited++;state.balance+=1;saveState();renderProfile();openModal('📋','VAZIFALAR',renderTasksHtml());">BOSHLASH</button>
         </div>
 
         <div class="task-card">
@@ -1403,57 +1386,11 @@
               <div class="task-reward">+${FRIEND_INVITE_BONUS} G · har do‘st uchun (${state.invitedFriends} ta)</div>
             </div>
           </div>
-          <button class="task-action-btn" onclick="completeFriendInviteTask()">OCHISH</button>
+          <button class="task-action-btn" onclick="state.invitedFriends++;state.balance+=FRIEND_INVITE_BONUS;saveState();renderProfile();openModal('📋','VAZIFALAR',renderTasksHtml());sendFriendInvite();">OCHISH</button>
         </div>
       `;
     }
 
-    function completeTaskAd() {
-      state.adsWatched += 1;
-      state.balance += 1;
-      state.xp += 5;
-      saveState();
-      renderProfile();
-      showToast("+1 G qo‘shildi!");
-      openModal("📋", "VAZIFALAR", renderTasksHtml());
-    }
-
-    function completeTaskBonus() {
-      if (state.bonusClaimed) {
-        showToast("Bonus allaqachon olingan!");
-        return;
-      }
-      state.bonusClaimed = true;
-      state.balance += 1;
-      state.xp += 10;
-      saveState();
-      renderProfile();
-      showToast("+1 G bonus qo‘shildi!");
-      openModal("📋", "VAZIFALAR", renderTasksHtml());
-    }
-
-    function completeTaskSite() {
-      state.sitesVisited += 1;
-      state.balance += 1;
-      state.xp += 5;
-      saveState();
-      renderProfile();
-      showToast("+1 G qo‘shildi!");
-      openModal("📋", "VAZIFALAR", renderTasksHtml());
-    }
-
-    function completeFriendInviteTask() {
-      state.invitedFriends += 1;
-      state.balance += FRIEND_INVITE_BONUS;
-      state.xp += 25;
-      saveState();
-      renderProfile();
-      showToast(`Do‘st taklifi uchun +${FRIEND_INVITE_BONUS} G qo‘shildi!`);
-      openModal("📋", "VAZIFALAR", renderTasksHtml());
-      sendFriendInvite();
-    }
-
-    /* 12. Xarid tizimi: Karta + Payme, Click, Uzum Bank, Telegram Stars + 2-3 soniyada tushishi */
     function renderDepositHtml() {
       const methods = ["Payme", "Click", "Uzum Bank", "Telegram Stars"];
       const packs = [
@@ -1462,95 +1399,70 @@
         { coins: 5000, som: 55000, stars: 250 },
         { coins: 10000, som: 110000, stars: 500 }
       ];
-
       return `
         <div class="section-box">
-          <div class="section-label">To‘lov usulini tanlang</div>
+          <div class="section-label">To‘lov usuli</div>
           <div class="pay-methods-grid">
-            ${methods.map((m) => `
-              <button class="pay-method-btn ${state.payMethod === m ? "active" : ""}" onclick="selectPayMethod('${m}')">${m}</button>
-            `).join("")}
+            ${methods.map((m) => `<button class="pay-method-btn ${state.payMethod === m ? "active" : ""}" onclick="state.payMethod='${m}';openModal('💰','DEPOZIT',renderDepositHtml());">${m}</button>`).join("")}
           </div>
           <div class="card-box">
-            <div><strong>Karta raqami:</strong> ${OWNER_CARD_NUMBER} (${OWNER_CARD_HOLDER})</div>
-            <div style="margin-top:4px; color:var(--text-secondary);">
-              Usul: <strong>${state.payMethod}</strong> · To‘lovdan <strong>2–3 soniya</strong> ichida tangalar hisobga tushadi.
-            </div>
+            <div><strong>Karta:</strong> ${MY_CARD_NUMBER}</div>
+            <div style="margin-top:2px;"><strong>Karta egasi:</strong> ${MY_CARD_OWNER}</div>
+            <div style="margin-top:4px;color:var(--text-secondary);">Usul: <strong>${state.payMethod}</strong> · To‘lovdan 2–3 soniyada tushadi.</div>
           </div>
         </div>
-
         <div class="section-box">
-          <div class="section-label">Paketlar (Minimal 1 000 G = 11 000 so‘m)</div>
+          <div class="section-label">Paketlar (Min 1 000 G = 11 000 so‘m)</div>
           ${packs.map((p) => `
-            <div class="leader-row" style="margin-bottom:8px;">
+            <div class="leader-row">
               <div>
-                <div style="font-weight:900; color:var(--gold-bright);">${p.coins.toLocaleString("en-US")} G</div>
-                <div style="font-size:11.5px; color:var(--text-secondary);">${p.som.toLocaleString("uz-UZ")} so‘m · ⭐ ${p.stars} Stars</div>
+                <div style="font-weight:900;color:var(--gold-bright);">${p.coins.toLocaleString("en-US")} G</div>
+                <div style="font-size:11.5px;color:var(--text-secondary);">${p.som.toLocaleString("uz-UZ")} so‘m · ⭐ ${p.stars} Stars</div>
               </div>
-              <button class="task-action-btn" onclick="processInstantPayment(${p.coins}, ${p.som})">To‘lash</button>
+              <button class="task-action-btn" onclick="payPack(${p.coins}, ${p.som})">To‘lash</button>
             </div>
           `).join("")}
         </div>
       `;
     }
 
-    function selectPayMethod(method) {
-      state.payMethod = method;
-      openModal("💰", "DEPOZIT", renderDepositHtml());
-    }
-
-    function processInstantPayment(coins, som) {
-      if (coins < MIN_COINS_BUY) {
-        showToast("Minimal 1 000 tanga (11 000 so‘m)");
-        return;
-      }
-      showToast(`${state.payMethod} orqali to‘lov tekshirilmoqda... (2–3 soniya)`);
+    function payPack(coins, som) {
+      if (coins < MIN_COINS_BUY) return;
+      showToast(`${state.payMethod} orqali to‘lov tasdiqlanmoqda (2–3 soniya)...`);
       setTimeout(() => {
         state.balance += coins;
         state.xp += 30;
         saveState();
         renderProfile();
-        showToast(`✅ ${coins.toLocaleString("en-US")} G hisobingizga tushdi (${som.toLocaleString("uz-UZ")} so‘m)`);
+        showToast(`✅ +${coins.toLocaleString("en-US")} G tushdi (${som.toLocaleString("uz-UZ")} so‘m)`);
       }, 2500);
     }
 
-    /* Reyting Top 100 */
-    function buildTop100Players(tabKey) {
+    function renderRatingHtml() {
       const myNick = getTelegramNick();
       const myLvl = getLevelInfo(state.xp).level;
-      const base = [
-        { name: "@Abdulatipov", wins: 142, coins: 17066, level: 24 },
-        { name: "@Javohir_UZ", wins: 131, coins: 16018, level: 22 },
-        { name: "@Madiev_Pro", wins: 118, coins: 14146, level: 20 },
-        { name: "@Ovchi_G", wins: 96, coins: 11188, level: 18 },
-        { name: "@Mango_King", wins: 88, coins: 9957, level: 17 }
-      ];
-      const extra = [];
-      for (let i = 6; i <= 105; i++) {
-        extra.push({
+      const list = [{ name: myNick, wins: state.wins, coins: state.balance, level: myLvl, isMe: true }];
+      for (let i = 1; i <= 105; i++) {
+        list.push({
           name: `@Player_${i}`,
-          wins: Math.max(1, 85 - Math.floor(i * 0.6)),
-          coins: Math.max(20, 9500 - i * 75),
-          level: Math.max(2, 16 - Math.floor(i / 8))
+          wins: Math.max(1, 110 - i),
+          coins: Math.max(10, 12000 - i * 95),
+          level: Math.max(1, 20 - Math.floor(i / 6))
         });
       }
-      const all = [...base, ...extra, { name: myNick, wins: state.wins, coins: state.balance, level: myLvl, isMe: true }];
-      all.sort((a, b) => tabKey === "wins" ? b.wins - a.wins : tabKey === "level" ? b.level - a.level : b.coins - a.coins);
-      return all.slice(0, 100);
-    }
+      list.sort((a, b) => state.ratingTab === "wins" ? b.wins - a.wins : state.ratingTab === "level" ? b.level - a.level : b.coins - a.coins);
+      const top100 = list.slice(0, 100);
 
-    function renderRatingHtml() {
-      const list = buildTop100Players(state.ratingTab);
       return `
         <div class="rating-tabs">
-          <button class="rating-tab ${state.ratingTab === "wins" ? "active" : ""}" onclick="setRatingTab('wins')">G‘ALABA</button>
-          <button class="rating-tab ${state.ratingTab === "coins" ? "active" : ""}" onclick="setRatingTab('coins')">TANGA</button>
-          <button class="rating-tab ${state.ratingTab === "level" ? "active" : ""}" onclick="setRatingTab('level')">DARAJA</button>
+          <button class="rating-tab ${state.ratingTab === "wins" ? "active" : ""}" onclick="state.ratingTab='wins';openModal('🏆','REYTING',renderRatingHtml());">G‘ALABA</button>
+          <button class="rating-tab ${state.ratingTab === "coins" ? "active" : ""}" onclick="state.ratingTab='coins';openModal('🏆','REYTING',renderRatingHtml());">TANGA</button>
+          <button class="rating-tab ${state.ratingTab === "level" ? "active" : ""}" onclick="state.ratingTab='level';openModal('🏆','REYTING',renderRatingHtml());">DARAJA</button>
         </div>
         <div class="leaderboard-list">
-          ${list.map((p, i) => `
+          ${top100.map((p, i) => `
             <div class="leader-row" style="${p.isMe ? "border-color:#ffe68a;" : ""}">
-              <div><strong>#${i + 1} ${p.name}</strong> ${p.isMe ? "(Siz)" : ""} <span style="font-size:11px;color:var(--text-secondary);">· Lvl ${p.level}</span></div>
+              <div><strong>#${i + 1} ${p.name}</strong> ${p.isMe ? "(Siz)" : ""}</div>
               <strong style="color:var(--gold-bright);">
                 ${state.ratingTab === "wins" ? `${p.wins} g‘alaba` : state.ratingTab === "level" ? `Lvl ${p.level}` : `${p.coins.toLocaleString("en-US")} G`}
               </strong>
@@ -1560,16 +1472,10 @@
       `;
     }
 
-    function setRatingTab(tab) {
-      state.ratingTab = tab;
-      openModal("🏆", "REYTING", renderRatingHtml());
-    }
-
     function openMenuModal(type) {
       if (type === "tasks") return openModal("📋", "VAZIFALAR", renderTasksHtml());
       if (type === "deposit") return openModal("💰", "DEPOZIT", renderDepositHtml());
       if (type === "rating") return openModal("🏆", "REYTING", renderRatingHtml());
-
       if (type === "shop") {
         const items = [
           { name: "Oltin ramka", price: 50, icon: "👑" },
@@ -1577,47 +1483,24 @@
           { name: "VIP stol effekti", price: 120, icon: "💎" }
         ];
         return openModal("🏪", "DO‘KON", items.map((it) => `
-          <div class="leader-row" style="margin-bottom:8px;">
+          <div class="leader-row">
             <div><strong>${it.icon} ${it.name}</strong></div>
-            <button class="task-action-btn" onclick="buyItem('${it.name}', ${it.price})">${it.price} G</button>
+            <button class="task-action-btn" onclick="if(state.balance>=${it.price}){state.balance-=${it.price};saveState();renderProfile();showToast('${it.name} olindi');}else{showToast('Mablag‘ yetarli emas');}">${it.price} G</button>
           </div>
         `).join(""));
       }
-
       if (type === "withdraw") {
         return openModal("💵", "PUL YECHISH", `
           <div class="section-box">
             <p style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;">
-              Balans: <strong style="color:var(--gold-bright);">${state.balance.toLocaleString("en-US")} G</strong> · Minimal yechish: 1 000 G
+              Balans: <strong style="color:var(--gold-bright);">${state.balance.toLocaleString("en-US")} G</strong> · Min: 1 000 G
             </p>
             <input id="wdAmt" class="room-code-input" type="number" placeholder="Miqdor (G)" />
             <input id="wdCard" class="room-code-input" placeholder="Karta raqami" />
-            <button class="primary-action" onclick="submitWithdraw()">So‘rov yuborish</button>
+            <button class="primary-action" onclick="const a=Number(document.getElementById('wdAmt').value||0);const c=(document.getElementById('wdCard').value||'').trim();if(a<1000||a>state.balance||!c)return showToast('Ma’lumotlarni tekshiring (min 1 000 G)');state.balance-=a;saveState();renderProfile();showToast(a+' G yechish so‘rovi yuborildi');closeModal();">So‘rov yuborish</button>
           </div>
         `);
       }
-    }
-
-    function buyItem(name, price) {
-      if (state.balance < price) return showToast("Mablag‘ yetarli emas!");
-      state.balance -= price;
-      state.xp += 20;
-      saveState();
-      renderProfile();
-      showToast(`${name} xarid qilindi!`);
-    }
-
-    function submitWithdraw() {
-      const amt = Number(document.getElementById("wdAmt")?.value || 0);
-      const card = (document.getElementById("wdCard")?.value || "").trim();
-      if (amt < 1000) return showToast("Minimal yechish 1 000 G!");
-      if (amt > state.balance) return showToast("Balansda mablag‘ yetarli emas!");
-      if (!card) return showToast("Karta raqamini kiriting!");
-      state.balance -= amt;
-      saveState();
-      renderProfile();
-      showToast(`${amt.toLocaleString("en-US")} G yechish so‘rovi yuborildi`);
-      closeModal();
     }
 
     renderProfile();
