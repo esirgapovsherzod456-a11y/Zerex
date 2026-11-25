@@ -33,7 +33,7 @@
       min-height: 100vh;
       color: var(--text-primary);
       background-image:
-        linear-gradient(180deg, rgba(7, 22, 14, 0.78) 0%, rgba(8, 20, 14, 0.86) 55%, rgba(4, 11, 7, 0.95) 100%),
+        linear-gradient(180deg, rgba(16, 12, 6, 0.72) 0%, rgba(11, 23, 15, 0.84) 55%, rgba(5, 12, 8, 0.95) 100%),
         var(--bg-image);
       background-size: cover;
       background-position: center;
@@ -204,7 +204,6 @@
       font-size: 12.5px;
       font-weight: 800;
       color: #e8ffec;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
     }
 
     .online-dot {
@@ -377,13 +376,13 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(2, 7, 4, 0.85);
+      background: rgba(5, 8, 5, 0.88);
       backdrop-filter: blur(7px);
       z-index: 40;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 12px;
+      padding: 10px;
     }
 
     .modal-backdrop.open {
@@ -392,14 +391,16 @@
 
     .modal-card {
       width: 100%;
-      max-width: 460px;
-      max-height: 92vh;
+      max-width: 455px;
+      max-height: 94vh;
       overflow-y: auto;
-      background: linear-gradient(180deg, rgba(23, 56, 39, 0.96) 0%, rgba(13, 31, 21, 0.98) 58%, rgba(8, 19, 13, 0.99) 100%);
+      background:
+        radial-gradient(circle at 50% 15%, rgba(245, 180, 24, 0.14), transparent 55%),
+        linear-gradient(180deg, #24180c 0%, #141c13 55%, #0a120c 100%);
       border: 2px solid rgba(240, 190, 130, 0.55);
       border-radius: var(--radius-xl);
-      padding: 15px;
-      box-shadow: 0 20px 46px rgba(0, 0, 0, 0.88);
+      padding: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
     }
 
     .modal-header {
@@ -407,88 +408,139 @@
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      margin-bottom: 12px;
-      padding-bottom: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
       border-bottom: 1px solid rgba(255, 230, 138, 0.16);
     }
 
     .modal-title-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .modal-title {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 900;
       color: var(--gold-bright);
     }
 
     .close-btn {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       background: rgba(255, 255, 255, 0.08);
       color: #fff;
-      font-size: 17px;
+      font-size: 16px;
       cursor: pointer;
     }
 
-    .section-box {
-      background: rgba(7, 17, 12, 0.84);
-      border: 1px solid rgba(255, 230, 138, 0.15);
-      border-radius: var(--radius-lg);
-      padding: 11px;
-      margin-bottom: 11px;
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .prize-banner-top {
       text-align: center;
-    }
-
-    .stake-one-row {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      color: #fff3c4;
+      text-shadow: 0 0 14px rgba(245, 180, 24, 0.45);
+      margin-bottom: 8px;
       display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 7px;
-      padding-bottom: 4px;
-      scrollbar-width: thin;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
-    .stake-pill {
-      flex: 0 0 auto;
-      padding: 8px 12px;
+    .player-strip-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(18, 15, 10, 0.85);
+      border: 1px solid rgba(255, 230, 138, 0.22);
+      border-radius: 15px;
+      padding: 8px 11px;
+      margin-bottom: 8px;
+    }
+
+    .player-strip-card.active-turn-card {
+      border-color: #ffe68a;
+      box-shadow: 0 0 14px rgba(245, 180, 24, 0.25);
+    }
+
+    .player-left-info {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .player-mini-ava {
+      width: 38px;
+      height: 38px;
       border-radius: 11px;
-      border: 1.5px solid rgba(240, 190, 130, 0.45);
-      background: linear-gradient(180deg, #5e3717 0%, #341c09 100%);
-      color: #fff3cf;
-      font-weight: 800;
-      font-size: 12px;
-      cursor: pointer;
-      white-space: nowrap;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 14px;
+      color: #fff;
+      border: 1.5px solid rgba(255, 230, 138, 0.5);
+      flex-shrink: 0;
+      object-fit: cover;
     }
 
-    .stake-pill.active {
-      background: linear-gradient(180deg, #ffe385 0%, #f5b418 65%, #b57400 100%);
-      color: #261400;
-      border-color: #fff5c2;
+    .player-name-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .lvl-tag {
+      background: linear-gradient(180deg, #9b5de5, #6930c3);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .sub-timer-line {
+      font-size: 11.5px;
+      color: #d4c49e;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+
+    .thinking-highlight {
+      color: #ffe68a;
+    }
+
+    .clock-pill {
+      background: rgba(45, 32, 16, 0.92);
+      border: 1px solid rgba(255, 230, 138, 0.28);
+      border-radius: 11px;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-weight: 900;
+      color: #f4e6c4;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wood-frame-board {
+      background: linear-gradient(145deg, #4b2d16 0%, #241307 100%);
+      border: 3px solid #7c4b23;
+      border-radius: 18px;
+      padding: 8px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 224, 160, 0.3);
+      margin: 6px 0;
     }
 
     .board-8x8 {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
       width: 100%;
-      max-width: 312px;
       aspect-ratio: 1 / 1;
-      margin: 8px auto;
-      border: 3px solid #c88446;
       border-radius: 10px;
       overflow: hidden;
     }
@@ -501,26 +553,214 @@
       position: relative;
     }
 
-    .sq-light { background: #edd1a3; }
-    .sq-dark  { background: #6f4222; }
-    .sq-selected { outline: 3px solid #38e8b0; outline-offset: -3px; }
-
-    .piece-red {
-      width: 74%;
-      height: 74%;
+    .sq-light { background: #dec196; }
+    .sq-dark  { background: #261b12; }
+    .sq-selected { outline: 3px solid #ffe68a; outline-offset: -3px; }
+    .sq-capture-hint::after {
+      content: "";
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ff7b7b, #c92a2a);
-      border: 2px solid #ffd8d8;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.55);
+      background: rgba(255, 230, 138, 0.85);
+      box-shadow: 0 0 8px #ffe68a;
     }
 
-    .piece-white {
-      width: 74%;
-      height: 74%;
+    .checker-white {
+      width: 78%;
+      height: 78%;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #cbd5e1);
-      border: 2px solid #475569;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.55);
+      background: radial-gradient(circle at 35% 30%, #ffffff, #d9cfc1 70%, #9e9180 100%);
+      border: 2px solid #f7f3eb;
+      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.7), inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .checker-black {
+      width: 78%;
+      height: 78%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #46423d, #1c1917 72%, #090807 100%);
+      border: 2px solid #5c544b;
+      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.14);
+    }
+
+    .turn-status-pill {
+      margin: 8px auto;
+      width: fit-content;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #275c3b, #143621);
+      border: 1px solid rgba(116, 235, 152, 0.45);
+      color: #d7ffe4;
+      font-size: 11.5px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .turn-status-pill.thinking-pill {
+      background: linear-gradient(180deg, #593b14, #2e1d08);
+      border-color: rgba(255, 230, 138, 0.55);
+      color: #ffe99e;
+    }
+
+    .gramora-bottom-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .round-icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(240, 190, 130, 0.5);
+      background: linear-gradient(180deg, #4b3117, #241609);
+      color: #ffe68a;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .round-icon-btn.active-mic {
+      background: linear-gradient(180deg, #28a745, #145c26);
+      color: #fff;
+    }
+
+    .wood-action-pill {
+      flex: 1;
+      height: 42px;
+      border-radius: 13px;
+      border: 1.5px solid rgba(240, 190, 130, 0.48);
+      background: linear-gradient(180deg, #4d3218, #261709);
+      color: #f6e7c8;
+      font-weight: 800;
+      font-size: 12.5px;
+      cursor: pointer;
+    }
+
+    .wood-action-pill.voted {
+      background: linear-gradient(180deg, #ffe385, #d99514);
+      color: #241300;
+    }
+
+    .stake-one-row {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 6px;
+      padding-bottom: 4px;
+    }
+
+    .stake-pill {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(240, 190, 130, 0.45);
+      background: linear-gradient(180deg, #5e3717 0%, #341c09 100%);
+      color: #fff3cf;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .stake-pill.active {
+      background: linear-gradient(180deg, #ffe385 0%, #f5b418 65%, #b57400 100%);
+      color: #261400;
+    }
+
+    .deposit-amount-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(25, 19, 11, 0.88);
+      border: 1px solid rgba(255, 230, 138, 0.25);
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .copy-gold-btn {
+      padding: 9px 14px;
+      border-radius: 12px;
+      border: 1px solid #ffe68a;
+      background: linear-gradient(180deg, #ffe385 0%, #e5a115 65%, #b57704 100%);
+      color: #261400;
+      font-weight: 900;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .warn-amber-box {
+      background: linear-gradient(180deg, rgba(120, 74, 14, 0.55), rgba(66, 39, 7, 0.65));
+      border: 1.5px solid rgba(245, 180, 24, 0.65);
+      border-radius: 14px;
+      padding: 11px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffe89e;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .pay-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .pay-method-btn {
+      padding: 9px;
+      border-radius: 11px;
+      border: 1.5px solid rgba(255, 230, 138, 0.35);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .pay-method-btn.active {
+      border-color: var(--gold-bright);
+      background: rgba(245, 180, 24, 0.24);
+      color: var(--gold-bright);
+    }
+
+    .gold-cta-btn {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1.5px solid #ffe68a;
+      background: linear-gradient(180deg, #ffd866 0%, #e5a115 65%, #b57704 100%);
+      color: #2b1600;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #694100;
+      margin-top: 8px;
+    }
+
+    .section-box {
+      background: rgba(7, 17, 12, 0.84);
+      border: 1px solid rgba(255, 230, 138, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 11px;
+      margin-bottom: 10px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      text-align: center;
     }
 
     .xo-grid {
@@ -540,38 +780,6 @@
       font-size: 26px;
       font-weight: 900;
       cursor: pointer;
-    }
-
-    .controls-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 7px;
-      margin-top: 8px;
-    }
-
-    .ctrl-btn {
-      padding: 9px 6px;
-      border-radius: 11px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      font-weight: 800;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    .ctrl-btn.mic-on {
-      background: linear-gradient(180deg, #27a852, #156630);
-      border-color: #7ef5a5;
-    }
-
-    .ctrl-btn.draw-voted {
-      background: linear-gradient(180deg, #eab308, #a16207);
-      color: #1c1200;
-    }
-
-    .ctrl-btn.surrender {
-      background: linear-gradient(180deg, #d94343, #872020);
     }
 
     .outcome-row {
@@ -594,36 +802,6 @@
     .outcome-win { background: linear-gradient(180deg, #27a852, #176b33); }
     .outcome-draw { background: linear-gradient(180deg, #eab308, #a16207); color: #1a1100; }
     .outcome-loss { background: linear-gradient(180deg, #d94343, #8c2323); }
-
-    .primary-action {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 13px;
-      border: 1px solid #ffe68a;
-      background: linear-gradient(180deg, #32b359 0%, #1b7837 100%);
-      color: #fff;
-      font-weight: 800;
-      font-size: 13.5px;
-      cursor: pointer;
-    }
-
-    .friend-games-row {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 6px;
-    }
-
-    .friend-send-btn {
-      width: 100%;
-      padding: 13px 14px;
-      border-radius: 14px;
-      border: 1.5px solid #ffe68a;
-      background: linear-gradient(180deg, #ffd866 0%, #e5a115 65%, #b57704 100%);
-      color: #2b1600;
-      font-weight: 900;
-      font-size: 14px;
-      cursor: pointer;
-    }
 
     .task-card {
       display: flex;
@@ -675,39 +853,6 @@
       font-size: 11px;
       cursor: pointer;
       white-space: nowrap;
-    }
-
-    .pay-methods-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .pay-method-btn {
-      padding: 9px;
-      border-radius: 11px;
-      border: 1.5px solid rgba(255, 230, 138, 0.35);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      font-weight: 800;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .pay-method-btn.active {
-      border-color: var(--gold-bright);
-      background: rgba(245, 180, 24, 0.22);
-      color: var(--gold-bright);
-    }
-
-    .card-box {
-      background: rgba(255, 230, 138, 0.09);
-      border: 1px dashed rgba(255, 230, 138, 0.5);
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 12px;
     }
 
     .leader-row {
@@ -855,7 +1000,7 @@
     </section>
 
     <div class="play-wrap">
-      <button class="play-btn" onclick="launchGameAuto(selectedGameId)">PLAY</button>
+      <button class="play-btn" onclick="startInstantLiveGame(selectedGameId)">PLAY</button>
     </div>
     <p class="selected-game-hint">
       Tanlangan o‘yin: <strong id="selectedGameLabel">Shashka</strong> · Tikuv: <strong id="hintStake">3 G</strong> · Yutuq: <strong>1.8x</strong>
@@ -866,7 +1011,7 @@
     <div class="modal-card" id="modalCard">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <span id="modalIcon" style="font-size: 24px;">🎮</span>
+          <span id="modalIcon" style="font-size: 22px;">🎮</span>
           <h2 class="modal-title" id="modalTitle">Bo‘lim</h2>
         </div>
         <button class="close-btn" onclick="closeModal()">✕</button>
@@ -882,629 +1027,4 @@
     const MY_CARD_OWNER = "Esirgapov Sherzod";
 
     const WIN_MULTIPLIER = 1.8;
-    const MAX_STAKE = 100000;
-    const STAKE_OPTIONS = [3, 5, 10, 20, 50, 100, 300, 1000, 5000, 10000, 50000, 100000];
-    const MIN_COINS_BUY = 1000;
-    const MIN_COINS_PRICE_UZS = 11000;
-    const FRIEND_INVITE_BONUS = 20;
-
-    const GAMES = [
-      { id: "shashka", name: "Shashka", icon: "⚫", artClass: "art-shashka" },
-      { id: "shaxmat", name: "Shaxmat", icon: "♞", artClass: "art-shaxmat" },
-      { id: "bilyard", name: "Bilyard", icon: "🎱", artClass: "art-bilyard" },
-      { id: "durak", name: "Durak", icon: "🃏", artClass: "art-durak" },
-      { id: "mafia", name: "Mafia", icon: "🕵️", artClass: "art-mafia" },
-      { id: "xo", name: "X-O", icon: "✖️", artClass: "art-xo" }
-    ];
-
-    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-    if (tg) {
-      tg.ready();
-      tg.expand();
-    }
-    const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
-
-    function getTelegramNick() {
-      if (tgUser && tgUser.username) return `@${tgUser.username}`;
-      if (tgUser && tgUser.first_name) return tgUser.first_name;
-      return "@Zerex_Player";
-    }
-
-    function createInitialShashkaBoard() {
-      const b = Array(64).fill(0);
-      for (let r = 0; r < 8; r++) {
-        for (let c = 0; c < 8; c++) {
-          if ((r + c) % 2 === 1) {
-            if (r < 3) b[r * 8 + c] = 2;
-            if (r > 4) b[r * 8 + c] = 1;
-          }
-        }
-      }
-      return b;
-    }
-
-    const state = {
-      balance: Number(localStorage.getItem("zerex_v5_balance") ?? 8),
-      xp: Number(localStorage.getItem("zerex_v5_xp") ?? 0),
-      wins: Number(localStorage.getItem("zerex_v5_wins") ?? 0),
-      invitedFriends: Number(localStorage.getItem("zerex_v5_friends") ?? 0),
-      adsWatched: Number(localStorage.getItem("zerex_v5_ads") ?? 0),
-      sitesVisited: Number(localStorage.getItem("zerex_v5_sites") ?? 0),
-      bonusClaimed: localStorage.getItem("zerex_v5_bonus") === "1",
-      selectedStake: 3,
-      friendGameId: "shashka",
-      friendStake: 3,
-      lockedStake: 0,
-      inGame: false,
-      opponentName: "",
-      micEnabled: false,
-      myDrawAgree: false,
-      opponentDrawAgree: true,
-      shashkaMoves50: 0,
-      shashkaBoard: createInitialShashkaBoard(),
-      shashkaSelected: null,
-      xoBoard: Array(9).fill(""),
-      xoTurn: "X",
-      payMethod: "Payme",
-      ratingTab: "coins",
-      onlineCount: 403
-    };
-
-    let selectedGameId = GAMES[0].id;
-
-    function getLevelInfo(xp) {
-      const level = Math.max(1, Math.floor(xp / 100) + 1);
-      const titles = ["Yangi o'yinchi", "Tajribali", "Usta", "Grossmeyster", "Afsona"];
-      return { level, title: titles[Math.min(titles.length - 1, Math.floor((level - 1) / 3))] };
-    }
-
-    function saveState() {
-      localStorage.setItem("zerex_v5_balance", String(state.balance));
-      localStorage.setItem("zerex_v5_xp", String(state.xp));
-      localStorage.setItem("zerex_v5_wins", String(state.wins));
-      localStorage.setItem("zerex_v5_friends", String(state.invitedFriends));
-      localStorage.setItem("zerex_v5_ads", String(state.adsWatched));
-      localStorage.setItem("zerex_v5_sites", String(state.sitesVisited));
-      localStorage.setItem("zerex_v5_bonus", state.bonusClaimed ? "1" : "0");
-    }
-
-    function showToast(text) {
-      const el = document.getElementById("toast");
-      el.textContent = text;
-      el.classList.add("show");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2500);
-    }
-
-    function renderProfile() {
-      const avatarEl = document.getElementById("userAvatar");
-      const fallbackSvg = encodeURIComponent(
-        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-          <rect width="100" height="100" fill="#132b1e"/>
-          <circle cx="50" cy="38" r="18" fill="#f5b418"/>
-          <path d="M20 88c4-18 18-26 30-26s26 8 30 26" fill="#28b856"/>
-        </svg>`
-      );
-      avatarEl.src = tgUser && tgUser.photo_url ? tgUser.photo_url : `data:image/svg+xml,${fallbackSvg}`;
-      document.getElementById("userNick").textContent = getTelegramNick();
-      const lvl = getLevelInfo(state.xp);
-      document.getElementById("userLevel").textContent = `Lvl ${lvl.level} · ${lvl.title}`;
-      document.getElementById("userBalance").textContent = state.balance.toLocaleString("en-US");
-      document.getElementById("onlineCount").textContent = `${state.onlineCount} online`;
-      document.getElementById("hintStake").textContent = `${state.selectedStake.toLocaleString("en-US")} G`;
-    }
-
-    function renderGamesStrip() {
-      const strip = document.getElementById("gamesStrip");
-      strip.innerHTML = GAMES.map((g) => `
-        <button class="game-chip ${g.id === selectedGameId ? "active" : ""}" onclick="selectAndPlayGame('${g.id}')">
-          <div class="game-art ${g.artClass}">${g.icon}</div>
-          <span class="game-name">${g.name}</span>
-        </button>
-      `).join("");
-      const active = GAMES.find((g) => g.id === selectedGameId) || GAMES[0];
-      document.getElementById("selectedGameLabel").textContent = active.name;
-    }
-
-    function selectAndPlayGame(gameId) {
-      selectedGameId = gameId;
-      renderGamesStrip();
-      renderProfile();
-      openGameScreen(gameId);
-    }
-
-    function launchGameAuto(gameId) {
-      selectedGameId = gameId;
-      renderGamesStrip();
-      if (!state.inGame) {
-        if (state.balance < state.selectedStake) {
-          showToast("Balansda yetarli tanga yo‘q! Depozit qiling.");
-          openMenuModal("deposit");
-          return;
-        }
-        const rivals = ["@Javohir_UZ", "@Madiev_Pro", "@Sarob_X", "@Bekzod_77", "@Ozodbek"];
-        state.balance -= state.selectedStake;
-        state.lockedStake = state.selectedStake;
-        state.inGame = true;
-        state.opponentName = rivals[Math.floor(Math.random() * rivals.length)];
-        state.shashkaBoard = createInitialShashkaBoard();
-        state.shashkaSelected = null;
-        state.shashkaMoves50 = 0;
-        state.xoBoard = Array(9).fill("");
-        state.xoTurn = "X";
-        state.myDrawAgree = false;
-        state.opponentDrawAgree = true;
-        saveState();
-        renderProfile();
-        showToast(`Raqib topildi: ${state.opponentName} · Tikuv ${state.lockedStake.toLocaleString("en-US")} G`);
-      }
-      openGameScreen(gameId);
-    }
-
-    function openModal(icon, title, bodyHtml) {
-      document.getElementById("modalIcon").textContent = icon;
-      document.getElementById("modalTitle").textContent = title;
-      document.getElementById("modalBody").innerHTML = bodyHtml;
-      document.getElementById("modalBackdrop").classList.add("open");
-    }
-
-    function closeModal() {
-      document.getElementById("modalBackdrop").classList.remove("open");
-    }
-
-    function handleBackdropClick(e) {
-      if (e.target.id === "modalBackdrop") closeModal();
-    }
-
-    function openGameScreen(gameId) {
-      const game = GAMES.find((g) => g.id === gameId) || GAMES[0];
-      const activeStake = state.inGame ? state.lockedStake : state.selectedStake;
-      const winAmount = Math.floor(activeStake * WIN_MULTIPLIER);
-
-      const stakeRowHtml = STAKE_OPTIONS.map((amt) => `
-        <button class="stake-pill ${state.selectedStake === amt ? "active" : ""}" onclick="pickStakeOneRow(${amt}, '${game.id}')">
-          ${amt.toLocaleString("en-US")} G
-        </button>
-      `).join("");
-
-      let boardHtml = "";
-      if (game.id === "shashka") {
-        const squares = state.shashkaBoard.map((cell, idx) => {
-          const r = Math.floor(idx / 8);
-          const c = idx % 8;
-          const isDark = (r + c) % 2 === 1;
-          const selClass = state.shashkaSelected === idx ? "sq-selected" : "";
-          const pieceHtml = cell === 1
-            ? `<div class="piece-red"></div>`
-            : cell === 2
-            ? `<div class="piece-white"></div>`
-            : "";
-          return `
-            <div class="sq-8x8 ${isDark ? "sq-dark" : "sq-light"} ${selClass}" onclick="tapShashkaSquare(${idx})">
-              ${pieceHtml}
-            </div>
-          `;
-        }).join("");
-        boardHtml = `
-          <div class="section-box">
-            <div class="section-label">Shashka 8×8 · Donani bosing va bo‘sh katakka yuring</div>
-            <div class="board-8x8">${squares}</div>
-          </div>
-        `;
-      } else if (game.id === "xo") {
-        boardHtml = `
-          <div class="section-box">
-            <div class="section-label">X-O 3×3 · Navbat: ${state.xoTurn}</div>
-            <div class="xo-grid">
-              ${state.xoBoard.map((val, i) => `<button class="xo-cell" onclick="tapXoSquare(${i})">${val}</button>`).join("")}
-            </div>
-          </div>
-        `;
-      } else {
-        boardHtml = `
-          <div class="section-box">
-            <div class="section-label">${game.name} Jonli Maydoni</div>
-            <p style="font-size:12.5px; color:var(--text-secondary); text-align:center; line-height:1.45;">
-              Raqib: <strong style="color:#fff;">${state.opponentName || "Avto-raqib"}</strong> ·
-              Tikuv: <strong style="color:var(--gold-bright);">${activeStake.toLocaleString("en-US")} G</strong> ·
-              Yutuq: <strong style="color:var(--gold-bright);">${winAmount.toLocaleString("en-US")} G (1.8x)</strong>
-            </p>
-          </div>
-        `;
-      }
-
-      const shashkaExtraBtn = game.id === "shashka"
-        ? `<button class="ctrl-btn" onclick="stepShashka50('${game.id}')">50x50 (${state.shashkaMoves50}/50)</button>`
-        : `<button class="ctrl-btn" onclick="showToast('50x50 faqat Shashkada mavjud')">50x50</button>`;
-
-      const bodyHtml = `
-        <div class="section-box">
-          <div class="section-label">Tikuv (1 qatorda · 3 G – 100 000 G · 1.8x yutuq)</div>
-          <div class="stake-one-row">${stakeRowHtml}</div>
-          <div style="margin-top:8px; font-size:12px; text-align:center; color:var(--gold-bright); font-weight:800;">
-            Tikuv: ${activeStake.toLocaleString("en-US")} G · Yutuq: ${winAmount.toLocaleString("en-US")} G (1.8x)
-          </div>
-        </div>
-
-        ${boardHtml}
-
-        <div class="section-box">
-          <div class="section-label">Boshqaruv</div>
-          <div class="controls-bar">
-            <button class="ctrl-btn ${state.micEnabled ? "mic-on" : ""}" onclick="toggleMic('${game.id}')">
-              ${state.micEnabled ? "🎙️ Mik: ON" : "🎤 Mikrofon"}
-            </button>
-            <button class="ctrl-btn ${state.myDrawAgree ? "draw-voted" : ""}" onclick="agreeDraw('${game.id}')">
-              🤝 Durrang
-            </button>
-            <button class="ctrl-btn surrender" onclick="surrenderNow('${game.id}')">
-              🏳️ Taslim bo‘lish
-            </button>
-          </div>
-          <div style="margin-top:7px;">${shashkaExtraBtn}</div>
-
-          ${state.inGame ? `
-            <div class="outcome-row">
-              <button class="outcome-btn outcome-win" onclick="finishRound('${game.id}', 'win')">G‘alaba (+${winAmount} G)</button>
-              <button class="outcome-btn outcome-draw" onclick="finishRound('${game.id}', 'draw')">Durrang (+${activeStake} G)</button>
-              <button class="outcome-btn outcome-loss" onclick="finishRound('${game.id}', 'loss')">Yutqazish</button>
-            </div>
-          ` : `
-            <button class="primary-action" style="margin-top:9px;" onclick="launchGameAuto('${game.id}')">
-              ⚡ Avto raqib topib o‘ynash (${state.selectedStake.toLocaleString("en-US")} G)
-            </button>
-          `}
-        </div>
-      `;
-
-      openModal(game.icon, game.name, bodyHtml);
-    }
-
-    function pickStakeOneRow(amt, gameId) {
-      if (amt > MAX_STAKE) return showToast("Maksimal tikuv 100 000 G!");
-      state.selectedStake = amt;
-      renderProfile();
-      openGameScreen(gameId);
-    }
-
-    function tapShashkaSquare(idx) {
-      if (!state.inGame) {
-        launchGameAuto("shashka");
-        return;
-      }
-      const board = state.shashkaBoard;
-      if (state.shashkaSelected === null) {
-        if (board[idx] === 1) {
-          state.shashkaSelected = idx;
-          openGameScreen("shashka");
-        } else {
-          showToast("O‘zingizning qizil shashkangizni tanlang");
-        }
-        return;
-      }
-
-      const from = state.shashkaSelected;
-      state.shashkaSelected = null;
-      if (from === idx) {
-        openGameScreen("shashka");
-        return;
-      }
-
-      const r1 = Math.floor(from / 8), c1 = from % 8;
-      const r2 = Math.floor(idx / 8), c2 = idx % 8;
-      const dr = r2 - r1, dc = Math.abs(c2 - c1);
-
-      if (board[idx] === 0 && Math.abs(dr) === 1 && dc === 1) {
-        board[idx] = board[from];
-        board[from] = 0;
-        state.shashkaMoves50 += 1;
-        const oppIdx = board.findIndex((v, i) => v === 2 && i + 9 < 64 && board[i + 9] === 0 && ((i + 9) % 8) !== 0);
-        if (oppIdx !== -1) {
-          board[oppIdx + 9] = 2;
-          board[oppIdx] = 0;
-        }
-      } else if (board[idx] === 0 && Math.abs(dr) === 2 && dc === 2) {
-        const mid = (r1 + r2) / 2 * 8 + (c1 + c2) / 2;
-        if (board[mid] === 2) {
-          board[mid] = 0;
-          board[idx] = board[from];
-          board[from] = 0;
-          state.shashkaMoves50 = 0;
-        }
-      } else {
-        showToast("Diagonal bo‘sh katakka yuring");
-      }
-      openGameScreen("shashka");
-    }
-
-    function stepShashka50(gameId) {
-      state.shashkaMoves50 += 1;
-      if (state.shashkaMoves50 >= 50) {
-        showToast("50x50 qoidasi bo‘yicha durrang!");
-        finishRound(gameId, "draw");
-      } else {
-        showToast(`50x50 yurish: ${state.shashkaMoves50}/50`);
-        openGameScreen(gameId);
-      }
-    }
-
-    function tapXoSquare(idx) {
-      if (!state.inGame) {
-        launchGameAuto("xo");
-        return;
-      }
-      if (state.xoBoard[idx]) return;
-      state.xoBoard[idx] = state.xoTurn;
-      state.xoTurn = state.xoTurn === "X" ? "O" : "X";
-      openGameScreen("xo");
-    }
-
-    async function toggleMic(gameId) {
-      if (!state.micEnabled) {
-        try {
-          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            stream.getTracks().forEach((t) => t.stop());
-          }
-        } catch (e) {}
-        state.micEnabled = true;
-        showToast("Mikrofon yoqildi");
-      } else {
-        state.micEnabled = false;
-        showToast("Mikrofon o‘chirildi");
-      }
-      openGameScreen(gameId);
-    }
-
-    function agreeDraw(gameId) {
-      state.myDrawAgree = true;
-      if (state.myDrawAgree && state.opponentDrawAgree) {
-        showToast("Ikkala tomon durrangni tasdiqladi! Tikuv qaytarildi.");
-        finishRound(gameId, "draw");
-      } else {
-        showToast("Durrang taklif qilindi");
-        openGameScreen(gameId);
-      }
-    }
-
-    function surrenderNow(gameId) {
-      showToast("Siz taslim bo‘ldingiz.");
-      finishRound(gameId, "loss");
-    }
-
-    function finishRound(gameId, outcome) {
-      if (!state.inGame) return;
-      if (outcome === "win") {
-        const prize = Math.floor(state.lockedStake * WIN_MULTIPLIER);
-        state.balance += prize;
-        state.wins += 1;
-        state.xp += 35;
-        showToast(`G‘alaba! +${prize.toLocaleString("en-US")} G (1.8x)`);
-      } else if (outcome === "draw") {
-        state.balance += state.lockedStake;
-        state.xp += 10;
-        showToast(`Durrang! ${state.lockedStake.toLocaleString("en-US")} G qaytarildi.`);
-      } else {
-        state.xp += 5;
-        showToast("O‘yin yakunlandi.");
-      }
-      state.inGame = false;
-      state.lockedStake = 0;
-      state.micEnabled = false;
-      state.myDrawAgree = false;
-      saveState();
-      renderProfile();
-      openGameScreen(gameId);
-    }
-
-    function openFriendPlayModal() {
-      const payout = Math.floor(state.friendStake * WIN_MULTIPLIER);
-      const gamesHtml = GAMES.map((g) => `
-        <button class="game-chip ${g.id === state.friendGameId ? "active" : ""}" onclick="state.friendGameId='${g.id}';openFriendPlayModal();">
-          <div class="game-art ${g.artClass}" style="width:40px;height:40px;font-size:19px;">${g.icon}</div>
-          <span class="game-name" style="font-size:9px;">${g.name}</span>
-        </button>
-      `).join("");
-
-      const stakesHtml = STAKE_OPTIONS.map((amt) => `
-        <button class="stake-pill ${state.friendStake === amt ? "active" : ""}" onclick="state.friendStake=${amt};openFriendPlayModal();">
-          ${amt.toLocaleString("en-US")} G
-        </button>
-      `).join("");
-
-      openModal("👥", "DO‘ST BILAN O‘YNASH", `
-        <div class="section-box">
-          <div class="section-label">QAYSI O‘YIN?</div>
-          <div class="friend-games-row">${gamesHtml}</div>
-        </div>
-        <div class="section-box">
-          <div class="section-label">NECHTA TANGA TIKASIZ? (1 QATORDA)</div>
-          <div class="stake-one-row">${stakesHtml}</div>
-        </div>
-        <div class="section-box">
-          <p style="font-size:12px;text-align:center;color:var(--text-secondary);margin-bottom:10px;line-height:1.45;">
-            Do‘stingizga havola yuboring — u havolani ochishi bilan o‘yin avtomatik boshlanadi.
-            Tikuv: <strong style="color:var(--gold-bright);">${state.friendStake.toLocaleString("en-US")} G</strong>,
-            g‘olib <strong style="color:var(--gold-bright);">×1.8 (${payout.toLocaleString("en-US")} G)</strong> oladi.
-          </p>
-          <button class="friend-send-btn" onclick="sendFriendInvite()">✈️ Telegram orqali do‘stga yuborish</button>
-        </div>
-      `);
-    }
-
-    function sendFriendInvite() {
-      const url = `https://t.me/Zerex_uz_bot?start=play_${state.friendGameId}_${state.friendStake}`;
-      const text = `Zerex'da ${state.friendGameId.toUpperCase()} o‘ynaymiz! Tikuv: ${state.friendStake} G (1.8x).`;
-      if (tg && tg.openTelegramLink) {
-        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
-      } else {
-        navigator.clipboard?.writeText(url);
-        showToast("Taklif havolasi nusxalandi!");
-      }
-    }
-
-    function renderTasksHtml() {
-      return `
-        <div class="task-card">
-          <div class="task-left">
-            <div class="task-icon-box">📺</div>
-            <div>
-              <div class="task-title">REKLAMA KO‘RISH</div>
-              <div class="task-reward">+1 G · ${state.adsWatched}/20</div>
-            </div>
-          </div>
-          <button class="task-action-btn" onclick="state.adsWatched++;state.balance+=1;saveState();renderProfile();openModal('📋','VAZIFALAR',renderTasksHtml());">BOSHLASH</button>
-        </div>
-
-        <div class="task-card">
-          <div class="task-left">
-            <div class="task-icon-box">🎁</div>
-            <div>
-              <div class="task-title">BONUS ДЛЯ НОВИЧКОВ БИРЖИ</div>
-              <div class="task-reward">+1 G</div>
-            </div>
-          </div>
-          <button class="task-action-btn" onclick="if(!state.bonusClaimed){state.bonusClaimed=true;state.balance+=1;saveState();renderProfile();showToast('+1 G');}else{showToast('Olindi');}">go</button>
-        </div>
-
-        <div class="task-card">
-          <div class="task-left">
-            <div class="task-icon-box">🔗</div>
-            <div>
-              <div class="task-title">SAYTGA O‘TISH</div>
-              <div class="task-reward">+1 G · ${state.sitesVisited}/5</div>
-            </div>
-          </div>
-          <button class="task-action-btn" onclick="state.sitesVisited++;state.balance+=1;saveState();renderProfile();openModal('📋','VAZIFALAR',renderTasksHtml());">BOSHLASH</button>
-        </div>
-
-        <div class="task-card">
-          <div class="task-left">
-            <div class="task-icon-box">👥</div>
-            <div>
-              <div class="task-title">DO‘ST TAKLIF QILISH</div>
-              <div class="task-reward">+${FRIEND_INVITE_BONUS} G · har do‘st uchun (${state.invitedFriends} ta)</div>
-            </div>
-          </div>
-          <button class="task-action-btn" onclick="state.invitedFriends++;state.balance+=FRIEND_INVITE_BONUS;saveState();renderProfile();openModal('📋','VAZIFALAR',renderTasksHtml());sendFriendInvite();">OCHISH</button>
-        </div>
-      `;
-    }
-
-    function renderDepositHtml() {
-      const methods = ["Payme", "Click", "Uzum Bank", "Telegram Stars"];
-      const packs = [
-        { coins: 1000, som: 11000, stars: 50 },
-        { coins: 2000, som: 22000, stars: 100 },
-        { coins: 5000, som: 55000, stars: 250 },
-        { coins: 10000, som: 110000, stars: 500 }
-      ];
-      return `
-        <div class="section-box">
-          <div class="section-label">To‘lov usuli</div>
-          <div class="pay-methods-grid">
-            ${methods.map((m) => `<button class="pay-method-btn ${state.payMethod === m ? "active" : ""}" onclick="state.payMethod='${m}';openModal('💰','DEPOZIT',renderDepositHtml());">${m}</button>`).join("")}
-          </div>
-          <div class="card-box">
-            <div><strong>Karta:</strong> ${MY_CARD_NUMBER}</div>
-            <div style="margin-top:2px;"><strong>Karta egasi:</strong> ${MY_CARD_OWNER}</div>
-            <div style="margin-top:4px;color:var(--text-secondary);">Usul: <strong>${state.payMethod}</strong> · To‘lovdan 2–3 soniyada tushadi.</div>
-          </div>
-        </div>
-        <div class="section-box">
-          <div class="section-label">Paketlar (Min 1 000 G = 11 000 so‘m)</div>
-          ${packs.map((p) => `
-            <div class="leader-row">
-              <div>
-                <div style="font-weight:900;color:var(--gold-bright);">${p.coins.toLocaleString("en-US")} G</div>
-                <div style="font-size:11.5px;color:var(--text-secondary);">${p.som.toLocaleString("uz-UZ")} so‘m · ⭐ ${p.stars} Stars</div>
-              </div>
-              <button class="task-action-btn" onclick="payPack(${p.coins}, ${p.som})">To‘lash</button>
-            </div>
-          `).join("")}
-        </div>
-      `;
-    }
-
-    function payPack(coins, som) {
-      if (coins < MIN_COINS_BUY) return;
-      showToast(`${state.payMethod} orqali to‘lov tasdiqlanmoqda (2–3 soniya)...`);
-      setTimeout(() => {
-        state.balance += coins;
-        state.xp += 30;
-        saveState();
-        renderProfile();
-        showToast(`✅ +${coins.toLocaleString("en-US")} G tushdi (${som.toLocaleString("uz-UZ")} so‘m)`);
-      }, 2500);
-    }
-
-    function renderRatingHtml() {
-      const myNick = getTelegramNick();
-      const myLvl = getLevelInfo(state.xp).level;
-      const list = [{ name: myNick, wins: state.wins, coins: state.balance, level: myLvl, isMe: true }];
-      for (let i = 1; i <= 105; i++) {
-        list.push({
-          name: `@Player_${i}`,
-          wins: Math.max(1, 110 - i),
-          coins: Math.max(10, 12000 - i * 95),
-          level: Math.max(1, 20 - Math.floor(i / 6))
-        });
-      }
-      list.sort((a, b) => state.ratingTab === "wins" ? b.wins - a.wins : state.ratingTab === "level" ? b.level - a.level : b.coins - a.coins);
-      const top100 = list.slice(0, 100);
-
-      return `
-        <div class="rating-tabs">
-          <button class="rating-tab ${state.ratingTab === "wins" ? "active" : ""}" onclick="state.ratingTab='wins';openModal('🏆','REYTING',renderRatingHtml());">G‘ALABA</button>
-          <button class="rating-tab ${state.ratingTab === "coins" ? "active" : ""}" onclick="state.ratingTab='coins';openModal('🏆','REYTING',renderRatingHtml());">TANGA</button>
-          <button class="rating-tab ${state.ratingTab === "level" ? "active" : ""}" onclick="state.ratingTab='level';openModal('🏆','REYTING',renderRatingHtml());">DARAJA</button>
-        </div>
-        <div class="leaderboard-list">
-          ${top100.map((p, i) => `
-            <div class="leader-row" style="${p.isMe ? "border-color:#ffe68a;" : ""}">
-              <div><strong>#${i + 1} ${p.name}</strong> ${p.isMe ? "(Siz)" : ""}</div>
-              <strong style="color:var(--gold-bright);">
-                ${state.ratingTab === "wins" ? `${p.wins} g‘alaba` : state.ratingTab === "level" ? `Lvl ${p.level}` : `${p.coins.toLocaleString("en-US")} G`}
-              </strong>
-            </div>
-          `).join("")}
-        </div>
-      `;
-    }
-
-    function openMenuModal(type) {
-      if (type === "tasks") return openModal("📋", "VAZIFALAR", renderTasksHtml());
-      if (type === "deposit") return openModal("💰", "DEPOZIT", renderDepositHtml());
-      if (type === "rating") return openModal("🏆", "REYTING", renderRatingHtml());
-      if (type === "shop") {
-        const items = [
-          { name: "Oltin ramka", price: 50, icon: "👑" },
-          { name: "Maxsus avatar nishoni", price: 80, icon: "⚡" },
-          { name: "VIP stol effekti", price: 120, icon: "💎" }
-        ];
-        return openModal("🏪", "DO‘KON", items.map((it) => `
-          <div class="leader-row">
-            <div><strong>${it.icon} ${it.name}</strong></div>
-            <button class="task-action-btn" onclick="if(state.balance>=${it.price}){state.balance-=${it.price};saveState();renderProfile();showToast('${it.name} olindi');}else{showToast('Mablag‘ yetarli emas');}">${it.price} G</button>
-          </div>
-        `).join(""));
-      }
-      if (type === "withdraw") {
-        return openModal("💵", "PUL YECHISH", `
-          <div class="section-box">
-            <p style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;">
-              Balans: <strong style="color:var(--gold-bright);">${state.balance.toLocaleString("en-US")} G</strong> · Min: 1 000 G
-            </p>
-            <input id="wdAmt" class="room-code-input" type="number" placeholder="Miqdor (G)" />
-            <input id="wdCard" class="room-code-input" placeholder="Karta raqami" />
-            <button class="primary-action" onclick="const a=Number(document.getElementById('wdAmt').value||0);const c=(document.getElementById('wdCard').value||'').trim();if(a<1000||a>state.balance||!c)return showToast('Ma’lumotlarni tekshiring (min 1 000 G)');state.balance-=a;saveState();renderProfile();showToast(a+' G yechish so‘rovi yuborildi');closeModal();">So‘rov yuborish</button>
-          </div>
-        `);
-      }
-    }
-
-    renderProfile();
-    renderGamesStrip();
-  </script>
-</body>
-</html>
+    const MAX_STAKE = 10000
