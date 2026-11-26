@@ -2,815 +2,449 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Zerex — Telegram Mini App</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zerex</title>
   <style>
-    :root {
-      --wood-top: #c88446;
-      --wood-mid: #8e5222;
-      --wood-bot: #532c0e;
-      --gold-bright: #ffe68a;
-      --gold-mid: #f5b418;
-      --violet-glow: #9b4dff;
-      --text-primary: #f7faf7;
-      --text-secondary: #c9ddd0;
-      --radius-xl: 22px;
-      --radius-lg: 16px;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, #1b140b 0%, #0d1d14 55%, #07100b 100%);
+      color: #f7faf7;
       min-height: 100vh;
-      color: var(--text-primary);
-      background:
-        radial-gradient(circle at 50% 0%, rgba(155, 77, 255, 0.16), transparent 45%),
-        radial-gradient(circle at 80% 20%, rgba(245, 180, 24, 0.12), transparent 40%),
-        linear-gradient(180deg, #16120a 0%, #0d1d13 55%, #060e09 100%);
-      overflow-x: hidden;
-      padding-bottom: 28px;
+      padding: 14px;
     }
 
-    .app {
-      position: relative;
-      z-index: 1;
-      max-width: 480px;
+    .wrap {
+      max-width: 460px;
       margin: 0 auto;
-      padding: 12px 14px 20px;
     }
 
-    .top-bar {
+    .top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
+      margin-bottom: 14px;
     }
 
-    .profile-box {
+    .avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffe68a, #f5b418, #9b4dff);
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-      max-width: 170px;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: #102118;
+      font-weight: 900;
+      margin-bottom: 6px;
     }
 
-    .avatar-ring {
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
-      padding: 3px;
-      background: linear-gradient(145deg, var(--gold-bright), var(--gold-mid), var(--violet-glow));
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 16px rgba(245, 180, 24, 0.35);
-      overflow: hidden;
-    }
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #102118;
-      display: block;
-      color: transparent;
-    }
-
-    .nick-badge {
-      max-width: 165px;
-      background: rgba(11, 27, 19, 0.92);
-      border: 1px solid rgba(255, 230, 138, 0.5);
+    .tag {
+      display: inline-block;
+      background: rgba(15, 34, 24, 0.95);
+      border: 1px solid rgba(255, 230, 138, 0.45);
       border-radius: 999px;
-      padding: 3px 10px;
-      font-size: 11.5px;
-      font-weight: 800;
-      color: var(--gold-bright);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffe68a;
+      margin-bottom: 5px;
     }
 
-    .level-pill {
-      background: rgba(9, 22, 15, 0.92);
-      border: 1px solid rgba(255, 230, 138, 0.32);
+    .sub-tag {
+      display: block;
+      background: rgba(10, 22, 16, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.25);
       border-radius: 10px;
       padding: 4px 9px;
-      font-size: 11.5px;
-      font-weight: 700;
+      font-size: 12px;
+      color: #dcebe2;
     }
 
-    .wallet-box {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
+    .wallet {
+      text-align: right;
     }
 
-    .balance-readout {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(10, 25, 17, 0.92);
-      border: 1px solid rgba(255, 230, 138, 0.42);
-      padding: 6px 12px;
+    .bal-box {
+      background: rgba(12, 28, 19, 0.95);
+      border: 1px solid rgba(255, 230, 138, 0.45);
       border-radius: 14px;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.55);
-    }
-
-    .balance-amount {
-      font-size: 25px;
+      padding: 8px 14px;
+      font-size: 22px;
       font-weight: 900;
-      background: linear-gradient(180deg, #fff5bf, #f5b418);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #ffe68a;
+      margin-bottom: 8px;
     }
 
-    .coin-g {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff4b8, #f5b418 58%, #9c5e00 100%);
-      border: 2px solid #ffe99e;
-      color: #462500;
-      font-weight: 900;
-      font-size: 15px;
-      display: grid;
-      place-items: center;
-    }
-
-    .deposit-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: linear-gradient(180deg, #d68e49 0%, #965722 55%, #5c310e 100%);
+    .btn-wood {
+      background: linear-gradient(180deg, #c88446 0%, #8e5222 60%, #532c0e 100%);
       border: 2px solid #f0be82;
-      border-radius: 13px;
-      padding: 7px 14px;
-      color: #fff8e6;
+      border-radius: 14px;
+      color: #fff8e7;
       font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #361905;
+    }
+
+    .btn-wood:active {
+      transform: translateY(2px);
+    }
+
+    .dep-btn {
+      padding: 8px 14px;
       font-size: 13px;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #3a1d06, 0 10px 18px rgba(0, 0, 0, 0.6);
     }
 
-    .center-status {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 8px;
-      gap: 8px;
+    .center-info {
+      text-align: center;
+      margin: 10px 0 18px;
     }
 
-    .zerex-crest {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(15, 34, 24, 0.9);
-      border: 1px solid rgba(183, 128, 255, 0.55);
-      padding: 5px 15px;
+    .brand {
+      display: inline-block;
+      background: rgba(18, 38, 28, 0.92);
+      border: 1px solid rgba(183, 128, 255, 0.5);
       border-radius: 999px;
-    }
-
-    .zerex-z {
-      font-weight: 950;
-      font-size: 15px;
-      background: linear-gradient(180deg, #ffffff, #cfa6ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .zerex-tagline {
-      font-size: 10px;
+      padding: 6px 16px;
+      font-size: 13px;
       font-weight: 800;
-      letter-spacing: 1.1px;
-      color: var(--gold-bright);
+      color: #e9d5ff;
+      margin-bottom: 8px;
     }
 
-    .online-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(10, 26, 18, 0.92);
+    .online {
+      display: inline-block;
+      background: rgba(11, 27, 18, 0.92);
       border: 1px solid rgba(72, 229, 91, 0.5);
-      padding: 6px 15px;
       border-radius: 999px;
-      font-size: 12.5px;
-      font-weight: 800;
-      color: #e8ffec;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #d8ffe0;
     }
 
-    .online-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #2fe65b;
-      box-shadow: 0 0 10px #2fe65b, 0 0 18px rgba(47, 230, 91, 0.7);
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    .side-menus-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-top: 14px;
-      gap: 12px;
+    .menu-btn {
+      padding: 13px 10px;
+      font-size: 13px;
     }
 
-    .side-col {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .games-box {
+      background: rgba(11, 24, 17, 0.88);
+      border: 1px solid rgba(255, 230, 138, 0.25);
+      border-radius: 16px;
+      padding: 10px;
+      margin-bottom: 16px;
     }
 
-    .side-col.right {
-      align-items: flex-end;
+    .games-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
     }
 
-    .wood-tile-btn {
-      width: 88px;
-      background: transparent;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
+    .game-btn {
+      background: rgba(25, 46, 34, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.3);
+      border-radius: 12px;
+      padding: 10px 6px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    .wood-tile-btn:active {
-      transform: scale(0.95);
-    }
-
-    .wood-box {
-      width: 64px;
-      height: 58px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, var(--wood-top) 0%, var(--wood-mid) 56%, var(--wood-bot) 100%);
-      border: 2px solid #f0be82;
-      box-shadow: 0 5px 0 #361905, 0 10px 16px rgba(0, 0, 0, 0.65);
-      display: grid;
-      place-items: center;
-      font-size: 26px;
-      position: relative;
-    }
-
-    .wood-box::after {
-      content: "";
-      position: absolute;
-      top: -4px;
-      left: 6px;
-      width: 18px;
-      height: 8px;
-      border-radius: 10px 10px 2px 10px;
-      background: linear-gradient(180deg, #86e35b, #36942a);
-      pointer-events: none;
-    }
-
-    .wood-label {
-      font-size: 11px;
-      font-weight: 800;
-      text-align: center;
-      line-height: 1.15;
-      color: #fff7e3;
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
-    }
-
-    .games-section {
-      margin-top: 22px;
-      background: rgba(10, 23, 16, 0.78);
-      border: 1px solid rgba(255, 230, 138, 0.28);
-      border-radius: 18px;
-      padding: 10px 8px;
-    }
-
-    .games-strip {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 6px;
-    }
-
-    .game-chip {
-      background: transparent;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .game-chip.active {
-      transform: translateY(-3px);
-    }
-
-    .game-art {
-      width: 48px;
-      height: 48px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      font-size: 23px;
-      border: 2px solid rgba(255, 230, 138, 0.5);
-      box-shadow: 0 5px 0 rgba(10, 20, 14, 0.95), 0 9px 16px rgba(0, 0, 0, 0.6);
-    }
-
-    .game-chip.active .game-art {
-      border-color: var(--gold-bright);
-      box-shadow: 0 0 0 2px rgba(245, 180, 24, 0.65), 0 0 16px rgba(245, 180, 24, 0.35);
-    }
-
-    .art-shashka { background: linear-gradient(145deg, #d98c46, #6d3810); }
-    .art-shaxmat { background: linear-gradient(145deg, #5677a3, #1f2f45); }
-    .art-bilyard { background: linear-gradient(145deg, #25a35f, #0b4a28); }
-    .art-durak   { background: linear-gradient(145deg, #b83d59, #4f1421); }
-    .art-mafia   { background: linear-gradient(145deg, #4b3578, #190f2e); }
-    .art-xo      { background: linear-gradient(145deg, #743bc9, #28104d); }
-
-    .game-name {
-      font-size: 10px;
-      font-weight: 800;
-      color: #f5f9f6;
-      text-align: center;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95);
-    }
-
-    .play-wrap {
-      margin-top: 14px;
-      display: flex;
-      justify-content: center;
+    .game-btn.active {
+      border-color: #ffe68a;
+      background: rgba(142, 82, 34, 0.65);
+      color: #ffe68a;
     }
 
     .play-btn {
-      width: 82%;
-      max-width: 310px;
-      padding: 16px 24px;
-      border-radius: 18px;
-      border: 2px solid #f0be82;
-      background: linear-gradient(180deg, #d48c48 0%, #945521 58%, #5b300e 100%);
-      box-shadow: 0 7px 0 #341804, 0 14px 26px rgba(0, 0, 0, 0.7);
-      color: #422006;
-      font-size: 28px;
-      font-weight: 950;
-      letter-spacing: 2px;
-      cursor: pointer;
+      width: 100%;
+      padding: 16px;
+      font-size: 24px;
+      letter-spacing: 1.5px;
+      color: #2c1504;
+      background: linear-gradient(180deg, #ffd866 0%, #d48c48 55%, #8e5222 100%);
     }
 
-    .play-btn:active {
-      transform: translateY(4px);
-    }
-
-    .selected-game-hint {
+    .hint {
       text-align: center;
       margin-top: 8px;
       font-size: 12px;
-      color: var(--text-secondary);
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+      color: #c9ddd0;
     }
 
-    .selected-game-hint strong {
-      color: var(--gold-bright);
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(5, 8, 5, 0.88);
-      backdrop-filter: blur(7px);
-      z-index: 40;
+    .panel {
       display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 455px;
-      max-height: 94vh;
-      overflow-y: auto;
-      background:
-        radial-gradient(circle at 50% 15%, rgba(245, 180, 24, 0.14), transparent 55%),
-        linear-gradient(180deg, #24180c 0%, #141c13 55%, #0a120c 100%);
-      border: 2px solid rgba(240, 190, 130, 0.55);
-      border-radius: var(--radius-xl);
-      padding: 14px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 230, 138, 0.16);
-    }
-
-    .modal-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .modal-title {
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--gold-bright);
-    }
-
-    .close-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .prize-banner-top {
-      text-align: center;
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: 0.6px;
-      color: #fff3c4;
-      text-shadow: 0 0 14px rgba(245, 180, 24, 0.45);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .player-strip-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(18, 15, 10, 0.85);
-      border: 1px solid rgba(255, 230, 138, 0.22);
-      border-radius: 15px;
-      padding: 8px 11px;
-      margin-bottom: 8px;
-    }
-
-    .player-strip-card.active-turn-card {
-      border-color: #ffe68a;
-      box-shadow: 0 0 14px rgba(245, 180, 24, 0.25);
-    }
-
-    .player-left-info {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-width: 0;
-    }
-
-    .player-mini-ava {
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      font-size: 14px;
-      color: #fff;
-      border: 1.5px solid rgba(255, 230, 138, 0.5);
-      flex-shrink: 0;
-      object-fit: cover;
-    }
-
-    .player-name-line {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .lvl-tag {
-      background: linear-gradient(180deg, #9b5de5, #6930c3);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 6px;
-    }
-
-    .sub-timer-line {
-      font-size: 11.5px;
-      color: #d4c49e;
-      margin-top: 2px;
-      font-weight: 700;
-    }
-
-    .thinking-highlight {
-      color: #ffe68a;
-    }
-
-    .clock-pill {
-      background: rgba(45, 32, 16, 0.92);
-      border: 1px solid rgba(255, 230, 138, 0.28);
-      border-radius: 11px;
-      padding: 6px 10px;
-      font-size: 14px;
-      font-weight: 900;
-      color: #f4e6c4;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .wood-frame-board {
-      background: linear-gradient(145deg, #4b2d16 0%, #241307 100%);
-      border: 3px solid #7c4b23;
+      margin-top: 16px;
+      background: rgba(14, 26, 19, 0.97);
+      border: 2px solid rgba(240, 190, 130, 0.5);
       border-radius: 18px;
-      padding: 8px;
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 224, 160, 0.3);
-      margin: 6px 0;
+      padding: 14px;
     }
 
-    .board-8x8 {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 10px;
-      overflow: hidden;
+    .panel.show {
+      display: block;
     }
 
-    .sq-8x8 {
-      display: grid;
-      place-items: center;
-      aspect-ratio: 1 / 1;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .sq-light { background: #dec196; }
-    .sq-dark  { background: #261b12; }
-    .sq-selected { outline: 3px solid #ffe68a; outline-offset: -3px; }
-    .sq-capture-hint::after {
-      content: "";
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 230, 138, 0.85);
-      box-shadow: 0 0 8px #ffe68a;
-    }
-
-    .checker-white {
-      width: 78%;
-      height: 78%;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #ffffff, #d9cfc1 70%, #9e9180 100%);
-      border: 2px solid #f7f3eb;
-      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.7), inset 0 -2px 4px rgba(0, 0, 0, 0.25);
-    }
-
-    .checker-black {
-      width: 78%;
-      height: 78%;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #46423d, #1c1917 72%, #090807 100%);
-      border: 2px solid #5c544b;
-      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.14);
-    }
-
-    .turn-status-pill {
-      margin: 8px auto;
-      width: fit-content;
-      padding: 6px 16px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #275c3b, #143621);
-      border: 1px solid rgba(116, 235, 152, 0.45);
-      color: #d7ffe4;
-      font-size: 11.5px;
-      font-weight: 900;
-      letter-spacing: 0.7px;
-      text-transform: uppercase;
-    }
-
-    .turn-status-pill.thinking-pill {
-      background: linear-gradient(180deg, #593b14, #2e1d08);
-      border-color: rgba(255, 230, 138, 0.55);
-      color: #ffe99e;
-    }
-
-    .gramora-bottom-actions {
+    .panel-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .round-icon-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(240, 190, 130, 0.5);
-      background: linear-gradient(180deg, #4b3117, #241609);
-      color: #ffe68a;
-      font-size: 18px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .round-icon-btn.active-mic {
-      background: linear-gradient(180deg, #28a745, #145c26);
-      color: #fff;
-    }
-
-    .wood-action-pill {
-      flex: 1;
-      height: 42px;
-      border-radius: 13px;
-      border: 1.5px solid rgba(240, 190, 130, 0.48);
-      background: linear-gradient(180deg, #4d3218, #261709);
-      color: #f6e7c8;
-      font-weight: 800;
-      font-size: 12.5px;
-      cursor: pointer;
-    }
-
-    .wood-action-pill.voted {
-      background: linear-gradient(180deg, #ffe385, #d99514);
-      color: #241300;
-    }
-
-    .stake-one-row {
-      display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 6px;
-      padding-bottom: 4px;
-    }
-
-    .stake-pill {
-      flex: 0 0 auto;
-      padding: 6px 10px;
-      border-radius: 10px;
-      border: 1.5px solid rgba(240, 190, 130, 0.45);
-      background: linear-gradient(180deg, #5e3717 0%, #341c09 100%);
-      color: #fff3cf;
-      font-weight: 800;
-      font-size: 11px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .stake-pill.active {
-      background: linear-gradient(180deg, #ffe385 0%, #f5b418 65%, #b57400 100%);
-      color: #261400;
-    }
-
-    .deposit-amount-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(25, 19, 11, 0.88);
-      border: 1px solid rgba(255, 230, 138, 0.25);
-      border-radius: 15px;
-      padding: 12px;
       margin-bottom: 10px;
     }
 
-    .copy-gold-btn {
-      padding: 9px 14px;
-      border-radius: 12px;
-      border: 1px solid #ffe68a;
-      background: linear-gradient(180deg, #ffe385 0%, #e5a115 65%, #b57704 100%);
-      color: #261400;
-      font-weight: 900;
-      font-size: 12px;
+    .panel-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffe68a;
+    }
+
+    .close-x {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      border-radius: 8px;
+      padding: 4px 10px;
       cursor: pointer;
     }
 
-    .warn-amber-box {
-      background: linear-gradient(180deg, rgba(120, 74, 14, 0.55), rgba(66, 39, 7, 0.65));
-      border: 1.5px solid rgba(245, 180, 24, 0.65);
-      border-radius: 14px;
-      padding: 11px;
-      text-align: center;
+    .panel-body {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #e8f3ec;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .small-btn {
+      background: rgba(255, 230, 138, 0.15);
+      border: 1px solid rgba(255, 230, 138, 0.45);
+      color: #ffe68a;
+      border-radius: 10px;
+      padding: 8px 12px;
       font-size: 12px;
       font-weight: 700;
-      color: #ffe89e;
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    .pay-methods-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 7px;
-      margin-bottom: 10px;
-    }
-
-    .pay-method-btn {
-      padding: 9px;
-      border-radius: 11px;
-      border: 1.5px solid rgba(255, 230, 138, 0.35);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      font-weight: 800;
-      font-size: 12px;
       cursor: pointer;
     }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="avatar">Z</div>
+        <div class="tag" id="nickText">@Oyinchi</div>
+        <span class="sub-tag" id="lvlText">Lvl 1 · Yangi o'yinchi</span>
+      </div>
 
-    .pay-method-btn.active {
-      border-color: var(--gold-bright);
-      background: rgba(245, 180, 24, 0.24);
-      color: var(--gold-bright);
+      <div class="wallet">
+        <div class="bal-box" id="balText">8 G</div>
+        <button class="btn-wood dep-btn" onclick="openPanel('deposit')">G DEPOZIT &gt;</button>
+      </div>
+    </div>
+
+    <div class="center-info">
+      <div class="brand">ZEREX · PLAY · WIN · EARN</div><br />
+      <div class="online">● 403 online</div>
+    </div>
+
+    <div class="menu-grid">
+      <button class="btn-wood menu-btn" onclick="openPanel('tasks')">📋 VAZIFALAR</button>
+      <button class="btn-wood menu-btn" onclick="openPanel('rating')">🏆 REYTING</button>
+      <button class="btn-wood menu-btn" onclick="openPanel('shop')">🏪 DO‘KON</button>
+      <button class="btn-wood menu-btn" onclick="openPanel('friend')">👥 DO‘ST BILAN</button>
+      <button class="btn-wood menu-btn" onclick="openPanel('withdraw')">💵 PUL YECHISH</button>
+      <button class="btn-wood menu-btn" onclick="openPanel('rules')">📜 QOIDALAR</button>
+    </div>
+
+    <div class="games-box">
+      <div class="games-list" id="gamesList"></div>
+    </div>
+
+    <button class="btn-wood play-btn" onclick="openPanel('play')">PLAY</button>
+    <div class="hint" id="hintText">Tanlangan o‘yin: Shashka · Tikuv: 3 G · Yutuq: 1.8x</div>
+
+    <div class="panel" id="panelBox">
+      <div class="panel-head">
+        <div class="panel-title" id="panelTitle">Bo‘lim</div>
+        <button class="close-x" onclick="closePanel()">Yopish</button>
+      </div>
+      <div class="panel-body" id="panelBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const games = [
+      { id: "shashka", name: "⚫ Shashka" },
+      { id: "shaxmat", name: "♞ Shaxmat" },
+      { id: "bilyard", name: "🎱 Bilyard" },
+      { id: "durak", name: "🃏 Durak" },
+      { id: "mafia", name: "🕵️ Mafia" },
+      { id: "xo", name: "✖️ X-O" }
+    ];
+
+    let currentGame = games[0];
+    let balance = 8;
+    let stake = 3;
+
+    function updateUI() {
+      document.getElementById("balText").textContent = balance + " G";
+      document.getElementById("hintText").textContent =
+        "Tanlangan o‘yin: " + currentGame.name.replace(/^[^\s]+\s/, "") +
+        " · Tikuv: " + stake + " G · Yutuq: 1.8x";
+
+      const list = document.getElementById("gamesList");
+      list.innerHTML = "";
+      games.forEach(function (g) {
+        const btn = document.createElement("button");
+        btn.className = "game-btn" + (g.id === currentGame.id ? " active" : "");
+        btn.textContent = g.name;
+        btn.onclick = function () {
+          currentGame = g;
+          updateUI();
+          openPanel("play");
+        };
+        list.appendChild(btn);
+      });
     }
 
-    .gold-cta-btn {
-      width: 100%;
-      padding: 13px 14px;
-      border-radius: 14px;
-      border: 1.5px solid #ffe68a;
-      background: linear-gradient(180deg, #ffd866 0%, #e5a115 65%, #b57704 100%);
-      color: #2b1600;
-      font-weight: 900;
-      font-size: 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #694100;
-      margin-top: 8px;
+    function openPanel(type) {
+      const box = document.getElementById("panelBox");
+      const title = document.getElementById("panelTitle");
+      const body = document.getElementById("panelBody");
+      box.classList.add("show");
+
+      if (type === "play") {
+        const prize = Math.floor(stake * 1.8);
+        title.textContent = currentGame.name;
+        body.innerHTML =
+          "<p>Tikuv: <b>" + stake + " G</b> · Yutuq: <b>" + prize + " G (1.8x)</b></p>" +
+          "<p>Vaqt: <b>6:30</b> umumiy · <b>50s</b> har yurishga · Raqib navbatida: <b>Raqib o‘ylamoqda...</b></p>" +
+          "<div class='action-row'>" +
+          "<button class='small-btn' onclick='changeStake(3)'>3 G</button>" +
+          "<button class='small-btn' onclick='changeStake(10)'>10 G</button>" +
+          "<button class='small-btn' onclick='changeStake(50)'>50 G</button>" +
+          "<button class='small-btn' onclick='playRound(\"win\")'>G‘alaba (+ " + prize + " G)</button>" +
+          "<button class='small-btn' onclick='playRound(\"draw\")'>Durrang</button>" +
+          "</div>";
+        return;
+      }
+
+      if (type === "deposit") {
+        title.textContent = "💰 DEPOZIT";
+        body.innerHTML =
+          "<p>Karta: <b>6262 5702 3220 5437</b> (Esirgapov Sherzod)</p>" +
+          "<p>Paket: <b>1 000 G = 11 000 so‘m</b></p>" +
+          "<div class='action-row'>" +
+          "<button class='small-btn' onclick='addCoins(1000)'>+1 000 G qo‘shish</button>" +
+          "</div>";
+        return;
+      }
+
+      if (type === "tasks") {
+        title.textContent = "📋 VAZIFALAR";
+        body.innerHTML =
+          "<p>Vazifani bajarib tanga oling:</p>" +
+          "<div class='action-row'><button class='small-btn' onclick='addCoins(1)'>Reklama ko‘rish (+1 G)</button></div>";
+        return;
+      }
+
+      if (type === "rating") {
+        title.textContent = "🏆 REYTING";
+        body.innerHTML = "<p>1. @Oyinchi — " + balance + " G</p><p>2. Pokiza — 450 G</p><p>3. Javohir — 320 G</p>";
+        return;
+      }
+
+      if (type === "shop") {
+        title.textContent = "🏪 DO‘KON";
+        body.innerHTML = "<p>Oltin ramka — 5 G</p><div class='action-row'><button class='small-btn' onclick='buyItem(5)'>Sotib olish (5 G)</button></div>";
+        return;
+      }
+
+      if (type === "friend") {
+        title.textContent = "👥 DO‘ST BILAN";
+        body.innerHTML = "<p>Do‘stingiz bilan " + currentGame.name + " o‘ynash uchun tikuvni tanlang: <b>" + stake + " G</b>.</p>";
+        return;
+      }
+
+      if (type === "withdraw") {
+        title.textContent = "💵 PUL YECHISH";
+        body.innerHTML = "<p>Joriy balans: <b>" + balance + " G</b>. Minimal yechish: <b>1 000 G</b>.</p>";
+        return;
+      }
+
+      title.textContent = "📜 QOIDALAR";
+      body.innerHTML = "<p>Shashkada toshni yutib olish majburiy. Har yurishga 50s, umumiy vaqt 6:30. Durrang ikki taraf roziligida.</p>";
     }
 
-    .section-box {
-      background: rgba(7, 17, 12, 0.84);
-      border: 1px solid rgba(255, 230, 138, 0.15);
-      border-radius: var(--radius-lg);
-      padding: 11px;
-      margin-bottom: 10px;
+    function closePanel() {
+      document.getElementById("panelBox").classList.remove("show");
     }
 
-    .section-label {
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--text-secondary);
-      margin-bottom: 7px;
-      text-transform: uppercase;
-      text-align: center;
+    function changeStake(val) {
+      stake = val;
+      updateUI();
+      openPanel("play");
     }
 
-    .xo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      max-width: 220px;
-      margin: 8px auto;
+    function addCoins(val) {
+      balance += val;
+      updateUI();
     }
 
-    .xo-cell {
-      aspect-ratio: 1 / 1;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 230, 138, 0.45);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--gold-bright);
-      font-size: 26px;
-      font-weight: 900;
-      cursor: pointer;
+    function buyItem(price) {
+      if (balance < price) {
+        alert("Balansda yetarli tanga yo‘q.");
+        return;
+      }
+      balance -= price;
+      updateUI();
     }
 
-    .outcome-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 7px;
-      margin-top: 8px;
+    function playRound(outcome) {
+      if (balance < stake) {
+        alert("Balansda yetarli tanga yo‘q.");
+        return;
+      }
+      if (outcome === "win") {
+        balance = balance - stake + Math.floor(stake * 1.8);
+      }
+      updateUI();
+      openPanel("play");
     }
 
-    .outcome-btn {
-      padding: 8px 5px;
-      border-radius: 10px;
-      border: none;
-      font-weight: 800;
-      font-size: 11px;
-      cursor: pointer;
-      color: #fff;
-    }
+    try {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        const u = window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user;
+        if (u && u.username) {
+          document.getElementById("nickText").textContent = "@" + u.username;
+        }
+      }
+    } catch (e) {}
 
-    .outcome-win { background: linear-gradient(180deg, #27a852, #176b33); }
-    .outcome-draw { background: linear-gradient(180deg, #eab308, #a16207); color: #1a1100; }
-    .outcome-loss { background: linear-gradient(180deg, #d94343, #8c2323); }
-
-    .task-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 11px;
-      border-radius: 15px;
-      background: linear-gradient(180deg, #593314 0%, #
+    updateUI();
+  </script>
+</body>
+</html>
