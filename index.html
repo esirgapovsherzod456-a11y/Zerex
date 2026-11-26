@@ -1,137 +1,728 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d19">
-<title>Zerex — Play Beyond</title>
-<style>
-:root{--bg:#080d19;--panel:#111b2d;--panel2:#172640;--line:#263956;--blue:#397bff;--cyan:#00d9ff;--gold:#ffc857;--text:#f4f7ff;--muted:#91a0b8;--green:#39d69a}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:radial-gradient(ellipse at 50% -20%,#1a3260 0,transparent 55%),var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;min-height:100vh;padding-bottom:90px}
-button,input{font:inherit}button{cursor:pointer;border:0}
-.topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:14px max(16px,calc((100vw - 900px)/2));background:#0b1424ed;backdrop-filter:blur(16px);border-bottom:1px solid #23334c}
-.logo{font-size:25px;font-weight:950;letter-spacing:2px;background:linear-gradient(90deg,#5b91ff,#00e5ff);background-clip:text;color:transparent}
-.top-right{display:flex;align-items:center;gap:10px}.coin-pill{padding:9px 13px;background:#202d43;border:1px solid #41516a;border-radius:30px;color:var(--gold);font-weight:800}.avatar{height:38px;width:38px;border-radius:13px;background:linear-gradient(135deg,#397bff,#00d9ff);display:grid;place-items:center;font-weight:900}
-main{max-width:900px;margin:auto;padding:20px 15px}.view{display:none;animation:appear .22s ease}.view.active{display:block}@keyframes appear{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
-.hello{margin:6px 0 18px}.hello h1{font-size:25px}.muted{color:var(--muted)}.small{font-size:12px}
-.hero{position:relative;overflow:hidden;padding:24px;border-radius:23px;border:1px solid #31558a;background:linear-gradient(115deg,#142b53,#111c34 70%);margin-bottom:20px}.hero:after{content:"✦";position:absolute;right:23px;top:15px;font-size:100px;color:#65baff25}.hero h2{font-size:25px;margin-bottom:8px}.hero p{max-width:390px;color:#c3d5f1;line-height:1.55;font-size:14px}.hero .btn{margin-top:17px;background:#f5f8ff;color:#174b9d}
-.btn{padding:12px 16px;border-radius:12px;background:linear-gradient(100deg,#397bff,#245bd0);color:white;font-weight:800;box-shadow:0 6px 18px #1456c833}.btn:active{transform:scale(.98)}.btn.secondary{background:#243653;box-shadow:none}.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none}.btn.full{width:100%}.btn:disabled{opacity:.45;cursor:not-allowed}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:23px 0 13px}.section-head h2{font-size:18px}.link{color:var(--cyan);background:none;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0 22px}.stat,.card{background:linear-gradient(145deg,#142139,#101a2b);border:1px solid var(--line);border-radius:17px}.stat{text-align:center;padding:14px 6px}.stat .ico{font-size:22px}.stat strong{display:block;font-size:21px;margin:5px}.stat small{color:var(--muted);font-size:11px}
-.games-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.game-card{padding:16px;background:linear-gradient(145deg,#172640,#101a2a);border:1px solid #2a3d5c;border-radius:18px;min-width:0}.game-icon{font-size:34px;margin-bottom:10px}.game-card h3{font-size:16px;margin-bottom:5px}.game-card p{font-size:12px;color:var(--muted);min-height:30px;line-height:1.4}.game-card .btn{width:100%;margin-top:12px;padding:10px}
-.card{padding:17px;margin:12px 0}.card h3{margin-bottom:8px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.divider{height:1px;background:var(--line);margin:13px 0}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;justify-content:space-around;background:#0b1425f5;border-top:1px solid #263650;padding:9px 4px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(15px)}.nav-item{background:none;color:#8998b2;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:54px;font-size:10px}.nav-item b{font-size:21px}.nav-item.active{color:var(--cyan)}
-.profile{text-align:center;padding:23px}.big-avatar{width:76px;height:76px;margin:0 auto 12px;border-radius:24px;background:linear-gradient(135deg,#397bff,#00d9ff);display:grid;place-items:center;font-size:30px;font-weight:900}
-.leader-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.leader-row:last-child{border:0}.rank{width:27px;color:var(--gold);font-weight:900}.leader-row .name{flex:1}.leader-row .points{color:var(--cyan);font-weight:800}
-.board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:330px;margin:20px auto}.cell{aspect-ratio:1;border-radius:15px;background:#1d2d49;border:1px solid #344968;color:white;font-size:clamp(35px,10vw,52px);font-weight:900}.cell.x{color:#62a1ff}.cell.o{color:#40e0d0}.gamebox{text-align:center}.gamebox h2{margin-bottom:7px}.game-message{min-height:25px;color:var(--cyan);font-weight:700}.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
-input{width:100%;padding:13px;background:#0d1728;border:1px solid var(--line);border-radius:11px;color:white;outline:none;margin:8px 0 12px}input:focus{border-color:var(--cyan)}
-.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:#243653;color:white;border:1px solid #4a6388;padding:12px 17px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
-.badge{display:inline-block;background:#183b3a;color:#6de5bd;border-radius:30px;padding:5px 9px;font-size:11px;font-weight:800}
-@media(min-width:650px){.games-grid{grid-template-columns:repeat(3,1fr)}main{padding-top:28px}.hero{padding:32px}.hero h2{font-size:30px}}
-</style>
-</head>
-<body>
-<header class="topbar">
-  <div class="logo">ZEREX<span style="color:#f4f7ff">.</span></div>
-  <div class="top-right"><div class="coin-pill">🪙 <span id="coinTop">5</span></div><div class="avatar" id="avatarTop">Z</div></div>
-</header>
-<main>
-  <section class="view active" id="home">
-    <div class="hello"><h1>Salom, <span id="helloName">Player</span>! 👋</h1><p class="muted small">Zerex olamiga xush kelibsiz.</p></div>
-    <div class="hero"><h2>PLAY BEYOND.</h2><p>O‘yna, mahoratingni oshir, do‘stlaring bilan bellash va reytingda yuqoriga ko‘taril.</p><button class="btn" onclick="navigate('games')">O‘yinlarni ko‘rish&nbsp; →</button></div>
-    <div class="stats">
-      <div class="stat"><div class="ico">🪙</div><strong id="homeCoins">5</strong><small>Ballar</small></div>
-      <div class="stat"><div class="ico">🎮</div><strong id="homeGames">0</strong><small>O‘yinlar</small></div>
-      <div class="stat"><div class="ico">🏆</div><strong id="homeWins">0</strong><small>G‘alabalar</small></div>
-    </div>
-    <div class="section-head"><h2>🔥 Mashhur o‘yinlar</h2><button class="link" onclick="navigate('games')">Barchasi →</button></div>
-    <div class="games-grid" id="featuredGames"></div>
-    <div class="card"><div class="row"><div><h3>🎁 Kunlik bonus</h3><p class="muted small">Har kuni kirib, bepul ball ol.</p></div><span class="badge">Bepul</span></div><button class="btn full" id="dailyBtn" onclick="claimDaily()">Bonusni olish</button></div>
-  </section>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Zerex — Telegram Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg-image: url("https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80");
+      --wood-top: #c88446;
+      --wood-mid: #8e5222;
+      --wood-bot: #532c0e;
+      --gold-bright: #ffe68a;
+      --gold-mid: #f5b418;
+      --violet-glow: #9b4dff;
+      --text-primary: #f7faf7;
+      --text-secondary: #c9ddd0;
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+    }
 
-  <section class="view" id="games">
-    <div class="section-head"><h2>🎮 O‘yinlar markazi</h2><span class="badge">Demo</span></div>
-    <div class="games-grid" id="allGames"></div>
-    <p class="muted small" style="margin-top:15px">Yangi o‘yinlar keyingi versiyalarda qo‘shiladi. Hozir X/O mini-o‘yini ishlaydi.</p>
-  </section>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
 
-  <section class="view" id="play">
-    <div class="card gamebox">
-      <div class="row"><button class="btn ghost" onclick="navigate('games')">← Orqaga</button><span class="badge">X/O • Mini o‘yin</span></div>
-      <h2 style="margin-top:20px">❌ X / O ⭕</h2>
-      <p class="muted small">Kompyuterga qarshi o‘yna. G‘alaba uchun 3 ta belgini bir qatorga joylashtir.</p>
-      <div class="board" id="board"></div>
-      <p class="game-message" id="gameMessage">Sening navbating — X</p>
-      <div class="actions"><button class="btn" onclick="newGame()">Qayta boshlash</button><button class="btn secondary" onclick="navigate('games')">O‘yinlardan chiqish</button></div>
-    </div>
-    <div class="card"><p class="muted small">Bu demo o‘yinda pul tikilmaydi. Natijalar faqat mashq va ko‘ngilochar ballar uchun.</p></div>
-  </section>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      color: var(--text-primary);
+      background-color: #09150e;
+      background-image:
+        linear-gradient(180deg, rgba(16, 12, 6, 0.72) 0%, rgba(11, 23, 15, 0.84) 55%, rgba(5, 12, 8, 0.95) 100%),
+        var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow-x: hidden;
+      padding-bottom: 28px;
+    }
 
-  <section class="view" id="leaderboard">
-    <div class="section-head"><h2>🏆 TOP-100 reyting</h2><span class="badge">Namunaviy</span></div>
-    <div class="card"><p class="muted small">Quyidagi reyting sinov ma’lumotlari. Haqiqiy umumiy reyting server ulangandan keyin ishlaydi.</p><div id="leaderList"></div></div>
-  </section>
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 12px 14px 20px;
+    }
 
-  <section class="view" id="bonus">
-    <div class="section-head"><h2>🎁 Bonus markazi</h2></div>
-    <div class="card"><h3>Kunlik sovg‘a</h3><p class="muted small">Har 24 soatda bir marta bepul ball olishing mumkin.</p><div style="font-size:42px;margin:15px 0">🎁</div><h2 style="color:var(--gold)">+5 ball</h2><button class="btn full" id="bonusBtn" onclick="claimDaily()">Bonusni olish</button></div>
-    <div class="card"><h3>📺 Reklama bo‘limi</h3><p class="muted small">Haqiqiy reklama tarmog‘i hali ulanmagan. Bu tugma faqat sinov rejimida ishlaydi.</p><button class="btn secondary full" onclick="demoAd()">Sinov bonusini ko‘rish (+1)</button></div>
-  </section>
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
 
-  <section class="view" id="profile">
-    <div class="card profile"><div class="big-avatar" id="bigAvatar">Z</div><h2 id="profileName">Player</h2><p class="muted small">Zerex o‘yinchisi</p><div class="divider"></div><div class="stats"><div class="stat"><strong id="profileCoins">5</strong><small>Ballar</small></div><div class="stat"><strong id="profileGames">0</strong><small>O‘yinlar</small></div><div class="stat"><strong id="profileWins">0</strong><small>G‘alabalar</small></div></div><button class="btn secondary full" onclick="changeName()">Ismni o‘zgartirish</button></div>
-    <div class="card"><h3>📜 O‘yinlar tarixi</h3><div id="history" class="muted small">Hozircha tarix mavjud emas.</div></div>
-    <div class="card"><h3>⚙️ Ilova haqida</h3><p class="muted small">Zerex v1.0 • HTML prototip. Ma’lumotlar ushbu qurilmada saqlanadi.</p><button class="btn ghost full" onclick="resetDemo()">Demo ma’lumotlarini tiklash</button></div>
-  </section>
-</main>
-<nav class="bottom-nav">
-  <button class="nav-item active" data-view="home" onclick="navigate('home')"><b>⌂</b>Asosiy</button>
-  <button class="nav-item" data-view="games" onclick="navigate('games')"><b>🎮</b>O‘yinlar</button>
-  <button class="nav-item" data-view="leaderboard" onclick="navigate('leaderboard')"><b>🏆</b>Reyting</button>
-  <button class="nav-item" data-view="bonus" onclick="navigate('bonus')"><b>🎁</b>Bonus</button>
-  <button class="nav-item" data-view="profile" onclick="navigate('profile')"><b>👤</b>Profil</button>
-</nav>
-<div class="toast" id="toast"></div>
+    .profile-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      max-width: 170px;
+    }
 
-<script>
-"use strict";
-const STORE_KEY="zerex_demo_v1";
-const defaultState={name:"Player",coins:5,games:0,wins:0,lastDaily:"",history:[],adDemo:0};
-let state=loadState();
-function loadState(){try{const x=JSON.parse(localStorage.getItem(STORE_KEY));return x&&typeof x==="object"?{...defaultState,...x}: {...defaultState}}catch(e){return {...defaultState}}}
-function save(){localStorage.setItem(STORE_KEY,JSON.stringify(state));render()}
-function safeText(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),2400)}
-function navigate(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===id));if(id==="play")drawBoard();window.scrollTo({top:0,behavior:"smooth"})}
-const games=[
- {icon:"❌",name:"X / O",desc:"Kompyuterga qarshi mantiqiy o‘yin",live:true},
- {icon:"♟️",name:"Shaxmat",desc:"Strategiya va aql sinovi",live:false},
- {icon:"🔴",name:"Shashka",desc:"Klassik stol o‘yini",live:false},
- {icon:"🃏",name:"Durak",desc:"Karta o‘yini",live:false},
- {icon:"🕵️",name:"Mafia",desc:"Jamoaviy sirli o‘yin",live:false},
- {icon:"🧩",name:"Puzzle",desc:"Mantiqiy boshqotirmalar",live:false}
-];
-function gameCard(g){return `<article class="game-card"><div class="game-icon">${g.icon}</div><h3>${g.name}</h3><p>${g.desc}</p><button class="btn" onclick="${g.live?"startXO()":"comingSoon()"}">${g.live?"O‘ynash":"Tez kunda"}</button></article>`}
-function renderGames(){document.getElementById("featuredGames").innerHTML=games.slice(0,2).map(gameCard).join("");document.getElementById("allGames").innerHTML=games.map(gameCard).join("")}
-function renderLeaderboard(){const people=[["ZerexMaster",4200],["Player_07",3850],["Shadow",3400],["ProGamer",2950],["BlueFox",2600],["Nova",2250],["Tiger",1900],["Sky",1600],["Alpha",1250],["Player_10",900]];people.push([state.name,state.coins]);people.sort((a,b)=>b[1]-a[1]);document.getElementById("leaderList").innerHTML=people.slice(0,10).map((p,i)=>`<div class="leader-row"><span class="rank">#${i+1}</span><span class="name">${safeText(p[0])}${p[0]===state.name?' <span class="badge">Siz</span>':''}</span><span class="points">${p[1].toLocaleString("uz-UZ")} 🪙</span></div>`).join("")}
-function renderHistory(){const h=document.getElementById("history");h.innerHTML=state.history.length?state.history.slice(0,10).map(x=>`<div class="leader-row"><span class="name">${safeText(x.label)}</span><span class="muted small">${safeText(x.date)}</span></div>`).join(""):"Hozircha tarix mavjud emas."}
-function render(){const n=safeText(state.name);["coinTop","homeCoins","profileCoins"].forEach(id=>document.getElementById(id).textContent=state.coins);document.getElementById("helloName").textContent=n;document.getElementById("profileName").textContent=n;document.getElementById("avatarTop").textContent=(state.name[0]||"Z").toUpperCase();document.getElementById("bigAvatar").textContent=(state.name[0]||"Z").toUpperCase();document.getElementById("homeGames").textContent=state.games;document.getElementById("homeWins").textContent=state.wins;document.getElementById("profileGames").textContent=state.games;document.getElementById("profileWins").textContent=state.wins;const claimed=state.lastDaily===new Date().toDateString();document.getElementById("dailyBtn").disabled=claimed;document.getElementById("bonusBtn").disabled=claimed;document.getElementById("dailyBtn").textContent=claimed?"Bugungi bonus olindi ✓":"Bonusni olish";document.getElementById("bonusBtn").textContent=claimed?"Bugungi bonus olindi ✓":"Bonusni olish";renderHistory();renderLeaderboard()}
-function addHistory(label){state.history.unshift({label,date:new Date().toLocaleString("uz-UZ")});state.history=state.history.slice(0,20)}
-function claimDaily(){if(state.lastDaily===new Date().toDateString()){toast("Bugungi bonusni allaqachon olding.");return}state.lastDaily=new Date().toDateString();state.coins+=5;addHistory("Kunlik bonus +5");save();toast("+5 bepul ball qo‘shildi!")}
-function demoAd(){state.adDemo++;state.coins+=1;addHistory("Sinov bonusi +1");save();toast("Sinov bonusi: +1 ball. Haqiqiy reklama ko‘rilmadi.")}
-function changeName(){const v=prompt("Yangi o‘yinchi ismini kiriting:",state.name);if(v&&v.trim()){state.name=v.trim().slice(0,18);save();toast("Ism yangilandi.")}}
-function comingSoon(){toast("Bu o‘yin keyingi versiyada qo‘shiladi.")}
-let cells=Array(9).fill(""),turn="X",ended=false;
-const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-function startXO(){navigate("play");newGame()}
-function drawBoard(){const b=document.getElementById("board");b.innerHTML="";cells.forEach((v,i)=>{const el=document.createElement("button");el.className="cell "+(v?v.toLowerCase():"");el.textContent=v;el.disabled=!!v||ended||turn!=="X";el.setAttribute("aria-label","Katak "+(i+1));el.onclick=()=>move(i);b.appendChild(el)});document.getElementById("gameMessage").textContent=ended?document.getElementById("gameMessage").textContent:turn==="X"?"Sening navbating — X":"Kompyuter o‘ylayapti…"}
-function winner(a){for(const line of wins){const [x,y,z]=line;if(a[x]&&a[x]===a[y]&&a[y]===a[z])return a[x]}return a.every(Boolean)?"draw":null}
-function finish(result){ended=true;state.games++;if(result==="X"){state.wins++;state.coins+=2;addHistory("X/O — G‘alaba (+2 ball)");document.getElementById("gameMessage").textContent="🎉 Tabriklaymiz! Sen yutding. +2 ball"}else if(result==="O"){addHistory("X/O — Kompyuter g‘alaba qildi");document.getElementById("gameMessage").textContent="Kompyuter yutdi. Yana urinib ko‘r!"}else{addHistory("X/O — Durrang");document.getElementById("gameMessage").textContent="Durrang! Yaxshi o‘yin."}save();drawBoard()}
-function move(i){if(ended||turn!=="X"||cells[i])return;cells[i]="X";let r=winner(cells);if(r){finish(r);return}turn="O";drawBoard();setTimeout(()=>{if(ended)return;const empty=cells.map((v,i)=>v?null:i).filter(v=>v!==null);if(!empty.length){finish("draw");return}let choice=empty.find(i=>{const a=[...cells];a[i]="O";return winner(a)==="O"});if(choice===undefined)choice=empty.find(i=>{const a=[...cells];a[i]="X";return winner(a)==="X"});if(choice===undefined)choice=empty[Math.floor(Math.random()*empty.length)];cells[choice]="O";r=winner(cells);if(r)finish(r);else{turn="X";drawBoard()}},450)}
-function newGame(){cells=Array(9).fill("");turn="X";ended=false;document.getElementById("gameMessage").textContent="Sening navbating — X";drawBoard()}
-function resetDemo(){if(!confirm("Demo ma’lumotlarini boshidan boshlaysizmi?"))return;state={...defaultState};save();newGame();toast("Demo ma’lumotlari tiklandi.")}
-renderGames();render();drawBoard();
-</script>
-</body>
-</html>
+    .avatar-ring {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(145deg, var(--gold-bright), var(--gold-mid), var(--violet-glow));
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 16px rgba(245, 180, 24, 0.35);
+      overflow: hidden;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #102118;
+      display: block;
+      color: transparent;
+    }
+
+    .nick-badge {
+      max-width: 165px;
+      background: rgba(11, 27, 19, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.5);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--gold-bright);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .level-pill {
+      background: rgba(9, 22, 15, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.32);
+      border-radius: 10px;
+      padding: 4px 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    .wallet-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .balance-readout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(10, 25, 17, 0.9);
+      border: 1px solid rgba(255, 230, 138, 0.42);
+      padding: 6px 12px;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.55);
+    }
+
+    .balance-amount {
+      font-size: 25px;
+      font-weight: 900;
+      background: linear-gradient(180deg, #fff5bf, #f5b418);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .coin-g {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff4b8, #f5b418 58%, #9c5e00 100%);
+      border: 2px solid #ffe99e;
+      color: #462500;
+      font-weight: 900;
+      font-size: 15px;
+      display: grid;
+      place-items: center;
+    }
+
+    .deposit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(180deg, #d68e49 0%, #965722 55%, #5c310e 100%);
+      border: 2px solid #f0be82;
+      border-radius: 13px;
+      padding: 7px 14px;
+      color: #fff8e6;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #3a1d06, 0 10px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .center-status {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 8px;
+      gap: 8px;
+    }
+
+    .zerex-crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 34, 24, 0.88);
+      border: 1px solid rgba(183, 128, 255, 0.55);
+      padding: 5px 15px;
+      border-radius: 999px;
+    }
+
+    .zerex-z {
+      font-weight: 950;
+      font-size: 15px;
+      background: linear-gradient(180deg, #ffffff, #cfa6ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .zerex-tagline {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      color: var(--gold-bright);
+    }
+
+    .online-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(10, 26, 18, 0.92);
+      border: 1px solid rgba(72, 229, 91, 0.5);
+      padding: 6px 15px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #e8ffec;
+    }
+
+    .online-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #2fe65b;
+      box-shadow: 0 0 10px #2fe65b, 0 0 18px rgba(47, 230, 91, 0.7);
+    }
+
+    .side-menus-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 14px;
+      gap: 12px;
+    }
+
+    .side-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .side-col.right {
+      align-items: flex-end;
+    }
+
+    .wood-tile-btn {
+      width: 88px;
+      background: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .wood-tile-btn:active {
+      transform: scale(0.95);
+    }
+
+    .wood-box {
+      width: 64px;
+      height: 58px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--wood-top) 0%, var(--wood-mid) 56%, var(--wood-bot) 100%);
+      border: 2px solid #f0be82;
+      box-shadow: 0 5px 0 #361905, 0 10px 16px rgba(0, 0, 0, 0.65);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      position: relative;
+    }
+
+    .wood-box::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 6px;
+      width: 18px;
+      height: 8px;
+      border-radius: 10px 10px 2px 10px;
+      background: linear-gradient(180deg, #86e35b, #36942a);
+      pointer-events: none;
+    }
+
+    .wood-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.15;
+      color: #fff7e3;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
+    }
+
+    .games-section {
+      margin-top: 22px;
+      background: rgba(10, 23, 16, 0.72);
+      border: 1px solid rgba(255, 230, 138, 0.25);
+      border-radius: 18px;
+      padding: 10px 8px;
+    }
+
+    .games-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+
+    .game-chip {
+      background: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .game-chip.active {
+      transform: translateY(-3px);
+    }
+
+    .game-art {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      border: 2px solid rgba(255, 230, 138, 0.5);
+      box-shadow: 0 5px 0 rgba(10, 20, 14, 0.95), 0 9px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    .game-chip.active .game-art {
+      border-color: var(--gold-bright);
+      box-shadow: 0 0 0 2px rgba(245, 180, 24, 0.65), 0 0 16px rgba(245, 180, 24, 0.35);
+    }
+
+    .art-shashka { background: linear-gradient(145deg, #d98c46, #6d3810); }
+    .art-shaxmat { background: linear-gradient(145deg, #5677a3, #1f2f45); }
+    .art-bilyard { background: linear-gradient(145deg, #25a35f, #0b4a28); }
+    .art-durak   { background: linear-gradient(145deg, #b83d59, #4f1421); }
+    .art-mafia   { background: linear-gradient(145deg, #4b3578, #190f2e); }
+    .art-xo      { background: linear-gradient(145deg, #743bc9, #28104d); }
+
+    .game-name {
+      font-size: 10px;
+      font-weight: 800;
+      color: #f5f9f6;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95);
+    }
+
+    .play-wrap {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .play-btn {
+      width: 82%;
+      max-width: 310px;
+      padding: 16px 24px;
+      border-radius: 18px;
+      border: 2px solid #f0be82;
+      background: linear-gradient(180deg, #d48c48 0%, #945521 58%, #5b300e 100%);
+      box-shadow: 0 7px 0 #341804, 0 14px 26px rgba(0, 0, 0, 0.7);
+      color: #422006;
+      font-size: 28px;
+      font-weight: 950;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    .play-btn:active {
+      transform: translateY(4px);
+    }
+
+    .selected-game-hint {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    }
+
+    .selected-game-hint strong {
+      color: var(--gold-bright);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 5, 0.88);
+      backdrop-filter: blur(7px);
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 455px;
+      max-height: 94vh;
+      overflow-y: auto;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(245, 180, 24, 0.14), transparent 55%),
+        linear-gradient(180deg, #24180c 0%, #141c13 55%, #0a120c 100%);
+      border: 2px solid rgba(240, 190, 130, 0.55);
+      border-radius: var(--radius-xl);
+      padding: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 230, 138, 0.16);
+    }
+
+    .modal-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--gold-bright);
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .prize-banner-top {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      color: #fff3c4;
+      text-shadow: 0 0 14px rgba(245, 180, 24, 0.45);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .player-strip-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(18, 15, 10, 0.85);
+      border: 1px solid rgba(255, 230, 138, 0.22);
+      border-radius: 15px;
+      padding: 8px 11px;
+      margin-bottom: 8px;
+    }
+
+    .player-strip-card.active-turn-card {
+      border-color: #ffe68a;
+      box-shadow: 0 0 14px rgba(245, 180, 24, 0.25);
+    }
+
+    .player-left-info {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .player-mini-ava {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 14px;
+      color: #fff;
+      border: 1.5px solid rgba(255, 230, 138, 0.5);
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .player-name-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .lvl-tag {
+      background: linear-gradient(180deg, #9b5de5, #6930c3);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .sub-timer-line {
+      font-size: 11.5px;
+      color: #d4c49e;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+
+    .thinking-highlight {
+      color: #ffe68a;
+    }
+
+    .clock-pill {
+      background: rgba(45, 32, 16, 0.92);
+      border: 1px solid rgba(255, 230, 138, 0.28);
+      border-radius: 11px;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-weight: 900;
+      color: #f4e6c4;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wood-frame-board {
+      background: linear-gradient(145deg, #4b2d16 0%, #241307 100%);
+      border: 3px solid #7c4b23;
+      border-radius: 18px;
+      padding: 8px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 224, 160, 0.3);
+      margin: 6px 0;
+    }
+
+    .board-8x8 {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .sq-8x8 {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .sq-light { background: #dec196; }
+    .sq-dark  { background: #261b12; }
+    .sq-selected { outline: 3px solid #ffe68a; outline-offset: -3px; }
+    .sq-capture-hint::after {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 230, 138, 0.85);
+      box-shadow: 0 0 8px #ffe68a;
+    }
+
+    .checker-white {
+      width: 78%;
+      height: 78%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #d9cfc1 70%, #9e9180 100%);
+      border: 2px solid #f7f3eb;
+      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.7), inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .checker-black {
+      width: 78%;
+      height: 78%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #46423d, #1c1917 72%, #090807 100%);
+      border: 2px solid #5c544b;
+      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.14);
+    }
+
+    .turn-status-pill {
+      margin: 8px auto;
+      width: fit-content;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #275c3b, #143621);
+      border: 1px solid rgba(116, 235, 152, 0.45);
+      color: #d7ffe4;
+      font-size: 11.5px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .turn-status-pill.thinking-pill {
+      background: linear-gradient(180deg, #593b14, #2e1d08);
+      border-color: rgba(255, 230, 138, 0.55);
+      color: #ffe99e;
+    }
+
+    .gramora-bottom-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .round-icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(240, 190, 130, 0.5);
+      background: linear-gradient(180deg, #4b3117, #241609);
+      color: #ffe68a;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .round-icon-btn.active-mic {
+      background: linear-gradient(180deg, #28a745, #145c26);
+      color: #fff;
+    }
+
+    .wood-action-pill {
+      flex: 1;
+      height: 42px;
+      border-radius: 13px;
+      border: 1.5px solid rgba(240, 190, 130, 0.48);
+      background: linear-gradient(180deg, #4d3218, #261709);
+      color: #f6e7c8;
+      font-weight: 800;
+      font-size: 12.5px;
+      cursor: pointer;
+    }
+
+    .wood-action-pill.voted {
+      background: linear-gradient(180deg, #ffe385, #d99514);
+      color: #241300;
+    }
+
+    .stake-one-row {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 6px;
+      padding-bottom: 4px;
+    }
+
+    .stake-pill {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(240, 190, 130, 0.45);
+      background: linear-gradient(180deg, #5e3717 0%, #341c09 100%);
+      color: #fff3cf;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .stake-pill.active {
+      background: linear-gradient(180deg, #ffe385 0%, #f5b418 65%, #b57400 100%);
+      color: #261400;
+    }
+
+    .deposit-amount-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(25, 19, 11, 0.88);
+      border: 1px solid rgba(255, 230, 138, 0.25);
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .copy-gold-btn {
+      padding: 9px 14px;
+      border-radius: 12px;
+      border: 1px solid #ffe68a;
+      background: linear-gradient(180deg, #ffe385 0%, #e5a115 65%, #b57704 100%);
+      color: #261400;
+      font-weight: 900;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .warn-amber-box {
+      background: linear-gradient(180deg, rgba(120, 74, 14, 0.55), rgba(66, 39, 7, 0.65));
+      border: 1.5px solid rgba(245, 180, 24, 0.65);
+      border-radius: 14px;
+      padding: 11px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffe89e;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .pay-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .pay-method-btn {
+      padding: 9px;
+      border-radius: 11px;
+      border: 1.5px solid rgba(255, 230, 13
