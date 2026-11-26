@@ -7,7 +7,6 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-image: url("https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80");
       --wood-top: #c88446;
       --wood-mid: #8e5222;
       --wood-bot: #532c0e;
@@ -32,13 +31,10 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       color: var(--text-primary);
-      background-color: #09150e;
-      background-image:
-        linear-gradient(180deg, rgba(16, 12, 6, 0.72) 0%, rgba(11, 23, 15, 0.84) 55%, rgba(5, 12, 8, 0.95) 100%),
-        var(--bg-image);
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(155, 77, 255, 0.16), transparent 45%),
+        radial-gradient(circle at 80% 20%, rgba(245, 180, 24, 0.12), transparent 40%),
+        linear-gradient(180deg, #16120a 0%, #0d1d13 55%, #060e09 100%);
       overflow-x: hidden;
       padding-bottom: 28px;
     }
@@ -88,7 +84,7 @@
 
     .nick-badge {
       max-width: 165px;
-      background: rgba(11, 27, 19, 0.9);
+      background: rgba(11, 27, 19, 0.92);
       border: 1px solid rgba(255, 230, 138, 0.5);
       border-radius: 999px;
       padding: 3px 10px;
@@ -101,7 +97,7 @@
     }
 
     .level-pill {
-      background: rgba(9, 22, 15, 0.9);
+      background: rgba(9, 22, 15, 0.92);
       border: 1px solid rgba(255, 230, 138, 0.32);
       border-radius: 10px;
       padding: 4px 9px;
@@ -120,7 +116,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(10, 25, 17, 0.9);
+      background: rgba(10, 25, 17, 0.92);
       border: 1px solid rgba(255, 230, 138, 0.42);
       padding: 6px 12px;
       border-radius: 14px;
@@ -175,7 +171,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(15, 34, 24, 0.88);
+      background: rgba(15, 34, 24, 0.9);
       border: 1px solid rgba(183, 128, 255, 0.55);
       padding: 5px 15px;
       border-radius: 999px;
@@ -286,8 +282,8 @@
 
     .games-section {
       margin-top: 22px;
-      background: rgba(10, 23, 16, 0.72);
-      border: 1px solid rgba(255, 230, 138, 0.25);
+      background: rgba(10, 23, 16, 0.78);
+      border: 1px solid rgba(255, 230, 138, 0.28);
       border-radius: 18px;
       padding: 10px 8px;
     }
@@ -725,4 +721,96 @@
     .pay-method-btn {
       padding: 9px;
       border-radius: 11px;
-      border: 1.5px solid rgba(255, 230, 13
+      border: 1.5px solid rgba(255, 230, 138, 0.35);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .pay-method-btn.active {
+      border-color: var(--gold-bright);
+      background: rgba(245, 180, 24, 0.24);
+      color: var(--gold-bright);
+    }
+
+    .gold-cta-btn {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1.5px solid #ffe68a;
+      background: linear-gradient(180deg, #ffd866 0%, #e5a115 65%, #b57704 100%);
+      color: #2b1600;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #694100;
+      margin-top: 8px;
+    }
+
+    .section-box {
+      background: rgba(7, 17, 12, 0.84);
+      border: 1px solid rgba(255, 230, 138, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 11px;
+      margin-bottom: 10px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .xo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      max-width: 220px;
+      margin: 8px auto;
+    }
+
+    .xo-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 230, 138, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--gold-bright);
+      font-size: 26px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .outcome-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    .outcome-btn {
+      padding: 8px 5px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .outcome-win { background: linear-gradient(180deg, #27a852, #176b33); }
+    .outcome-draw { background: linear-gradient(180deg, #eab308, #a16207); color: #1a1100; }
+    .outcome-loss { background: linear-gradient(180deg, #d94343, #8c2323); }
+
+    .task-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 11px;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #593314 0%, #
